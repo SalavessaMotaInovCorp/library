@@ -18,7 +18,7 @@ class AuthorFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'photo' => $this->faker->imageUrl(),
+            'photo' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 200) . '/200/300',
         ];
     }
 }

@@ -22,8 +22,8 @@ class BookFactory extends Factory
             'name' => $this->faker->words(3, true),
             'publisher_id' => Publisher::factory(),
             'description' => $this->faker->paragraph(),
-            'cover_image' => $this->faker->imageUrl(),
-            'price' => $this->faker->numberBetween(5, 1000),
+            'cover_image' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 200) . '/200/300',
+            'price' => $this->faker->numberBetween(5, 500),
         ];
     }
 }
