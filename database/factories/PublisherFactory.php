@@ -18,7 +18,7 @@ class PublisherFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'logo' => $this->faker->imageUrl()
+            'logo' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 150) . '/200/300',
         ];
     }
 }

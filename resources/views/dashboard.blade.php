@@ -1,41 +1,60 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        <div class="bg-cover bg-center">
+            <div class="inset-0 flex items-center justify-center">
+                <h1 class="text-black text-5xl font-bold">Inovcorp Library</h1>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                    <a
-                        href="{{ url('/welcome') }}"
-                        id="docs-card"
-                        class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10"
-                    >
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
 
-                        <div class="relative flex items-center gap-6 lg:items-end">
-                            <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#FF2D20" d="M23 4a1 1 0 0 0-1.447-.894L12.224 7.77a.5.5 0 0 1-.448 0L2.447 3.106A1 1 0 0 0 1 4v13.382a1.99 1.99 0 0 0 1.105 1.79l9.448 4.728c.14.065.293.1.447.1.154-.005.306-.04.447-.105l9.453-4.724a1.99 1.99 0 0 0 1.1-1.789V4ZM3 6.023a.25.25 0 0 1 .362-.223l7.5 3.75a.251.251 0 0 1 .138.223v11.2a.25.25 0 0 1-.362.224l-7.5-3.75a.25.25 0 0 1-.138-.22V6.023Zm18 11.2a.25.25 0 0 1-.138.224l-7.5 3.75a.249.249 0 0 1-.329-.099.249.249 0 0 1-.033-.12V9.772a.251.251 0 0 1 .138-.224l7.5-3.75a.25.25 0 0 1 .362.224v11.2Z"/><path fill="#FF2D20" d="m3.55 1.893 8 4.048a1.008 1.008 0 0 0 .9 0l8-4.048a1 1 0 0 0-.9-1.785l-7.322 3.706a.506.506 0 0 1-.452 0L4.454.108a1 1 0 0 0-.9 1.785H3.55Z"/></svg>
-                                </div>
-
-                                <div class="pt-3 sm:pt-5 lg:pt-0">
-                                    <h1 class="text-4xl font-bold text-gray-800">Welcome to Our Library</h1>
-                                    <p class="mt-4 text-lg text-gray-600">
-                                        Explore a vast collection of <span class="font-semibold">books</span>, discover new <span class="font-semibold">authors</span>,
-                                        and browse through renowned <span class="font-semibold">publishers</span>.
-                                        Register now to access all the details and start your journey into knowledge.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <svg class="size-6 shrink-0 stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-                        </div>
-                    </a>
+            <div class="grid gap-10 md:grid-cols-3 text-center mb-6">
+                <div class="bg-gray-50 p-6 rounded-lg text-black shadow-lg">
+                    <h3 class="text-4xl font-bold">{{ $books_count }}</h3>
+                    <p class="text-lg">Books Available</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg text-black shadow-lg">
+                    <h3 class="text-4xl font-bold">{{ $authors_count }}</h3>
+                    <p class="text-lg">Authors</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg text-black shadow-lg">
+                    <h3 class="text-4xl font-bold">{{ $publishers_count }}</h3>
+                    <p class="text-lg">Publishers</p>
                 </div>
             </div>
+
+            <form action="/search" class="relative flex items-center justify-center mb-6">
+                @csrf
+                <input type="text" class="input input-bordered w-full max-w-md" name="query" placeholder="Search for books...">
+                 <x-button class="btn btn-primary ml-2">🔍 Search</x-button>
+            </form>
+
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">Recent Books</h2>
+            <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 mb-6">
+                @foreach($recent_books as $book)
+                    <div class="card bg-white shadow-xl">
+                        <figure>
+                            <img src="{{ $book->cover_image }}" alt="Book Cover" class="h-48 w-full object-cover">
+                        </figure>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold">{{ $book->name }}</h3>
+                            <p class="text-sm text-gray-600">{{ Str::limit($book->description, 50) }}</p>
+                            <x-button href="/books/{{ $book->id }}" class="btn btn-primary btn-sm mt-4">View Details</x-button>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800">Explore</h2>
+            <div class="grid gap-6 md:grid-cols-3">
+                <x-button href="/books" class="btn btn-outline btn-lg w-full">Browse Books</x-button>
+                <x-button href="/authors" class="btn btn-outline btn-lg w-full">Meet the Authors</x-button>
+                <x-button href="/publishers" class="btn btn-outline btn-lg w-full">Publishers</x-button>
+            </div>
+
         </div>
     </div>
 </x-app-layout>

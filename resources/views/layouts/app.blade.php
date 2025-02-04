@@ -38,6 +38,10 @@
             </main>
         </div>
 
+        <footer class="text-center text-sm text-gray-500 bg-white py-4 shadow w-full">
+            Created by Nuno Salavessa Mota using Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+        </footer>
+
         @stack('modals')
 
         @livewireScripts

@@ -1,48 +1,50 @@
 <x-app-layout>
-
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Books
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Books
+            </h2>
+            <x-button href="/books/create">Register book</x-button>
+        </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 text-black">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 bg-white border border-gray-200">
 
-                    <div class="overflow-x-auto">
-                        <table class="table table-zebra w-full border-solid">
-
+                    <div class="overflow-x-auto p-6">
+                        <table class="table w-full border-collapse border border-gray-300">
                             <thead>
-                            <tr>
-                                <th>ISBN</th>
-                                <th>Name</th>
-                                <th>Publisher</th>
-                                <th>Description</th>
-                                <th>Cover</th>
-                                <th>Price</th>
-                                <th>Actions</th>
+                            <tr class="bg-gray-200 text-black">
+                                <th class="border border-gray-300 p-2">ISBN</th>
+                                <th class="border border-gray-300 p-2">Name</th>
+                                <th class="border border-gray-300 p-2">Publisher</th>
+                                <th class="border border-gray-300 p-2">Description</th>
+                                <th class="border border-gray-300 p-2">Cover</th>
+                                <th class="border border-gray-300 p-2">Price</th>
+                                <th class="border border-gray-300 p-2"></th>
                             </tr>
                             </thead>
-
                             <tbody>
                             @foreach($books as $book)
-                                <tr>
-                                    <td>{{ $book->isbn }}</td>
-                                    <td>{{ $book->name }}</td>
-                                    <td>{{ $book->publisher->name }}</td>
-                                    <td>{{ \Illuminate\Support\Str::limit($book->description, 50) }}</td>
-                                    <td>
-                                        @if($book->cover_image)
-                                            <img src="{{ $book->cover_image }}" alt="{{ $book->name }} cover" class="h-12 w-auto">
-                                        @else
-                                            <span class="text-gray-400">No Image</span>
-                                        @endif
+                                <tr class="hover:bg-gray-100">
+                                    <td class="border border-gray-300 p-2">{{ $book->isbn }}</td>
+                                    <td class="border border-gray-300 p-2">{{ $book->name }}</td>
+                                    <td class="border border-gray-300 p-2">{{ $book->publisher->name }}</td>
+                                    <td class="border border-gray-300 p-2">{{ \Illuminate\Support\Str::limit($book->description, 50) }}</td>
+                                    <td class="border border-gray-300 p-2">
+                                        <div class="flex justify-center">
+                                            @if($book->cover_image)
+                                                <img src="{{ $book->cover_image }}" alt="{{ $book->name }} cover" class="h-12 w-auto p-2">
+                                            @else
+                                                <span class="text-gray-400 p-2">No Image</span>
+                                            @endif
+                                        </div>
                                     </td>
-                                    <td>${{ number_format($book->price, 2) }}</td>
-                                    <td>
-                                        <a href="/books/{{ $book->id }}" class="btn btn-primary btn-sm">View</a>
+                                    <td class="border border-gray-300 p-2">${{ number_format($book->price, 2) }}</td>
+                                    <td class="border border-gray-300 p-2">
+                                        <x-button href="/books/{{ $book->id }}" class="btn btn-primary btn-sm p-2">Details</x-button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -50,9 +52,15 @@
                         </table>
                     </div>
 
-                    <div class="mt-4">
+                    <div>
                         {{ $books->links() }}
                     </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="my-3 mx-auto">
+                        <x-button href="/dashboard">Home</x-button>
+                    </p>
                 </div>
             </div>
         </div>
