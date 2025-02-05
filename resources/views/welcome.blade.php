@@ -27,7 +27,7 @@
                         world of knowledge.</p>
                     <div class="mt-6">
                         <x-button href="{{ route('register') }}" class="btn btn-primary btn-lg">Register</x-button>
-                        <x-button href="{{ route('login') }}" class="btn btn-outline btn-lg ml-4">Log in</x-button>
+                        <x-button href="{{ route('login') }}" class="btn btn-primary btn-lg ml-4">Log in</x-button>
                     </div>
                 </header>
 

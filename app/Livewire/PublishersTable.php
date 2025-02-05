@@ -35,6 +35,8 @@ class PublishersTable extends DataTableComponent
                 'class' => 'text-black',
             ];
         });
+
+        $this->setSearchPlaceholder('Search publisher name...');
     }
 
     public function query()

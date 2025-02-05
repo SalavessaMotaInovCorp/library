@@ -23,11 +23,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        $books = Book::factory(200)->create();
+        $books = Book::factory(50)->create();
 
-        Publisher::factory(10)->create();
-
-        $authors = Author::factory(20)->create();
+        $authors = Author::factory(30)->create();
 
         $books->each(function ($book) use ($authors) {
             $book->authors()->attach(

@@ -35,6 +35,9 @@ class AuthorsTable extends DataTableComponent
                 'class' => 'text-black',
             ];
         });
+
+
+        $this->setSearchPlaceholder('Search author name...');
     }
 
     public function query()

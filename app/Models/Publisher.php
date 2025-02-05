@@ -11,6 +11,12 @@ class Publisher extends Model
 
     protected $fillable = ['name', 'logo'];
 
+    protected function casts(): array {
+        return [
+            'logo' => 'encrypted'
+        ];
+    }
+
     public function books()
     {
         return $this->hasMany(Book::class);
