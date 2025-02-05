@@ -21,6 +21,7 @@
             <div class="relative w-full max-w-7xl px-6 py-12">
 
                 <header class="text-center">
+                    <img src="https://aircinelmvc.blob.core.windows.net/resources/inovcorp_logo_book_bg_removed.png.png" alt="library" class="mx-auto w-16">
                     <h1 class="text-5xl font-extrabold text-gray-900">Welcome to Inovcorp Library</h1>
                     <p class="mt-4 text-lg text-gray-700">Explore thousands of books, meet renowned authors, and dive into a
                         world of knowledge.</p>

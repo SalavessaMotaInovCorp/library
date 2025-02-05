@@ -20,7 +20,7 @@
 
                 <div class="flex justify-between">
                     <p class="mt-6">
-                        <x-button href="/publishers">Back</x-button>
+                        <x-button href="{{ url()->previous() }}">Back</x-button>
                     </p>
 
                     <p class="mt-6">

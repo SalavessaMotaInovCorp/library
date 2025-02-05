@@ -24,8 +24,19 @@
                 </div>
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                    <strong class="text-bold text-gray-900">Author(s):</strong>
+                    @foreach($authors as $author)
+                        <a href="/authors/{{ $author->id }}">
+                            <p class="text-gray-500 hover:underline">{{ $author->name }}</p>
+                        </a>
+                    @endforeach
+                </div>
+
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                     <strong class="text-bold text-gray-900">Publisher:</strong>
-                    <p class="text-gray-500">{{ $book->publisher->name }}</p>
+                    <a href="/publishers/{{ $book->publisher->id }}">
+                        <p class="text-gray-500 hover:underline">{{ $book->publisher->name }}</p>
+                    </a>
                 </div>
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
@@ -40,7 +51,7 @@
 
                 <div class="flex justify-between">
                     <p class="mt-6">
-                        <x-button href="/books">Books List</x-button>
+                        <x-button href="{{ url()->previous() }}">Back</x-button>
                     </p>
 
                     <p class="mt-6">

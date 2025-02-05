@@ -7,7 +7,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
 {{--                        <x-application-mark class="block h-9 w-auto" />--}}
-                        <img src="https://aircinelmvc.blob.core.windows.net/resources/inovcorp_logo_book.jpg" alt="library">
+                        <img src="https://aircinelmvc.blob.core.windows.net/resources/inovcorp_logo_book_bg_removed.png.png" alt="library" class="mx-auto w-16">
                     </a>
                 </div>
 
@@ -15,6 +15,15 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Home Page') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('books.index') }}" :active="request()->routeIs('books.index')">
+                        {{ __('Books') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('authors.index') }}" :active="request()->routeIs('authors.index')">
+                        {{ __('Authors') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('publishers.index') }}" :active="request()->routeIs('publishers.index')">
+                        {{ __('Publishers') }}
                     </x-nav-link>
                 </div>
             </div>

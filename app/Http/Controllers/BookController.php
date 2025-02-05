@@ -4,21 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Publisher;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::with('publisher')->latest()->Paginate(20);
+        $query = Book::query();
 
-        return view('books.index', [
-            'books' => $books
-        ]);
+        if ($request->filled('isbn')) {
+            $query->where('isbn', 'like', '%' . $request->isbn . '%');
+        }
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('publisher')) {
+            $query->whereHas('publisher', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->publisher . '%');
+            });
+        }
+
+        if ($request->filled('description')) {
+            $query->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        $books = $query->paginate(10);
+
+        return view('books.index', compact('books'));
     }
 
     public function show(Book $book)
     {
-        return view('books.show', ['book' => $book]);
+        return view('books.show', [
+            'book' => $book,
+            'authors' => $book->authors()->get()
+            ]);
     }
 
     public function create()

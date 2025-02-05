@@ -13,6 +13,19 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 bg-white border border-gray-200">
 
+                    <form action="{{ route('publishers.index') }}" method="GET" class="p-6">
+                        <h1 class="my-3 font-extrabold">Search Filters:</h1>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label for="name" class="block font-medium">Name</label>
+                                <input type="text" name="name" id="name" value="{{ request('name') }}" class="w-full border-gray-300 rounded">
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <x-button type="submit">Search</x-button>
+                        </div>
+                    </form>
+
                     <div class="overflow-x-auto">
                         <table class="table w-full border-collapse border border-gray-300">
                             <thead>
