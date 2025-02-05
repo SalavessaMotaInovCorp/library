@@ -27,7 +27,7 @@
 
             <form action="/search" class="relative flex items-center justify-center mb-6">
                 @csrf
-                <input type="text" class="input input-bordered w-full max-w-md" name="query" placeholder="Search for books...">
+                <input type="text" class="input input-bordered w-full max-w-md" name="query" placeholder="Book Quick Search">
                  <x-button class="btn btn-primary ml-2">🔍 Search</x-button>
             </form>
 

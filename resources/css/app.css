@@ -5,3 +5,7 @@
 [x-cloak] {
     display: none;
 }
+
+.paged-pagination-results {
+    color: black !important;
+}
