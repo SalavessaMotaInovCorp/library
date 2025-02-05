@@ -4,6 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Books
             </h2>
+            <x-button href="{{ route('books.export') }}">Export CSV/Excel</x-button>
             <x-button href="/books/create">Register book</x-button>
         </div>
     </x-slot>
