@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -24,7 +25,9 @@ class AuthorController extends Controller
 
     public function show(Author $author)
     {
-        return view('authors.show', ['author' => $author]);
+        $books = $author->books()->orderBy('name')->paginate(10);
+
+        return view('authors.show', compact('author', 'books'));
     }
 
     public function create()

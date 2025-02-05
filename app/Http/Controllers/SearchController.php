@@ -8,8 +8,6 @@ class SearchController extends Controller
 {
     public function __invoke()
     {
-
-
         $books = Book::query()
             ->with(['authors', 'publisher'])
             ->where('name', 'like', '%' . request('query') . '%')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
@@ -45,22 +46,26 @@ class BookController extends Controller
 
     public function create()
     {
-        $publishers = Publisher::all();
-        return view('books.create', compact('publishers'));
+        $publishers = Publisher::orderBy('name', 'asc')->get();
+        $authors = Author::orderBy('name', 'asc')->paginate(10);
+        return view('books.create', compact('publishers', 'authors'));
     }
+
 
     public function store()
     {
         request()->validate([
-            'isbn' => ['required', 'regex:/^(?:\d{10}|\d{13})$/'],
-            'name' => ['required', 'min:3'],
+            'isbn' => 'required|string|unique:books,isbn',
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'cover_image' => 'required|string',
+            'price' => 'required|numeric',
             'publisher_id' => 'required|exists:publishers,id',
-            'description' => ['required', 'min:3'],
-            'cover_image' => ['required', 'min:5'],
-            'price' => 'required|numeric|min:0',
+            'authors' => 'required|array',
+            'authors.*' => 'exists:authors,id',
         ]);
 
-        Book::create([
+        $book = Book::create([
             'isbn' => request('isbn'),
             'name' => request('name'),
             'publisher_id' => request('publisher_id'),
@@ -68,6 +73,8 @@ class BookController extends Controller
             'cover_image' => request('cover_image'),
             'price' => request('price'),
         ]);
+
+        $book->authors()->attach(request()->authors);
 
         return redirect('/books');
     }

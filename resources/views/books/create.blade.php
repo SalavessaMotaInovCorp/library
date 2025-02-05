@@ -61,6 +61,36 @@
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <label class="block text-sm font-medium text-gray-900">Authors</label>
+                        <div class="grid grid-cols-2 gap-2 mt-2">
+                            @foreach($authors as $author)
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" name="authors[]" value="{{ $author->id }}" class="checkbox checkbox-primary"
+                                        {{ in_array($author->id, old('authors', [])) ? 'checked' : '' }}>
+                                    <span class="text-sm">{{ $author->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+
+                        <div class="mt-4">
+                            {{ $authors->links() }}
+                        </div>
+
+                        @error('authors') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <label for="publisher_id" class="block text-sm font-medium text-gray-900">Publisher</label>
+                        <select name="publisher_id" id="publisher_id" class="select select-bordered w-full mt-2" required>
+                            <option value="" disabled selected>Select a Publisher</option>
+                            @foreach($publishers as $publisher)
+                                <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('publisher_id') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="price" class="block text-sm font-medium text-gray-900">Price</label>
                         <input
                             type="number"
@@ -75,16 +105,6 @@
                         @enderror
                     </div>
 
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <label for="publisher_id" class="block text-sm font-medium text-gray-900">Publisher</label>
-                        <select name="publisher_id" id="publisher_id" class="select select-bordered w-full mt-2" required>
-                            <option value="" disabled selected>Select a Publisher</option>
-                            @foreach($publishers as $publisher)
-                                <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('publisher_id') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
-                    </div>
 
                     <div class="flex justify-between items-center mt-6">
                         <x-button href="/books" class="btn btn-outline btn-sm">Back</x-button>
@@ -98,3 +118,5 @@
         </div>
     </div>
 </x-app-layout>
+
+
