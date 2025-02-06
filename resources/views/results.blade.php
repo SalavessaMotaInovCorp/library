@@ -19,6 +19,7 @@
                             <tr class="bg-gray-200 text-black">
                                 <th class="border border-gray-300 p-2">ISBN</th>
                                 <th class="border border-gray-300 p-2">Name</th>
+                                <th class="border border-gray-300 p-2">Authors</th>
                                 <th class="border border-gray-300 p-2">Publisher</th>
                                 <th class="border border-gray-300 p-2">Description</th>
                                 <th class="border border-gray-300 p-2">Cover</th>
@@ -31,7 +32,16 @@
                                 <tr class="hover:bg-gray-100">
                                     <td class="border border-gray-300 p-2">{{ $book->isbn }}</td>
                                     <td class="border border-gray-300 p-2">{{ $book->name }}</td>
-                                    <td class="border border-gray-300 p-2">{{ $book->publisher->name }}</td>
+                                    <td class="border border-gray-300 p-2">
+                                        @foreach($book->authors as $author)
+                                            <a href="/authors/{{ $author->id }}" class="hover:underline">{{ $author->name }}</a>
+                                            <br/>
+                                        @endforeach
+                                    </td>
+                                    <td class="border border-gray-300 p-2">
+                                        <a href="/publishers/{{ $book->publisher_id }}" class="hover:underline">{{ $book->publisher->name }}</a>
+                                        <br/>
+                                    </td>
                                     <td class="border border-gray-300 p-2">{{ \Illuminate\Support\Str::limit($book->description, 50) }}</td>
                                     <td class="border border-gray-300 p-2">
                                         <div class="flex justify-center">

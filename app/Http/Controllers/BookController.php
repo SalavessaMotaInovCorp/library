@@ -11,27 +11,7 @@ class BookController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Book::query();
-
-        if ($request->filled('isbn')) {
-            $query->where('isbn', 'like', '%' . $request->isbn . '%');
-        }
-
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        if ($request->filled('publisher')) {
-            $query->whereHas('publisher', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->publisher . '%');
-            });
-        }
-
-        if ($request->filled('description')) {
-            $query->where('description', 'like', '%' . $request->description . '%');
-        }
-
-        $books = $query->paginate(10);
+        $books = Book::latest()->paginate(10);
 
         return view('books.index', compact('books'));
     }
@@ -81,9 +61,10 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
-        $publishers = Publisher::all();
-
-        return view('books.edit', compact('book', 'publishers'));
+        $publishers = Publisher::orderBy('name', 'asc')->get();
+        $authors = Author::orderBy('name', 'asc')->paginate(15);
+        $bookAuthorsIds = $book->authors->pluck('id')->toArray();
+        return view('books.edit', compact('book', 'publishers', 'authors', 'bookAuthorsIds'));
     }
 
 
@@ -108,6 +89,8 @@ class BookController extends Controller
             'cover_image' => request('cover_image'),
             'price' => request('price')
         ]);
+
+        $book->authors()->sync(request()->authors);
 
         return redirect('/books/' . $book->id);
     }

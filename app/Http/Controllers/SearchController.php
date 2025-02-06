@@ -8,11 +8,10 @@ class SearchController extends Controller
 {
     public function __invoke()
     {
-        $books = Book::query()
-            ->with(['authors', 'publisher'])
+        $books = Book::with(['authors', 'publisher'])
             ->where('name', 'like', '%' . request('query') . '%')
             ->paginate(10);
 
-        return view ('results', ['books' => $books]);
+        return view ('results', compact('books'));
     }
 }

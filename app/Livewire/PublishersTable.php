@@ -32,7 +32,7 @@ class PublishersTable extends DataTableComponent
         $this->setTdAttributes(function ($row, $column, $value) {
             return [
                 'default' => false,
-                'class' => 'text-black',
+                'class' => 'text-black p-1 text-center',
             ];
         });
 
@@ -57,7 +57,7 @@ class PublishersTable extends DataTableComponent
             Column::make("Logo", "logo")
                 ->format(function ($value, $row, $column) {
                     return $value
-                        ? '<img src="' . $value . '" alt="Publisher Logo" style="height:50px;">'
+                        ? '<img src="' . $value . '" alt="Publisher Logo" style="height:50px;" class="rounded mx-auto">'
                         : 'No image';
                 })
                 ->html(),

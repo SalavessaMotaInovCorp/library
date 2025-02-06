@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Publisher;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -23,30 +24,29 @@ class BooksTable extends DataTableComponent
             'class' => 'bg-white divide-y divide-gray-200',
         ]);
 
-        $this->setTrAttributes(function ($row) {
+        $this->setTrAttributes(function () {
             return [
                 'default' => false,
                 'class' => 'hover:bg-gray-100',
             ];
         });
 
-        $this->setTdAttributes(function ($row, $column, $value) {
+        $this->setTdAttributes(function () {
             return [
                 'default' => false,
-                'class' => 'text-black',
+                'class' => 'text-black p-1 text-center',
             ];
         });
 
         $this->setSearchPlaceholder('Search book name...');
     }
 
-
-    public function query()
-    {
-        return Book::query()
-            ->with('publisher')
-            ->select('id', 'isbn', 'name', 'publisher_id', 'description', 'cover_image', 'price');
-    }
+//    public function query()
+//    {
+//        return Book::query()
+//            ->with('publisher','authors')
+//            ->select('id', 'isbn', 'name','publisher_id', 'description', 'cover_image', 'price');
+//    }
 
     public function columns(): array
     {
@@ -60,30 +60,50 @@ class BooksTable extends DataTableComponent
             Column::make("Name", "name")
                 ->sortable()
                 ->searchable(),
-            Column::make("Publisher", "publisher.name")
-                ->sortable()
-                ->searchable(),
+
+            Column::make("Authors")
+                ->label(function ($row) {
+                    return $row->authors->map(function ($author) {
+                        return '<a href="/authors/' . $author->id . '" class="hover:underline">' . $author->name . '</a>';
+                    })->join('<br/>');
+                })
+                ->html(),
+
+            Column::make("Publisher", "publisher.id")
+                ->format(function ($value) {
+
+                    $publisher_name = Publisher::find($value)->name;
+
+                    return $value
+                        ? '<a href="/publishers/' . $value . '" class="hover:underline">' . $publisher_name . '</a>'
+                        : 'No Publisher';
+                })
+                ->html()
+                ->sortable(),
+
+
             Column::make("Description", "description")
                 ->sortable()
-                ->searchable()
-                ->format(function ($value, $row, $column) {
+                ->format(function ($value) {
                     return Str::limit($value, 25);
                 }),
+
             Column::make("Cover image", "cover_image")
-                ->format(function ($value, $row, $column) {
+                ->format(function ($value) {
                     return $value
-                        ? '<img src="' . $value . '" alt="Cover image" style="height:50px;">'
+                        ? '<img src="' . $value . '" alt="Cover image" style="height:50px;" class="rounded mx-auto">'
                         : 'No image';
                 })
                 ->html(),
+
             Column::make("Price", "price")
                 ->sortable()
-                ->searchable()
-                ->format(function ($value, $row, $column) {
+                ->format(function ($value) {
                     return number_format($value, 2, ',', '.') . ' €';
                 }),
+
             Column::make("Actions")
-                ->label(function ($row, $column) {
+                ->label(function ($row) {
                     return '<a href="/books/' . $row->id . '" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150">Details</a>';
                 })
                 ->html(),

@@ -32,7 +32,7 @@ class AuthorsTable extends DataTableComponent
         $this->setTdAttributes(function ($row, $column, $value) {
             return [
                 'default' => false,
-                'class' => 'text-black',
+                'class' => 'text-black p-1 text-center',
             ];
         });
 
@@ -58,7 +58,7 @@ class AuthorsTable extends DataTableComponent
             Column::make("Photo", "photo")
                 ->format(function ($value, $row, $column) {
                     return $value
-                        ? '<img src="' . $value . '" alt="Author Photo" style="height:50px;">'
+                        ? '<img src="' . $value . '" alt="Author Photo" style="height:50px;" class="rounded mx-auto">'
                         : 'No image';
                 })
                 ->html(),

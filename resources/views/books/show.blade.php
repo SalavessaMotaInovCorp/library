@@ -46,7 +46,7 @@
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                     <strong class="text-bold text-gray-900">Price:</strong>
-                    <p class="text-gray-500">${{ number_format($book->price, 2) }}</p>
+                    <p class="text-gray-500">{{ number_format($book->price, 2) }} €</p>
                 </div>
 
                 <div class="flex justify-between">

@@ -49,6 +49,27 @@
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <label class="block text-sm font-medium text-gray-900">Authors</label>
+                        <div class="grid grid-cols-2 gap-2 mt-2">
+                            @foreach($authors as $author)
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" name="authors[]" value="{{ $author->id }}" class="checkbox checkbox-primary"
+                                        {{ in_array($author->id, old('authors', $bookAuthorsIds)) ? 'checked' : '' }}>
+                                    <span class="text-sm">{{ $author->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+
+                        <div class="mt-4">
+                            {{ $authors->links() }}
+                        </div>
+
+                        @error('authors')
+                        <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="publisher_id" class="block text-sm font-medium text-gray-900">Publisher</label>
                         <select name="publisher_id" id="publisher_id" class="select select-bordered w-full mt-2" required>
                             <option value="" disabled>Select a Publisher</option>
