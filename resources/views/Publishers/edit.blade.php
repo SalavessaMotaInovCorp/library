@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <label for="logo" class="block text-sm font-medium text-gray-900">Cover Image URL</label>
+                        <label for="logo" class="block text-sm font-medium text-gray-900">Publisher logo URL</label>
                         <input type="text" name="logo" id="logo" class="rounded-lg w-full mt-2"
                                placeholder="Enter Cover Image URL" value="{{ $publisher->logo }}" required>
                         @error('logo') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror

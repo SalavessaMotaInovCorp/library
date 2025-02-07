@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <label for="photo" class="block text-sm font-medium text-gray-900">Cover Image URL</label>
+                        <label for="photo" class="block text-sm font-medium text-gray-900">Author photo URL</label>
                         <input type="text" name="photo" id="photo" class="rounded-lg w-full mt-2"
                                placeholder="Enter Cover Image URL" value="{{ $author->photo }}" required>
                         @error('photo') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror

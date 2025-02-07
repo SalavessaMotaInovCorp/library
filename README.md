@@ -20,6 +20,7 @@ This project is a **Library Management System** built with **Laravel Jetstream**
 - **DaisyUI** (Tailwind CSS Components)
 - **MySQL** (or any supported DB)
 - **Maatwebsite/Laravel-Excel** (for data export)
+- **Rappasoft Laravel Livewire Tables** (for dynamic data tables)
 
 ##  Database Structure
 
