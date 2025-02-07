@@ -50,18 +50,21 @@
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label class="block text-sm font-medium text-gray-900">Authors</label>
-                        <div class="grid grid-cols-2 gap-2 mt-2">
-                            @foreach($authors as $author)
-                                <label class="flex items-center space-x-2 cursor-pointer">
-                                    <input type="checkbox" name="authors[]" value="{{ $author->id }}" class="checkbox checkbox-primary"
-                                        {{ in_array($author->id, old('authors', $bookAuthorsIds)) ? 'checked' : '' }}>
-                                    <span class="text-sm">{{ $author->name }}</span>
-                                </label>
-                            @endforeach
-                        </div>
 
-                        <div class="mt-4">
-                            {{ $authors->links() }}
+                        <div class="max-h-80 overflow-y-auto border rounded-lg p-2 mt-2">
+                            <div class="grid grid-cols-2 gap-2">
+                                @foreach($authors as $author)
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            name="authors[]"
+                                            value="{{ $author->id }}"
+                                            class="checkbox"
+                                            {{ in_array($author->id, old('authors', $bookAuthorsIds)) ? 'checked' : '' }}>
+                                        <span class="text-sm">{{ $author->name }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
                         </div>
 
                         @error('authors')

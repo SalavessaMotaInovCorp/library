@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create the 'authors' table
         Schema::create('authors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('photo')->nullable();
-            $table->timestamps();
+            $table->id(); // Primary key
+            $table->string('name'); // Author's name
+            $table->text('photo')->nullable(); // Author's photo (optional)
+            $table->timestamps(); // Created_at and updated_at timestamps
         });
-
     }
 
     /**
@@ -25,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Drop the 'authors' table if it exists
         Schema::dropIfExists('authors');
     }
 };

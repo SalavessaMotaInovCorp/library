@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create the 'publishers' table
         Schema::create('publishers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('logo')->nullable();
-            $table->timestamps();
+            $table->id(); // Primary key
+            $table->string('name'); // Publisher name
+            $table->text('logo')->nullable(); // Logo (optional)
+            $table->timestamps(); // Created_at and updated_at timestamps
         });
-
     }
 
     /**
@@ -25,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Drop the 'publishers' table if it exists
         Schema::dropIfExists('publishers');
     }
 };

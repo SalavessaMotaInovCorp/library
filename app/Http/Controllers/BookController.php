@@ -9,29 +9,33 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    // Display a paginated list of books
     public function index(Request $request)
     {
         $books = Book::latest()->paginate(10);
-
         return view('books.index', compact('books'));
     }
 
+    // Show details of a specific book
     public function show(Book $book)
     {
         return view('books.show', [
             'book' => $book,
             'authors' => $book->authors()->get()
-            ]);
+        ]);
     }
 
-    public function create()
+    // Show the form to create a new book
+    public function create(Request $request)
     {
-        $publishers = Publisher::orderBy('name', 'asc')->get();
-        $authors = Author::orderBy('name', 'asc')->paginate(10);
-        return view('books.create', compact('publishers', 'authors'));
+        $publishers = Publisher::orderBy('name')->get();
+        $authors = Author::orderBy('name')->get();
+        $selectedAuthors = $request->get('authors', []);
+
+        return view('books.create', compact('publishers', 'authors', 'selectedAuthors'));
     }
 
-
+    // Store a new book in the database
     public function store()
     {
         request()->validate([
@@ -54,24 +58,27 @@ class BookController extends Controller
             'price' => request('price'),
         ]);
 
+        // Attach authors to the book
         $book->authors()->attach(request()->authors);
 
         return redirect('/books');
     }
 
+    // Show the form to edit an existing book
     public function edit(Book $book)
     {
-        $publishers = Publisher::orderBy('name', 'asc')->get();
-        $authors = Author::orderBy('name', 'asc')->paginate(15);
+        $publishers = Publisher::orderBy('name')->get();
+        $authors = Author::orderBy('name')->get();
         $bookAuthorsIds = $book->authors->pluck('id')->toArray();
+
         return view('books.edit', compact('book', 'publishers', 'authors', 'bookAuthorsIds'));
     }
 
-
-    public function update (Book $book)
+    // Update book details
+    public function update(Book $book)
     {
         request()->validate([
-            // isbn number has to have exactly 10 or 13 digits
+            // ISBN must be exactly 10 or 13 digits
             'isbn' => ['required', 'regex:/^(?:\d{10}|\d{13})$/'],
             'name' => ['required', 'min:3'],
             'publisher_id' => 'required|exists:publishers,id',
@@ -79,7 +86,6 @@ class BookController extends Controller
             'cover_image' => ['required', 'min:5'],
             'price' => ['required', 'numeric'],
         ]);
-
 
         $book->update([
             'isbn' => request('isbn'),
@@ -90,15 +96,16 @@ class BookController extends Controller
             'price' => request('price')
         ]);
 
+        // Sync authors with the book
         $book->authors()->sync(request()->authors);
 
         return redirect('/books/' . $book->id);
     }
 
+    // Delete a book from the database
     public function destroy(Book $book)
     {
         $book->delete();
-
         return redirect('/books');
     }
 }

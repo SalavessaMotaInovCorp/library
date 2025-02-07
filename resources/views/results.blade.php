@@ -52,7 +52,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td class="border border-gray-300 p-2">${{ number_format($book->price, 2) }}</td>
+                                    <td class="border border-gray-300 p-2">{{ number_format($book->price, 2) }} €</td>
                                     <td class="border border-gray-300 p-2">
                                         <x-button href="/books/{{ $book->id }}" class="btn btn-primary btn-sm p-2">Details</x-button>
                                     </td>

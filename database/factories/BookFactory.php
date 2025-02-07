@@ -6,6 +6,8 @@ use App\Models\Publisher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Factory for generating fake Book data
+ *
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Book>
  */
 class BookFactory extends Factory
@@ -18,12 +20,12 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            'isbn' => $this->faker->isbn13(),
-            'name' => $this->faker->words(3, true),
-            'publisher_id' => Publisher::factory(),
-            'description' => $this->faker->paragraph(),
-            'cover_image' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 200) . '/200/300',
-            'price' => $this->faker->numberBetween(5, 500),
+            'isbn' => $this->faker->isbn13(), // Generate a random ISBN-13
+            'name' => $this->faker->words(3, true), // Generate a random book title
+            'publisher_id' => Publisher::factory(), // Create a related publisher
+            'description' => $this->faker->paragraph(), // Generate a random description
+            'cover_image' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 200) . '/200/300', // Random cover image URL
+            'price' => $this->faker->numberBetween(5, 500), // Random price between 5 and 500
         ];
     }
 }

@@ -5,6 +5,8 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * Factory for generating fake Publisher data
+ *
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Publisher>
  */
 class PublisherFactory extends Factory
@@ -17,8 +19,8 @@ class PublisherFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->company(),
-            'logo' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 150) . '/200/300',
+            'name' => $this->faker->company(), // Generate a random company name
+            'logo' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 150) . '/200/300', // Generate a random logo URL
         ];
     }
 }

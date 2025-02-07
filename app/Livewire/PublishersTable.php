@@ -8,51 +8,54 @@ use App\Models\Publisher;
 
 class PublishersTable extends DataTableComponent
 {
+    // Define the model for the table
     protected $model = Publisher::class;
 
+    // Configure table settings
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
-        $this->setSortingEnabled();
-        $this->setSearchEnabled();
-
+        $this->setPrimaryKey('id'); // Set primary key
+        $this->setSortingEnabled(); // Enable sorting
+        $this->setSearchEnabled();  // Enable search
 
         $this->setTBodyAttributes([
             'default' => false,
-            'class' => 'bg-white divide-y divide-gray-200',
+            'class' => 'bg-white divide-y divide-gray-200', // Styling for tbody
         ]);
 
         $this->setTrAttributes(function ($row) {
             return [
                 'default' => false,
-                'class' => 'hover:bg-gray-100',
+                'class' => 'hover:bg-gray-100', // Hover effect for rows
             ];
         });
 
         $this->setTdAttributes(function ($row, $column, $value) {
             return [
                 'default' => false,
-                'class' => 'text-black p-1 text-center',
+                'class' => 'text-black p-1 text-center', // Cell styling
             ];
         });
 
-        $this->setSearchPlaceholder('Search publisher name...');
+        $this->setSearchPlaceholder('Search publisher name...'); // Custom search placeholder
     }
 
+    // Query to fetch publisher data
     public function query()
     {
         return Publisher::query()->select('id', 'name', 'logo');
     }
 
+    // Define table columns
     public function columns(): array
     {
         return [
             Column::make("Id", "id")
-                ->hideIf(true),
+                ->hideIf(true), // Hide the ID column
 
             Column::make("Name", "name")
-                ->sortable()
-                ->searchable(),
+                ->sortable() // Enable sorting
+                ->searchable(), // Enable searching
 
             Column::make("Logo", "logo")
                 ->format(function ($value, $row) {
@@ -73,7 +76,7 @@ class PublishersTable extends DataTableComponent
                         <label for="publisher-modal-' . $row->id . '" class="btn btn-sm mt-4">Close</label>
                    </div>
                </div>'
-                        : 'No image';
+                        : 'No image'; // Display logo or fallback text
                 })
                 ->html(),
 
@@ -81,7 +84,7 @@ class PublishersTable extends DataTableComponent
                 ->label(function ($row, $column) {
                     return '<a href="/publishers/' . $row->id . '" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150">Details</a>';
                 })
-                ->html(),
+                ->html(), // Action button
         ];
     }
 }
