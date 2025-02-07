@@ -10,17 +10,7 @@ class AuthorController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Author::query();
-
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        $authors = $query->paginate(10);
-
-        return view('authors.index', [
-            'authors' => $authors
-        ]);
+        return view('authors.index');
     }
 
     public function show(Author $author)

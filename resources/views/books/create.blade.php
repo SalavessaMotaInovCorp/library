@@ -18,7 +18,7 @@
                             type="text"
                             name="isbn"
                             id="isbn"
-                            class="input input-bordered w-full mt-2"
+                            class="rounded-lg w-full mt-2"
                             placeholder="Enter ISBN"
                             required>
                         @error('isbn')
@@ -32,7 +32,7 @@
                             type="text"
                             name="name"
                             id="name"
-                            class="input input-bordered w-full mt-2"
+                            class="rounded-lg w-full mt-2"
                             placeholder="Enter book name"
                             required>
                         @error('name')
@@ -45,7 +45,7 @@
                         <textarea
                             name="description"
                             id="description"
-                            class="textarea textarea-bordered w-full mt-2"
+                            class="rounded-lg w-full mt-2"
                             placeholder="Enter book description"
                             required></textarea>
                         @error('description')
@@ -55,7 +55,7 @@
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="cover_image" class="block text-sm font-medium text-gray-900">Cover Image URL</label>
-                        <input type="text" name="cover_image" id="cover_image" class="input input-bordered w-full mt-2"
+                        <input type="text" name="cover_image" id="cover_image" class="rounded-lg w-full mt-2"
                                placeholder="Enter Cover Image URL" required>
                         @error('cover_image') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>
@@ -81,7 +81,7 @@
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="publisher_id" class="block text-sm font-medium text-gray-900">Publisher</label>
-                        <select name="publisher_id" id="publisher_id" class="select select-bordered w-full mt-2" required>
+                        <select name="publisher_id" id="publisher_id" class="rounded-lg w-full mt-2" required>
                             <option value="" disabled selected>Select a Publisher</option>
                             @foreach($publishers as $publisher)
                                 <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
@@ -96,7 +96,7 @@
                             type="number"
                             name="price"
                             id="price"
-                            class="input input-bordered w-full mt-2"
+                            class="rounded-lg w-full mt-2"
                             placeholder="Enter book price"
                             step="0.01"
                             required>

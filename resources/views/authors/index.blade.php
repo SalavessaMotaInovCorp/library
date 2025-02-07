@@ -4,6 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Authors
             </h2>
+            <x-button href="{{ route('authors.export') }}">Export CSV/Excel</x-button>
             <x-button href="/authors/create">Register author</x-button>
         </div>
     </x-slot>

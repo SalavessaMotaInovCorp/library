@@ -15,35 +15,35 @@
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="isbn" class="block text-sm font-medium text-gray-900">ISBN</label>
-                        <input type="text" name="isbn" id="isbn" class="input input-bordered w-full mt-2"
+                        <input type="text" name="isbn" id="isbn" class="rounded-lg w-full mt-2"
                                placeholder="Enter ISBN" value="{{ $book->isbn }}" required>
                         @error('isbn') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
-                        <input type="text" name="name" id="name" class="input input-bordered w-full mt-2"
+                        <input type="text" name="name" id="name" class="rounded-lg w-full mt-2"
                                placeholder="Enter book name" value="{{ $book->name }}" required>
                         @error('name') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="description" class="block text-sm font-medium text-gray-900">Description</label>
-                        <textarea name="description" id="description" class="textarea textarea-bordered w-full mt-2"
+                        <textarea name="description" id="description" class="rounded-lg w-full mt-2"
                                   placeholder="Enter book description" required>{{ $book->description }}</textarea>
                         @error('description') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="cover_image" class="block text-sm font-medium text-gray-900">Cover Image URL</label>
-                        <input type="text" name="cover_image" id="cover_image" class="input input-bordered w-full mt-2"
+                        <input type="text" name="cover_image" id="cover_image" class="rounded-lg w-full mt-2"
                                placeholder="Enter Cover Image URL" value="{{ $book->cover_image }}" required>
                         @error('cover_image') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="price" class="block text-sm font-medium text-gray-900">Price</label>
-                        <input type="number" name="price" id="price" class="input input-bordered w-full mt-2"
+                        <input type="number" name="price" id="price" class="rounded-lg w-full mt-2"
                                placeholder="Enter book price" step="0.01" value="{{ $book->price }}" required>
                         @error('price') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>
@@ -71,7 +71,7 @@
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="publisher_id" class="block text-sm font-medium text-gray-900">Publisher</label>
-                        <select name="publisher_id" id="publisher_id" class="select select-bordered w-full mt-2" required>
+                        <select name="publisher_id" id="publisher_id" class="rounded-lg w-full mt-2" required>
                             <option value="" disabled>Select a Publisher</option>
                             @foreach($publishers as $publisher)
                                 <option value="{{ $publisher->id }}"
@@ -87,7 +87,10 @@
                         <x-button href="/books/{{ $book->id }}" class="btn btn-outline btn-sm">Back</x-button>
                         <div class="flex gap-4">
                             <x-button type="submit" class="btn btn-primary">Save Changes</x-button>
-                            <x-button form="delete-form" class="btn btn-error">Delete</x-button>
+                            <label for="delete-modal" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest
+                    hover:bg-red-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer
+                    disabled:opacity-50 transition ease-in-out duration-150
+                    transform hover:-translate-y-1 hover:shadow-lg active:scale-95">Delete</label>
                         </div>
                     </div>
                 </form>
@@ -96,6 +99,18 @@
                     @csrf
                     @method('DELETE')
                 </form>
+
+                <input type="checkbox" id="delete-modal" class="modal-toggle" />
+                <div class="modal">
+                    <div class="modal-box">
+                        <h3 class="font-bold text-lg text-red-600">Confirm Delete</h3>
+                        <p class="py-4">Are you sure you want to delete the book <strong>{{ $book->name }}</strong>?</p>
+                        <div class="modal-action">
+                            <label for="delete-modal" class="btn">Cancel</label>
+                            <x-button onclick="document.getElementById('delete-form').submit();" class="btn btn-error bg-red-600">Yes, Delete</x-button>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

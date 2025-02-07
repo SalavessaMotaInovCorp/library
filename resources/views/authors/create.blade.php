@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Register a new book
+            Register a new author
         </h2>
     </x-slot>
 
@@ -18,8 +18,8 @@
                             type="text"
                             name="name"
                             id="name"
-                            class="input input-bordered w-full mt-2"
-                            placeholder="Enter book name"
+                            class="rounded-lg w-full mt-2"
+                            placeholder="Enter author name"
                             required>
                         @error('name')
                         <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
@@ -29,7 +29,7 @@
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="photo" class="block text-sm font-medium text-gray-900">Author photo URL</label>
-                        <input type="text" name="photo" id="photo" class="input input-bordered w-full mt-2"
+                        <input type="text" name="photo" id="photo" class="rounded-lg w-full mt-2"
                                placeholder="Enter Author Photo URL" required>
                         @error('photo') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>

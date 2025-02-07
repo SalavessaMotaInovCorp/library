@@ -9,20 +9,15 @@ class PublisherController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Publisher::query();
-
-        if($request->has('name')){
-            $query->where('name', 'like', '%'.$request->get('name').'%');
-        }
-
-        $publishers = $query->paginate(10);
-
-        return view('publishers.index', compact('publishers'));
+        return view('publishers.index');
     }
+
 
     public function show(Publisher $publisher)
     {
-        return view('publishers.show', compact('publisher'));
+        $books = $publisher->books;
+
+        return view('publishers.show', compact('publisher', 'books'));
     }
 
     public function create()

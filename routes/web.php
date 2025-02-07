@@ -1,6 +1,8 @@
 <?php
 
+use App\Exports\AuthorsExport;
 use App\Exports\BooksExport;
+use App\Exports\PublishersExport;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
@@ -17,7 +19,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     })->name('books.export');
     Route::resource('books', BookController::class);
 
+    Route::get('/authors/export', function () {
+        return Excel::download(new AuthorsExport, 'authors.xlsx');
+    })->name('authors.export');
     Route::resource('authors', AuthorController::class);
+
+    Route::get('/publishers/export', function () {
+        return Excel::download(new PublishersExport, 'publishers.xlsx');
+    })->name('publishers.export');
     Route::resource('publishers', PublisherController::class);
 });
 

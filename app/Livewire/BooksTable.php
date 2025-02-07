@@ -89,14 +89,30 @@ class BooksTable extends DataTableComponent
                 }),
 
             Column::make("Cover image", "cover_image")
-                ->format(function ($value) {
+                ->format(function ($value, $row) {
                     return $value
-                        ? '<img src="' . $value . '" alt="Cover image" style="height:50px;" class="rounded mx-auto">'
+                        ? '<label for="modal-' . $row->id . '">
+                   <img src="' . $value . '" alt="Cover image" style="height:60px; cursor:pointer;" class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
+               </label>
+               <input type="checkbox" id="modal-' . $row->id . '" class="modal-toggle" />
+               <div class="modal space-y-1" id="modal-' . $row->id . '">
+                   <div class="modal-box bg-white">
+                        <div>
+                            <h3>Cover image for:</h3>
+                            <h3 class="text-lg font-bold mb-4 mx-auto">' . $row->name . '</h3> <!-- Aqui foi corrigido -->
+                        </div>
+
+                        <img src="' . $value . '" alt="Cover image" class="rounded-lg shadow-2xl mx-auto w-full border-black">
+
+                        <label for="modal-' . $row->id . '" class="btn btn-sm mt-2">Close</label>
+                   </div>
+               </div>'
                         : 'No image';
                 })
                 ->html(),
 
-            Column::make("Price", "price")
+
+        Column::make("Price", "price")
                 ->sortable()
                 ->format(function ($value) {
                     return number_format($value, 2, ',', '.') . ' €';

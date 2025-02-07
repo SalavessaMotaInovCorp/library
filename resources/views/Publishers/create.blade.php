@@ -18,7 +18,7 @@
                             type="text"
                             name="name"
                             id="name"
-                            class="input input-bordered w-full mt-2"
+                            class="rounded-lg w-full mt-2"
                             placeholder="Enter publisher name"
                             required>
                         @error('name')
@@ -29,7 +29,7 @@
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                         <label for="logo" class="block text-sm font-medium text-gray-900">Publisher Logo URL</label>
-                        <input type="text" name="logo" id="logo" class="input input-bordered w-full mt-2"
+                        <input type="text" name="logo" id="logo" class="rounded-lg w-full mt-2"
                                placeholder="Enter publisher logo URL" required>
                         @error('logo') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>

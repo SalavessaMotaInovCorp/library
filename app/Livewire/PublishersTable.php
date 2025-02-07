@@ -55,9 +55,24 @@ class PublishersTable extends DataTableComponent
                 ->searchable(),
 
             Column::make("Logo", "logo")
-                ->format(function ($value, $row, $column) {
+                ->format(function ($value, $row) {
                     return $value
-                        ? '<img src="' . $value . '" alt="Publisher Logo" style="height:50px;" class="rounded mx-auto">'
+                        ? '<label for="publisher-modal-' . $row->id . '">
+                   <img src="' . $value . '" alt="Publisher Logo" style="height:60px; cursor:pointer;" class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
+               </label>
+               <input type="checkbox" id="publisher-modal-' . $row->id . '" class="modal-toggle" />
+               <div class="modal" id="publisher-modal-' . $row->id . '">
+                   <div class="modal-box bg-white">
+                        <div class="text-center">
+                            <h3 class="text-lg font-bold mb-2">Logo of:</h3>
+                            <h3 class="text-xl font-semibold mb-4">' . $row->name . '</h3>
+                        </div>
+
+                        <img src="' . $value . '" alt="Publisher Logo" class="rounded-lg shadow-2xl mx-auto w-full border border-black">
+
+                        <label for="publisher-modal-' . $row->id . '" class="btn btn-sm mt-4">Close</label>
+                   </div>
+               </div>'
                         : 'No image';
                 })
                 ->html(),
