@@ -4,8 +4,12 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Books
             </h2>
-            <x-button href="{{ route('books.export') }}">Export CSV/Excel</x-button>
-            <x-button href="/books/create">Register book</x-button>
+            @auth
+                @if(Auth::user()->hasRole('admin'))
+                    <x-button href="{{ route('books.export') }}">Export CSV/Excel</x-button>
+                    <x-button href="/books/create">Register book</x-button>
+                @endif
+            @endauth
         </div>
     </x-slot>
 
@@ -18,9 +22,14 @@
 
                 <div class="text-center">
                     <p class="my-3 mx-auto">
-                        <x-button href="/dashboard">Home</x-button>
+                        @auth
+                            <x-button href="{{ route('dashboard') }}">Home</x-button>
+                        @else
+                            <x-button href="/">Home</x-button>
+                        @endauth
                     </p>
                 </div>
+
             </div>
         </div>
     </div>

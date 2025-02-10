@@ -7,23 +7,28 @@
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-3">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
 
-            <div class="grid gap-10 md:grid-cols-3 text-center mb-6">
-                <div class="bg-gray-50 p-6 rounded-lg text-black shadow-lg">
+            <h2 class="text-2xl font-bold text-gray-800 mb-3 mt-12">Explore</h2>
+            <div class="grid gap-10 md:grid-cols-3 text-center">
+                <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                     <h3 class="text-4xl font-bold">{{ $books_count }}</h3>
                     <p class="text-lg">Books Available</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg text-black shadow-lg">
+                </x-button>
+
+                <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                     <h3 class="text-4xl font-bold">{{ $authors_count }}</h3>
                     <p class="text-lg">Authors</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg text-black shadow-lg">
+                </x-button>
+
+                <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                     <h3 class="text-4xl font-bold">{{ $publishers_count }}</h3>
                     <p class="text-lg">Publishers</p>
-                </div>
+                </x-button>
             </div>
+
+
 
             <form action="/search" class="relative flex items-center justify-center mb-6">
                 @csrf
@@ -46,14 +51,6 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
-
-
-            <h2 class="text-2xl font-bold text-gray-800">Explore</h2>
-            <div class="grid gap-6 md:grid-cols-3">
-                <x-button href="/books" class="btn btn-outline btn-lg w-full">Browse Books</x-button>
-                <x-button href="/authors" class="btn btn-outline btn-lg w-full">Meet the Authors</x-button>
-                <x-button href="/publishers" class="btn btn-outline btn-lg w-full">Publishers</x-button>
             </div>
 
         </div>

@@ -18,7 +18,7 @@
 
         <div class="relative min-h-screen flex flex-col items-center justify-center">
 
-            <div class="relative w-full max-w-7xl px-6 py-12">
+            <div class="relative w-full max-w-7xl px-6">
 
                 <header class="text-center">
                     <img src="https://aircinelmvc.blob.core.windows.net/resources/inovcorp_logo_book_bg_removed.png.png" alt="library" class="mx-auto w-16">
@@ -31,19 +31,22 @@
                     </div>
                 </header>
 
+                <h2 class="text-2xl font-bold text-gray-800 mb-3">Explore</h2>
                 <div class="grid gap-10 md:grid-cols-3 text-center mt-12">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                         <h3 class="text-4xl font-bold">{{ $books_count }}</h3>
                         <p class="text-lg">Books Available</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                    </x-button>
+
+                    <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                         <h3 class="text-4xl font-bold">{{ $authors_count }}</h3>
                         <p class="text-lg">Authors</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                    </x-button>
+
+                    <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                         <h3 class="text-4xl font-bold">{{ $publishers_count }}</h3>
                         <p class="text-lg">Publishers</p>
-                    </div>
+                    </x-button>
                 </div>
 
                 <h2 class="text-2xl font-bold text-gray-800 mt-12">Discover New Books</h2>
@@ -61,13 +64,6 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
-
-                <h2 class="text-2xl font-bold text-gray-800 mt-12">Explore More</h2>
-                <div class="grid gap-6 md:grid-cols-3 mt-6">
-                    <x-button href="/books" class="btn btn-outline btn-lg w-full">Browse Books</x-button>
-                    <x-button href="/authors" class="btn btn-outline btn-lg w-full">Meet the Authors</x-button>
-                    <x-button href="/publishers" class="btn btn-outline btn-lg w-full">Publishers</x-button>
                 </div>
             </div>
         </div>

@@ -58,9 +58,13 @@
                         <x-button href="/dashboard">Home</x-button>
                     </p>
 
-                    <p class="mt-6">
-                        <x-button href="/books/{{ $book->id }}/edit">Edit book</x-button>
-                    </p>
+                    @auth
+                        @if(Auth::user()->hasRole('admin'))
+                            <p class="mt-6">
+                                <x-button href="/books/{{ $book->id }}/edit">Edit book</x-button>
+                            </p>
+                        @endif
+                    @endauth
                 </div>
             </div>
         </div>
