@@ -19,12 +19,14 @@ class RolesSeeder extends Seeder
         $role_citizen = Role::create(['name' => 'citizen']);
 
         $permission_read = Permission::create(['name' => 'read']);
+        $permissions_export = Permission::create(['name' => 'export']);
         $permission_create = Permission::create(['name' => 'create']);
         $permission_update = Permission::create(['name' => 'update']);
         $permission_delete = Permission::create(['name' => 'delete']);
 
         $permissions_admin = [
             $permission_read,
+            $permissions_export,
             $permission_create,
             $permission_update,
             $permission_delete,

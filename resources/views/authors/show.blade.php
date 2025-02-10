@@ -42,9 +42,11 @@
                         <x-button href="{{ url()->previous() }}">Back</x-button>
                     </p>
 
-                    <p class="mt-6">
-                        <x-button href="/authors/{{ $author->id }}/edit">Edit author</x-button>
-                    </p>
+                    @can('update')
+                        <p class="mt-6">
+                            <x-button href="/authors/{{ $author->id }}/edit">Edit author</x-button>
+                        </p>
+                    @endcan
                 </div>
             </div>
         </div>

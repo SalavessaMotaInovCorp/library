@@ -31,10 +31,13 @@
                         <x-button href="/authors/{{ $author->id }}" class="btn btn-outline btn-sm">Back</x-button>
                         <div class="flex gap-4">
                             <x-button type="submit" class="btn btn-primary">Save Changes</x-button>
-                            <label for="delete-modal" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest
+
+                            @can('delete')
+                                <label for="delete-modal" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest
                     hover:bg-red-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer
                     disabled:opacity-50 transition ease-in-out duration-150
                     transform hover:-translate-y-1 hover:shadow-lg active:scale-95">Delete</label>
+                            @endcan
                         </div>
                     </div>
                 </form>

@@ -21,12 +21,19 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Create a test user
-        $user = User::factory()->create([
+        $admin = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@library.com',
             'password' => Hash::make('password')
         ]);
-        $user->assignRole('admin');
+        $admin->assignRole('admin');
+
+        $citizen = User::factory()->create([
+            'name' => 'Citizen',
+            'email' => 'citizen@library.com',
+            'password' => Hash::make('password')
+        ]);
+        $citizen->assignRole('citizen');
 
         // Create 50 books
         $books = Book::factory(50)->create();

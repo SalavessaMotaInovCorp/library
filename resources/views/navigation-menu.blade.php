@@ -36,6 +36,11 @@
                     <x-nav-link href="{{ route('publishers.index') }}" :active="request()->routeIs('publishers.index')">
                         {{ __('Publishers') }}
                     </x-nav-link>
+                    @if(Auth::user()->hasRole('admin'))
+                            <x-nav-link href="{{ route('create_admin') }}" :active="request()->routeIs('publishers.index')">
+                                {{ __('Register New Admin') }}
+                            </x-nav-link>
+                    @endif
                 </div>
             </div>
 

@@ -11,62 +11,64 @@ use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 
-// Public route for the home page
+
+// Home page
 Route::get('/', [HomeController::class, 'index']);
 
-// Public route for search functionality
+// Search functionality
 Route::get('/search', SearchController::class);
 
+// Protected Routes (Authentication Required)
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
 
-Route::get('/books', [BookController::class, 'index'])->name('books.index');
-Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');
-Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers.index');
+    // Dashboard route
+    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
-// Protected routes (require authentication)
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    // Admin Routes
+    Route::middleware('role:admin')->group(function () {
 
-    Route::get('/dashboard', [HomeController::class, 'dashboard'])
-        ->name('dashboard'); // Dashboard route
+        // Export books to Excel
+        Route::get('/books/export', function () {
+            return Excel::download(new BooksExport, 'books.xlsx');
+        })->name('books.export');
 
-    // Export books to Excel
-    Route::get('/books/export', function () {
-        return Excel::download(new BooksExport, 'books.xlsx');
-    })->middleware('role:admin')
-        ->name('books.export');
+        // Export authors to Excel
+        Route::get('/authors/export', function () {
+            return Excel::download(new AuthorsExport, 'authors.xlsx');
+        })->name('authors.export');
 
-    Route::get('/books/create', [BookController::class, 'create'])->name('books.create')->middleware('role:admin');
+        // Export publishers to Excel
+        Route::get('/publishers/export', function () {
+            return Excel::download(new PublishersExport, 'publishers.xlsx');
+        })->name('publishers.export');
 
-    // Resource routes for books
-    Route::resource('books', BookController::class)
-        ->except('index')
-        ->middleware('role:admin');
+        // Resource routes for books (create, store, edit, update, destroy)
+        Route::resource('books', BookController::class)->except(['index', 'show','export']);
 
-    // Export authors to Excel
-    Route::get('/authors/export', function () {
-        return Excel::download(new AuthorsExport, 'authors.xlsx');
-    })
-        ->middleware('role:admin')
-        ->name('authors.export');
+        // Resource routes for authors (create, store, edit, update, destroy)
+        Route::resource('authors', AuthorController::class)->except(['index', 'show','export']);
 
-    Route::get('/authors/create', [AuthorController::class, 'create'])->name('authors.create')->middleware('role:admin');
-    // Resource routes for authors
-    Route::resource('authors', AuthorController::class)
-        ->except('index')
-        ->middleware('role:admin');
+        // Resource routes for publishers (create, store, edit, update, destroy)
+        Route::resource('publishers', PublisherController::class)->except(['index', 'show','export']);
 
-    // Export publishers to Excel
-    Route::get('/publishers/export', function () {
-        return Excel::download(new PublishersExport, 'publishers.xlsx');
-    })
-        ->middleware('role:admin')
-        ->name('publishers.export');
-
-    Route::get('/publishers/create', [PublisherController::class, 'create'])->name('publishers.create')->middleware('role:admin');
-
-    // Resource routes for publishers
-    Route::resource('publishers', PublisherController::class)
-        ->except('index')
-        ->middleware('role:admin');
+        // Register New Admin Route
+        Route::get('/create-admin', [HomeController::class, 'create_admin'])->name('create_admin');
+        Route::post('/create-admin', [HomeController::class, 'store_admin'])->name('store_admin');
+    });
 });
 
+// Public book routes
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
+Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
 
+// Public author routes
+Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');
+Route::get('/authors/{author}', [AuthorController::class, 'show'])->name('authors.show');
+
+// Public publisher routes
+Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers.index');
+Route::get('/publishers/{publisher}', [PublisherController::class, 'show'])->name('publishers.show');
