@@ -1,0 +1,99 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Book;
+use App\Models\BookRequest;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class BookRequestController extends Controller
+{
+    public function index()
+    {
+        $bookRequests = BookRequest::with('book.authors', 'book.publisher')->where('user_id', Auth::id())->paginate(20);
+
+        return view('book_requests.index', compact('bookRequests'));
+    }
+
+    public function indexAdmin()
+    {
+        $bookRequests = BookRequest::with('user','book.authors', 'book.publisher')->paginate(20);
+
+        return view('book_requests.indexAdmin', compact('bookRequests'));
+    }
+
+    public function available()
+    {
+        $books = Book::whereDoesntHave('bookRequests', function ($query) {
+            $query->whereIn('status', ['active', 'pending_return_confirm']);
+        })->with('authors', 'publisher')->paginate(10);
+
+        $citizens = User::role('citizen')
+            ->withCount(['bookRequests' => function ($query) {
+                $query->whereIn('status', ['active', 'pending_return_confirm']);
+            }])
+            ->having('book_requests_count', '<', 3)
+            ->get();
+
+        return view('book_requests.available', compact('books', 'citizens'));
+    }
+
+
+
+    public function requestBook(Request $request, Book $book)
+    {
+        $user = Auth::user()->hasRole('admin') && $request->has('user_id')
+            ? User::findOrFail($request->user_id)
+            : Auth::user();
+
+        if (BookRequest::where('book_id', $book->id)->whereIn('status', ['active', 'pending_return_confirm'])->exists()) {
+            return back()->with('error', 'This book has already been requested.');
+        }
+
+        if ($user->bookRequests()->whereIn('status', ['active', 'pending_return_confirm'])->count() >= 3) {
+            return back()->with('error', 'This user cannot request more than 3 books.');
+        }
+
+        BookRequest::create([
+            'user_id'    => $user->id,
+            'book_id'    => $book->id,
+            'user_name'  => $user->name,
+            'user_email' => $user->email,
+            'request_date' => now(),
+            'due_date'     => now()->addDays(5),
+            'status'       => 'active',
+        ]);
+
+        return redirect()->route('book_requests.available')->with('success', 'Request has been sent.');
+    }
+
+
+
+    public function returnBook(BookRequest $bookRequest)
+    {
+        $bookRequest->update([
+            'is_returned' => true,
+            'return_date' => now(),
+            'status' => 'pending_return_confirm',
+        ]);
+
+        return back()->with('success', 'Request has been returned.');
+    }
+
+    public function confirmReturn(BookRequest $bookRequest)
+    {
+        $totalDays = Carbon::parse($bookRequest->request_date)->diffInDays(now(), false);
+
+        $bookRequest->update([
+            'is_confirmed' => true,
+            'confirmed_at' => now(),
+            'status' => 'returned',
+            'total_request_days' => $totalDays,
+        ]);
+
+        return back()->with('success', 'Book has been returned.');
+    }
+}

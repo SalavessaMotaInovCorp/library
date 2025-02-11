@@ -3,6 +3,7 @@
 use App\Exports\AuthorsExport;
 use App\Exports\BooksExport;
 use App\Exports\PublishersExport;
+use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
@@ -27,6 +28,17 @@ Route::middleware([
 
     // Dashboard route
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/book-requests', [BookRequestController::class, 'index'])->name('book_requests.index');
+    Route::get('/book-requests-admin', [BookRequestController::class, 'indexAdmin'])->name('book_requests.indexAdmin');
+    Route::get('/book-requests/available', [BookRequestController::class, 'available'])->name('book_requests.available');
+
+    Route::post('/book-requests/{book}/request', [BookRequestController::class, 'requestBook'])
+        ->name('book_requests.request');
+    Route::post('/book-requests/{bookRequest}/returnBook', [BookRequestController::class, 'returnBook'])
+        ->name('book_requests.returnBook');
+    Route::post('/book-requests/{bookRequest}/confirmReturn', [BookRequestController::class, 'confirmReturn'])
+        ->name('book_requests.confirmReturn');
 
     // Admin Routes
     Route::middleware('role:admin')->group(function () {
@@ -64,6 +76,7 @@ Route::middleware([
 // Public book routes
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
+
 
 // Public author routes
 Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');

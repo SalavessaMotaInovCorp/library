@@ -36,6 +36,11 @@
                  <x-button class="btn btn-primary ml-2">🔍 Search</x-button>
             </form>
 
+            <div class="text-center">
+                <x-button href="/book-requests/available" class="p-12 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold">Request a Book</h3>
+                </x-button>
+            </div>
 
             <h2 class="text-2xl font-bold text-gray-800 mb-3">Recent Books</h2>
             <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 mb-6">

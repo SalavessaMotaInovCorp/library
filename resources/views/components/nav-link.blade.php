@@ -5,7 +5,7 @@
                     transform hover:-translate-y-1 hover:shadow-md active:scale-95';
 
     $classes = ($active ?? false)
-        ? 'border-indigo-400 text-gray-900 focus:border-indigo-700 ' . $baseClasses
+        ? 'border-gray-400 text-gray-900 focus:border-gray-900 ' . $baseClasses
         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300 ' . $baseClasses;
 @endphp
 

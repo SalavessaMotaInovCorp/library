@@ -20,7 +20,7 @@ class HomeController extends Controller
             'books_count' => Book::count(),
             'authors_count' => Author::count(),
             'publishers_count' => Publisher::count(),
-            'recent_books' => Book::latest()->take(8)->get(),
+            'recent_books' => Book::latest()->take(12)->get(),
         ]);
     }
 

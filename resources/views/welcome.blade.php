@@ -31,8 +31,8 @@
                     </div>
                 </header>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-3">Explore</h2>
-                <div class="grid gap-10 md:grid-cols-3 text-center mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-3 mt-12">Explore</h2>
+                <div class="grid gap-10 md:grid-cols-3 text-center mt-6">
                     <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                         <h3 class="text-4xl font-bold">{{ $books_count }}</h3>
                         <p class="text-lg">Books Available</p>
@@ -49,8 +49,8 @@
                     </x-button>
                 </div>
 
-                <h2 class="text-2xl font-bold text-gray-800 mt-12">Discover New Books</h2>
-                <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-3 mt-12">Discover New Books</h2>
+                <div class="grid gap-10 md:grid-cols-3 text-center mt-6">
                     @foreach($recent_books as $book)
                         <div class="card bg-white shadow-xl">
                             <figure>
@@ -65,10 +65,11 @@
                         </div>
                     @endforeach
                 </div>
+
             </div>
         </div>
 
-        <footer class="text-center text-sm text-gray-500 bg-white py-4 shadow w-full">
+        <footer class="text-center text-sm text-gray-500 bg-white py-4 mt-4 shadow w-full">
             Created by Nuno Salavessa Mota using Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
         </footer>
     </body>
