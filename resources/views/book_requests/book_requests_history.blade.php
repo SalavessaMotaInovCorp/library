@@ -3,7 +3,7 @@
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 @if(Auth::user()->hasRole('admin'))
-                    Book Requests
+                    Requests History for Book: {{ $book->name }}
                 @endif
             </h2>
         </div>
@@ -13,9 +13,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 bg-white border border-gray-200">
-                    @if ($bookRequests->isEmpty())
-                        <p class="text-gray-600">There are no book requests yet.</p>
-                    @else
+                    @if ($book->bookRequests()->exists())
                         <div class="overflow-x-auto p-6">
                             <table class="table w-full border-collapse border border-gray-300">
                                 <thead>
@@ -56,10 +54,10 @@
 
                                         <td class="border border-gray-300 p-2 text-center">
                                             @if($bookRequest->is_confirmed)
-                                                <p class="text-green-500">Return Confirmed</p>
+                                                <p class="text-green-500 font-bold">Return Confirmed</p>
                                             @else
                                                 @if(!$bookRequest->is_returned)
-                                                    <p class="text-yellow-500">Active</p>
+                                                    <p class="text-yellow-500 font-bold">Active</p>
                                                 @else
                                                     <form method="POST" action="{{ route('book_requests.confirmReturn', $bookRequest->id) }}">
                                                         @csrf
@@ -74,6 +72,9 @@
 
                             </table>
                         </div>
+                    @else
+                        <p class="text-gray-600">There are no book requests yet.</p>
+
                     @endif
                     <div>
                         {{ $bookRequests->links() }}

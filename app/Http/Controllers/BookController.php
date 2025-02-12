@@ -19,11 +19,24 @@ class BookController extends Controller
     // Show details of a specific book
     public function show(Book $book)
     {
-        return view('books.show', [
-            'book' => $book,
-            'authors' => $book->authors()->get()
-        ]);
+        $authors = $book->authors;
+        $book_requests = $book->bookRequests();
+
+        $user = auth()->user();
+
+        $hasActiveRequest = $user->bookRequests()
+            ->where('book_id', $book->id)
+            ->whereIn('status', ['active', 'pending_return_confirm'])
+            ->exists();
+
+        $isBookRequestedByOthers = $book->bookRequests()
+            ->whereIn('status', ['active', 'pending_return_confirm'])
+            ->where('user_id', '!=', $user->id)
+            ->exists();
+
+        return view('books.show', compact('book', 'authors', 'book_requests', 'hasActiveRequest', 'isBookRequestedByOthers'));
     }
+
 
     // Show the form to create a new book
     public function create(Request $request)

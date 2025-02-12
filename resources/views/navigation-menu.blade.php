@@ -37,7 +37,7 @@
                         {{ __('Publishers') }}
                     </x-nav-link>
                         @if(Auth::user()->hasRole('admin'))
-                            <x-nav-link href="{{ route('book_requests.indexAdmin') }}" :active="request()->routeIs('book_requests.indexAdmin')">
+                            <x-nav-link href="{{ route('book_requests.index_admin') }}" :active="request()->routeIs('book_requests.index_admin')">
                                 {{ __('Book Requests') }}
                             </x-nav-link>
                         @else

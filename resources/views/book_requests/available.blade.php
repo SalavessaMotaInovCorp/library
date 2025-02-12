@@ -110,7 +110,7 @@
                                             @endphp
 
                                             @if ($activeRequests < 3)
-                                                <label for="confirm-request-{{ $book->id }}" class="btn text-white px-4 py-2 rounded cursor-pointer bg-green-500 hover:bg-green-600">
+                                                <label for="confirm-request-{{ $book->id }}" class="btn text-white px-4 py-2 rounded cursor-pointer">
                                                     Request
                                                 </label>
                                                 <input type="checkbox" id="confirm-request-{{ $book->id }}" class="modal-toggle"/>

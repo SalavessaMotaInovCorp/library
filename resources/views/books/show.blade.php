@@ -49,6 +49,54 @@
                     <p class="text-gray-500">{{ number_format($book->price, 2) }} €</p>
                 </div>
 
+                @if(Auth::user()->hasRole('admin'))
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 text-center cursor-pointer">
+                        <a href="/book-requests/{{ $book->id }}/history" class="hover:underline">
+                            <strong class="text-gray-900 cursor-pointer">See Requests History</strong>
+                        </a>
+                    </div>
+                @else
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 text-center">
+                        @if ($hasActiveRequest)
+                            <p class="text-gray-900 font-semibold">You already have an active request for this book.</p>
+                        @elseif ($isBookRequestedByOthers)
+                            <p class="text-gray-900 font-semibold">This book is currently requested by another user.</p>
+                        @else
+                            @php
+                                $activeRequests = Auth::user()->bookRequests()
+                                    ->whereIn('status', ['active', 'pending_return_confirm'])
+                                    ->count();
+                            @endphp
+
+                            @if ($activeRequests < 3)
+                                <label for="confirm-request-{{ $book->id }}" class="btn text-white px-4 py-2 rounded cursor-pointer">
+                                    Request this book
+                                </label>
+                                <input type="checkbox" id="confirm-request-{{ $book->id }}" class="modal-toggle"/>
+
+                                <div class="modal">
+                                    <div class="modal-box text-white">
+                                        <h3 class="font-bold text-lg">Confirm Book Request</h3>
+                                        <p class="py-4">Are you sure you want to request the book:
+                                            <strong>{{ $book->name }}</strong>?</p>
+                                        <div class="modal-action flex justify-between">
+                                            <label for="confirm-request-{{ $book->id }}" class="btn bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</label>
+                                            <form method="POST" action="{{ route('book_requests.request', $book->id) }}">
+                                                @csrf
+                                                <x-button type="submit">Confirm</x-button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <p class="text-red-500 font-semibold">No more requests available.</p>
+                            @endif
+                        @endif
+                    </div>
+                @endif
+
+
+
                 <div class="flex justify-between">
                     <p class="mt-6">
                         <x-button href="{{ url()->previous() }}">Back</x-button>

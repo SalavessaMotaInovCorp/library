@@ -29,10 +29,11 @@ Route::middleware([
     // Dashboard route
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/book-requests', [BookRequestController::class, 'index'])->name('book_requests.index');
-    Route::get('/book-requests-admin', [BookRequestController::class, 'indexAdmin'])->name('book_requests.indexAdmin');
+
     Route::get('/book-requests/available', [BookRequestController::class, 'available'])->name('book_requests.available');
 
+    Route::get('/book-requests', [BookRequestController::class, 'index'])->name('book_requests.index');
+    Route::get('/book-requests/{book}/history', [BookRequestController::class, 'bookRequestsHistory'])->name('book_requests.history');
     Route::post('/book-requests/{book}/request', [BookRequestController::class, 'requestBook'])
         ->name('book_requests.request');
     Route::post('/book-requests/{bookRequest}/returnBook', [BookRequestController::class, 'returnBook'])
@@ -42,6 +43,8 @@ Route::middleware([
 
     // Admin Routes
     Route::middleware('role:admin')->group(function () {
+
+        Route::get('/book-requests-admin', [BookRequestController::class, 'indexAdmin'])->name('book_requests.index_admin');
 
         // Export books to Excel
         Route::get('/books/export', function () {

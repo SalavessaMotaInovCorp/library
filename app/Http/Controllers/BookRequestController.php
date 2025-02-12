@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendBookRequestEmail;
+use App\Jobs\SendDueDateReminder;
 use App\Models\Book;
 use App\Models\BookRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schedule;
 
 class BookRequestController extends Controller
 {
@@ -22,7 +25,13 @@ class BookRequestController extends Controller
     {
         $bookRequests = BookRequest::with('user','book.authors', 'book.publisher')->paginate(20);
 
-        return view('book_requests.indexAdmin', compact('bookRequests'));
+        return view('book_requests.index_admin', compact('bookRequests'));
+    }
+
+    public function bookRequestsHistory(Book $book)
+    {
+        $bookRequests = $book->bookRequests()->paginate(20);
+        return view('book_requests.book_requests_history', compact('book', 'bookRequests'));
     }
 
     public function available()
@@ -41,8 +50,6 @@ class BookRequestController extends Controller
         return view('book_requests.available', compact('books', 'citizens'));
     }
 
-
-
     public function requestBook(Request $request, Book $book)
     {
         $user = Auth::user()->hasRole('admin') && $request->has('user_id')
@@ -57,19 +64,27 @@ class BookRequestController extends Controller
             return back()->with('error', 'This user cannot request more than 3 books.');
         }
 
-        BookRequest::create([
-            'user_id'    => $user->id,
-            'book_id'    => $book->id,
-            'user_name'  => $user->name,
-            'user_email' => $user->email,
+        $bookRequest = BookRequest::create([
+            'user_id'      => $user->id,
+            'book_id'      => $book->id,
+            'user_name'    => $user->name,
+            'user_email'   => $user->email,
             'request_date' => now(),
             'due_date'     => now()->addDays(5),
             'status'       => 'active',
         ]);
 
+        SendBookRequestEmail::dispatch($bookRequest, $user, true);
+
+        $admins = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->get();
+        foreach ($admins as $admin) {
+            SendBookRequestEmail::dispatch($bookRequest, $admin, false);
+        }
+
         return redirect()->route('book_requests.available')->with('success', 'Request has been sent.');
     }
-
 
 
     public function returnBook(BookRequest $bookRequest)
