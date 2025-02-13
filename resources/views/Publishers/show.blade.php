@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-black text-3xl font-bold">
             Publisher Details
         </h2>
     </x-slot>
@@ -37,15 +37,17 @@
                     @endif
                 </div>
 
-                <div class="flex justify-between">
-                    <p class="mt-6">
-                        <x-button href="{{ url()->previous() }}">Back</x-button>
-                    </p>
+                <div class="flex justify-between mt-6">
+                    <x-button href="/publishers">Publishers List</x-button>
+
+                    @auth
+                        <x-button href="{{ route('dashboard') }}">Home</x-button>
+                    @else
+                        <x-button href="/">Home</x-button>
+                    @endauth
 
                     @can('update')
-                        <p class="mt-6">
-                            <x-button href="/publishers/{{ $publisher->id }}/edit">Edit publisher</x-button>
-                        </p>
+                        <x-button href="/publishers/{{ $publisher->id }}/edit">Edit publisher</x-button>
                     @endcan
                 </div>
             </div>

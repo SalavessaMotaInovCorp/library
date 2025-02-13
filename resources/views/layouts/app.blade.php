@@ -19,33 +19,43 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
-        <x-banner />
+    <body class="font-sans antialiased bg-cover bg-center bg-no-repeat"
+          style="background-image: url('https://aircinelmvc.blob.core.windows.net/resources/libraryBackground2blurred.jpg');">
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    @livewire('navigation-menu')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+    <x-banner/>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+    <!-- Page Heading -->
+    @if (isset($header))
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+    @endif
+
+    <div class="text-black min-h-screen">
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg my-3">
+                <div>
+                    <!-- Page Content -->
+                    <main class="flex-grow w-full h-full">
+                        {{ $slot }}
+                    </main>
+                </div>
+            </div>
         </div>
-
-        <footer class="text-center text-sm text-gray-500 bg-white py-4 shadow w-full">
-            Created by Nuno Salavessa Mota using Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-        </footer>
 
         @stack('modals')
 
         @livewireScripts
+
+    </div>
+    <footer class="text-center text-sm text-gray-500 bg-white py-4 shadow w-full">
+        Created by Nuno Salavessa Mota using Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP
+        v{{ PHP_VERSION }})
+    </footer>
     </body>
 </html>

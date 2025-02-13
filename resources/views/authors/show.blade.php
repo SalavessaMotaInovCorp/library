@@ -39,7 +39,7 @@
 
                 <div class="flex justify-between">
                     <p class="mt-6">
-                        <x-button href="{{ url()->previous() }}">Back</x-button>
+                        <x-button href="/authors">Authors List</x-button>
                     </p>
 
                     @can('update')
@@ -47,6 +47,17 @@
                             <x-button href="/authors/{{ $author->id }}/edit">Edit author</x-button>
                         </p>
                     @endcan
+
+                    @auth
+                        <p class="mt-6">
+                            <x-button href="/dashboard">Home</x-button>
+                        </p>
+                    @endauth
+                    @guest
+                        <p class="mt-6">
+                            <x-button href="/">Home</x-button>
+                        </p>
+                    @endguest
                 </div>
             </div>
         </div>

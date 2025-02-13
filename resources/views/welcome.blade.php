@@ -14,11 +14,26 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     </head>
-    <body class="font-sans antialiased bg-gray-100 text-gray-900">
+    <body class="font-sans antialiased text-gray-900">
 
-        <div class="relative min-h-screen flex flex-col items-center justify-center">
+        <video
+            autoplay
+            muted
+            loop
+            style="position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: -1;">
+            <source src="https://aircinelmvc.blob.core.windows.net/resources/libraryBackgroundVideo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
-            <div class="relative w-full max-w-7xl px-6">
+        <div class="relative min-h-screen flex flex-col items-center justify-center ">
+
+            <div class="relative w-full max-w-7xl p-6 bg-gray-100 rounded-2xl">
 
                 <header class="text-center">
                     <img src="https://aircinelmvc.blob.core.windows.net/resources/inovcorp_logo_book_bg_removed.png.png" alt="library" class="mx-auto w-16">
@@ -38,12 +53,12 @@
                         <p class="text-lg">Books Available</p>
                     </x-button>
 
-                    <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
+                    <x-button href="/authors" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                         <h3 class="text-4xl font-bold">{{ $authors_count }}</h3>
                         <p class="text-lg">Authors</p>
                     </x-button>
 
-                    <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
+                    <x-button href="/publishers" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                         <h3 class="text-4xl font-bold">{{ $publishers_count }}</h3>
                         <p class="text-lg">Publishers</p>
                     </x-button>

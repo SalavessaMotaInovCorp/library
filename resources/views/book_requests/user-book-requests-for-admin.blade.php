@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Book Requests History of: {{ $user->name }}
+            <h2 class="text-black text-3xl font-bold">
+                Book Requests History of:    {{ $user->name }}
             </h2>
         </div>
     </x-slot>
@@ -15,16 +15,16 @@
                         <p class="text-gray-600">There are no book requests yet.</p>
                     @else
                         <div class="overflow-x-auto p-6">
-                            <table class="table w-full border-collapse border border-gray-300">
+                            <table class="table w-full border-collapse border border-gray-300 text-center">
                                 <thead>
                                 <tr class="bg-gray-200 text-black">
                                     <th class="border border-gray-300 p-2">ISBN</th>
-                                    <th class="border border-gray-300 p-2">Name</th>
+                                    <th class="border border-gray-300 p-2">Book Name</th>
                                     <th class="border border-gray-300 p-2">Authors</th>
                                     <th class="border border-gray-300 p-2">Publisher</th>
-                                    <th class="border border-gray-300 p-2">Description</th>
-                                    <th class="border border-gray-300 p-2">Cover</th>
-                                    <th class="border border-gray-300 p-2">Price</th>
+                                    <th class="border border-gray-300 p-2">Request Date</th>
+                                    <th class="border border-gray-300 p-2">Return Date</th>
+                                    <th class="border border-gray-300 p-2">Total Request Days</th>
                                     <th class="border border-gray-300 p-2"></th>
                                 </tr>
                                 </thead>
@@ -43,17 +43,9 @@
                                                 {{ $bookRequest->book->publisher->name ?? 'N/A' }}
                                             </a>
                                         </td>
-                                        <td class="border border-gray-300 p-2">{{ \Illuminate\Support\Str::limit($bookRequest->book->description ?? 'N/A', 50) }}</td>
-                                        <td class="border border-gray-300 p-2">
-                                            <div class="flex justify-center">
-                                                @if ($bookRequest->book && $bookRequest->book->cover_image)
-                                                    <img src="{{ $bookRequest->book->cover_image }}" alt="{{ $bookRequest->book->name }} cover" class="h-12 w-auto p-2">
-                                                @else
-                                                    <span class="text-gray-400 p-2">No Image</span>
-                                                @endif
-                                            </div>
-                                        </td>
-                                        <td class="border border-gray-300 p-2">{{ number_format($bookRequest->book->price ?? 0, 2) }} €</td>
+                                        <td class="border border-gray-300 p-2">{{ $bookRequest->request_date }}</td>
+                                        <td class="border border-gray-300 p-2">{{ $bookRequest->return_date }}</td>
+                                        <td class="border border-gray-300 p-2">{{ $bookRequest->total_request_days }}</td>
                                         <td class="border border-gray-300 p-2 text-center font-bold">
                                             @if(!$bookRequest->is_returned)
                                                 <p clasS="text-yellow-500">Active</p>

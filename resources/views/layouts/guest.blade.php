@@ -17,10 +17,15 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body>
-        <div class="font-sans text-gray-900 antialiased">
-            {{ $slot }}
+    <body class="font-sans antialiased bg-cover bg-center bg-no-repeat"
+          style="background-image: url('https://aircinelmvc.blob.core.windows.net/resources/libraryBackground2blurred.jpg');">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="overflow-hidden shadow-xl sm:rounded-lg my-3">
+            <div>
+                {{ $slot }}
+            </div>
         </div>
+    </div>
 
         @livewireScripts
     </body>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-black text-3xl font-bold">
                 Books
             </h2>
             <x-button href="/books/create">Register book</x-button>

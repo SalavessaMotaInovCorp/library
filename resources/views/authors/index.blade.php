@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h1 class="text-black text-3xl font-bold">
                 Authors
-            </h2>
+            </h1>
             @can('create')
                 <x-button href="/authors/create">Register author</x-button>
             @endcan

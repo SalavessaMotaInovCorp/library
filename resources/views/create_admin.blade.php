@@ -1,12 +1,6 @@
 <x-app-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
-
-        <x-validation-errors class="mb-4" />
-
-        <form id="register-admin-form" method="POST" action="{{ route('store_admin') }}">
+    <div class="mx-auto w-1/2">
+        <form class="p-12 text-center" id="register-admin-form" method="POST" action="{{ route('store_admin') }}">
             @csrf
 
             <h1 class="text-center text-4xl font-bold text-black mb-3">Register a new Admin</h1>
@@ -38,7 +32,10 @@
                     <x-button href="/">Home</x-button>
                 @endauth
 
-                <label for="confirm-register-modal" class="btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
+                <label for="confirm-register-modal" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest
+                    hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                    disabled:opacity-50 transition ease-in-out duration-150
+                    transform hover:-translate-y-1 active:scale-95">
                     Register Admin
                 </label>
             </div>
@@ -60,5 +57,6 @@
                 </div>
             </div>
         </form>
-    </x-authentication-card>
+    </div>
+
 </x-app-layout>

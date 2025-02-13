@@ -36,18 +36,20 @@
                     <x-nav-link href="{{ route('publishers.index') }}" :active="request()->routeIs('publishers.index')">
                         {{ __('Publishers') }}
                     </x-nav-link>
-                        @if(Auth::user()->hasRole('admin'))
-                            <x-nav-link href="{{ route('book_requests.index_admin') }}" :active="request()->routeIs('book_requests.index_admin')">
-                                {{ __('Book Requests') }}
-                            </x-nav-link>
-                            <x-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
-                                {{ __('Admin Panel') }}
-                            </x-nav-link>
-                        @else
-                            <x-nav-link href="{{ route('book_requests.index') }}" :active="request()->routeIs('book_requests.index')">
-                                {{ __('Book Requests') }}
-                            </x-nav-link>
-                        @endif
+                        @auth
+                            @if(Auth::user()->hasRole('admin'))
+                                <x-nav-link href="{{ route('book_requests.index_admin') }}" :active="request()->routeIs('book_requests.index_admin')">
+                                    {{ __('Book Requests') }}
+                                </x-nav-link>
+                                <x-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
+                                    {{ __('Admin Panel') }}
+                                </x-nav-link>
+                            @else
+                                <x-nav-link href="{{ route('book_requests.index') }}" :active="request()->routeIs('book_requests.index')">
+                                    {{ __('Book Requests') }}
+                                </x-nav-link>
+                            @endif
+                        @endauth
                 </div>
             </div>
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -64,9 +66,11 @@
                                         <div class="text-center self-center">
                                             {{ Auth::user()->name }}
                                             <br/>
-                                            @if(Auth::user()->hasRole('admin'))
-                                                <span class="text-red-500 text-xs">(admin)</span>
-                                            @endif
+                                            @auth
+                                                @if(Auth::user()->hasRole('admin'))
+                                                    <span class="text-red-500 text-xs">(admin)</span>
+                                                @endif
+                                            @endauth
                                         </div>
                                         <img class="size-10 rounded-full object-cover"
                                              src="{{ Auth::user()->profile_photo_url }}"

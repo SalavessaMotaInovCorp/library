@@ -44,6 +44,28 @@ class UsersTable extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
+            Column::make("Profile image", "profile_photo_path")
+                ->format(function ($value, $row) {
+                    return $value
+                        ? '<label for="modal-' . $row->id . '">
+                   <img src="' . $value . '" alt="Cover image" style="height:60px; cursor:pointer;" class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
+               </label>
+               <input type="checkbox" id="modal-' . $row->id . '" class="modal-toggle" />
+               <div class="modal space-y-1" id="modal-' . $row->id . '">
+                   <div class="modal-box bg-white">
+                        <div>
+                            <h3>Profile photo for:</h3>
+                            <h3 class="text-lg font-bold mb-4 mx-auto">' . $row->name . '</h3>
+                        </div>
+
+                        <img src="' . $value . '" alt="Profile photo" class="rounded-lg shadow-2xl mx-auto w-full border-black">
+
+                        <label for="modal-' . $row->id . '" class="btn btn-sm mt-2">Close</label>
+                   </div>
+               </div>'
+                        : 'No image'; // Display image or fallback text
+                })
+                ->html(),
             Column::make("Name", "name")
                 ->searchable()
                 ->sortable(),

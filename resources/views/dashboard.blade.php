@@ -1,4 +1,15 @@
 <x-app-layout>
+    <style>
+        body {
+            background-image: none !important;
+        }
+    </style>
+
+    <video autoplay muted loop class="fixed inset-0 w-full h-full object-cover -z-10">
+        <source src="https://aircinelmvc.blob.core.windows.net/resources/libraryBackgroundVideo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
     <x-slot name="header">
         <div class="bg-cover bg-center">
             <div class="inset-0 flex items-center justify-center">
@@ -17,12 +28,12 @@
                     <p class="text-lg">Books Available</p>
                 </x-button>
 
-                <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
+                <x-button href="/authors" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                     <h3 class="text-4xl font-bold">{{ $authors_count }}</h3>
                     <p class="text-lg">Authors</p>
                 </x-button>
 
-                <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
+                <x-button href="/publishers" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                     <h3 class="text-4xl font-bold">{{ $publishers_count }}</h3>
                     <p class="text-lg">Publishers</p>
                 </x-button>
@@ -32,7 +43,7 @@
 
             <form action="/search" class="relative flex items-center justify-center mb-6">
                 @csrf
-                <input type="text" class="input input-bordered w-full max-w-md" name="query" placeholder="Search book name...">
+                <input type="text" class="input input-bordered w-full max-w-md text-white" name="query" placeholder="Search book name...">
                  <x-button class="btn btn-primary ml-2">🔍 Search</x-button>
             </form>
 

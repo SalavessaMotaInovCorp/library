@@ -6,6 +6,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -22,20 +23,27 @@ class BookController extends Controller
         $authors = $book->authors;
         $book_requests = $book->bookRequests();
 
-        $user = auth()->user();
+        // Definir valores padrão para evitar erro caso o utilizador não esteja autenticado
+        $hasActiveRequest = false;
+        $isBookRequestedByOthers = false;
 
-        $hasActiveRequest = $user->bookRequests()
-            ->where('book_id', $book->id)
-            ->whereIn('status', ['active', 'pending_return_confirm'])
-            ->exists();
+        if (Auth::check()) {
+            $user = auth()->user();
 
-        $isBookRequestedByOthers = $book->bookRequests()
-            ->whereIn('status', ['active', 'pending_return_confirm'])
-            ->where('user_id', '!=', $user->id)
-            ->exists();
+            $hasActiveRequest = $user->bookRequests()
+                ->where('book_id', $book->id)
+                ->whereIn('status', ['active', 'pending_return_confirm'])
+                ->exists();
+
+            $isBookRequestedByOthers = $book->bookRequests()
+                ->whereIn('status', ['active', 'pending_return_confirm'])
+                ->where('user_id', '!=', $user->id)
+                ->exists();
+        }
 
         return view('books.show', compact('book', 'authors', 'book_requests', 'hasActiveRequest', 'isBookRequestedByOthers'));
     }
+
 
 
     // Show the form to create a new book
