@@ -73,19 +73,26 @@
                             </table>
                         </div>
                     @else
-                        <p class="text-gray-600">There are no book requests yet.</p>
+                        <p class="text-gray-600">This book has no requests yet.</p>
 
                     @endif
                     <div>
                         {{ $bookRequests->links() }}
                     </div>
+
+                        <div class="flex justify-between">
+                            <p class="mt-6">
+                                <x-button href="{{ url()->previous() }}">Back</x-button>
+                            </p>
+
+                            <p class="mt-6">
+                                <x-button href="{{ route('dashboard') }}">Home</x-button>
+                            </p>
+                        </div>
+
                 </div>
 
-                <div class="text-center">
-                    <p class="my-3 mx-auto">
-                        <x-button href="/dashboard">Home</x-button>
-                    </p>
-                </div>
+
             </div>
         </div>
     </div>

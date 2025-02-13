@@ -6,6 +6,9 @@
                     Book Requests
                 @endif
             </h2>
+            @can('export')
+                <x-button href="{{ route('book_requests.export') }}">Export CSV/Excel</x-button>
+            @endcan
         </div>
     </x-slot>
 
@@ -13,6 +16,23 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 bg-white border border-gray-200">
+
+                    <div class="flex gap-4 mb-6 text-center justify-between">
+                        <div class="bg-gray-200 p-4 rounded-lg shadow">
+                            <p class="text-lg font-bold">{{ $activeRequests }}</p>
+                            <p class="text-sm">Active Requests</p>
+                        </div>
+                        <div class="bg-gray-200 p-4 rounded-lg shadow">
+                            <p class="text-lg font-bold">{{ $last30DaysRequests }}</p>
+                            <p class="text-sm">Requests in Last 30 Days</p>
+                        </div>
+                        <div class="bg-gray-200 p-4 rounded-lg shadow">
+                            <p class="text-lg font-bold">{{ $returnedToday }}</p>
+                            <p class="text-sm">Books Returned Today</p>
+                        </div>
+                    </div>
+
+
                     @if ($bookRequests->isEmpty())
                         <p class="text-gray-600">There are no book requests yet.</p>
                     @else
@@ -21,8 +41,8 @@
                                 <thead>
                                 <tr class="bg-gray-200 text-black">
                                     <th class="border border-gray-300 p-2">User Name</th>
-                                    <th class="border border-gray-300 p-2">ISBN</th>
-                                    <th class="border border-gray-300 p-2">Book Title</th>
+                                    <th class="border border-gray-300 p-2">User Email</th>
+                                    <th class="border border-gray-300 p-2">Book Name</th>
                                     <th class="border border-gray-300 p-2">Request Date</th>
                                     <th class="border border-gray-300 p-2">Due Date</th>
                                     <th class="border border-gray-300 p-2">Returned</th>
@@ -35,7 +55,7 @@
                                 @foreach($bookRequests as $bookRequest)
                                     <tr class="hover:bg-gray-100">
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->user_name ?? 'N/A' }}</td>
-                                        <td class="border border-gray-300 p-2">{{ $bookRequest->book->isbn ?? 'N/A' }}</td>
+                                        <td class="border border-gray-300 p-2">{{ $bookRequest->user_email ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->book->name }}</td>
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->request_date }}</td>
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->due_date }}</td>

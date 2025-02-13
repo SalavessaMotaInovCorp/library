@@ -21,6 +21,12 @@ class BookRequest extends Model
         'status',
     ];
 
+    protected function casts(): array {
+        return [
+            'user_email' => 'encrypted',
+        ];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

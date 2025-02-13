@@ -4,11 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Books
             </h2>
-            @can('export')
-                <x-button href="{{ route('books.export') }}">Export CSV/Excel</x-button>
-            @endcan
             @can('create')
                 <x-button href="/books/create">Register book</x-button>
+            @endcan
+            @can('export')
+                <x-button href="{{ route('books.export') }}">Export CSV/Excel</x-button>
             @endcan
         </div>
     </x-slot>

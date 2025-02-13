@@ -34,6 +34,11 @@ class HomeController extends Controller
         ]);
     }
 
+    public function admin_panel()
+    {
+        return view('admin_panel');
+    }
+
     public function create_admin()
     {
         return view('create_admin');

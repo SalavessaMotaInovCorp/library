@@ -2,32 +2,16 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Your Book Requests
+                Book Requests History of: {{ $user->name }}
             </h2>
         </div>
     </x-slot>
 
     <div class="py-12 text-black">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 bg-white border border-gray-200">
-
-                    <div class="flex gap-4 mb-6 text-center justify-between">
-                        <div class="bg-gray-200 p-4 rounded-lg shadow">
-                            <p class="text-lg font-bold">{{ $activeRequests }}</p>
-                            <p class="text-sm">Active Requests</p>
-                        </div>
-                        <div class="bg-gray-200 p-4 rounded-lg shadow">
-                            <p class="text-lg font-bold">{{ $last30DaysRequests }}</p>
-                            <p class="text-sm">Requests in Last 30 Days</p>
-                        </div>
-                        <div class="bg-gray-200 p-4 rounded-lg shadow">
-                            <p class="text-lg font-bold">{{ $returnedToday }}</p>
-                            <p class="text-sm">Books Returned Today</p>
-                        </div>
-                    </div>
-
-                    @if ($bookRequests->isEmpty())
+            <div class="p-6 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white border border-gray-200">
+                    @if ($userBookRequests->isEmpty())
                         <p class="text-gray-600">There are no book requests yet.</p>
                     @else
                         <div class="overflow-x-auto p-6">
@@ -35,7 +19,7 @@
                                 <thead>
                                 <tr class="bg-gray-200 text-black">
                                     <th class="border border-gray-300 p-2">ISBN</th>
-                                    <th class="border border-gray-300 p-2">Book Name</th>
+                                    <th class="border border-gray-300 p-2">Name</th>
                                     <th class="border border-gray-300 p-2">Authors</th>
                                     <th class="border border-gray-300 p-2">Publisher</th>
                                     <th class="border border-gray-300 p-2">Description</th>
@@ -45,7 +29,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($bookRequests as $bookRequest)
+                                @foreach($userBookRequests as $bookRequest)
                                     <tr class="hover:bg-gray-100">
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->book->isbn ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->book->name ?? 'N/A' }}</td>
@@ -72,12 +56,13 @@
                                         <td class="border border-gray-300 p-2">{{ number_format($bookRequest->book->price ?? 0, 2) }} €</td>
                                         <td class="border border-gray-300 p-2 text-center font-bold">
                                             @if(!$bookRequest->is_returned)
-                                                <form method="POST" action="{{ route('book_requests.returnBook', $bookRequest->id) }}">
-                                                    @csrf
-                                                    <x-button type="submit">Return Book</x-button>
-                                                </form>
+                                                <p clasS="text-yellow-500">Active</p>
                                             @else
-                                                <p class="text-green-500">Returned</p>
+                                                @if(!$bookRequest->is_confirmed)
+                                                    <p class="text-yellow-500">Pending Return Confirmation</p>
+                                                @else
+                                                    <p class="text-green-500">Returned</p>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>
@@ -88,13 +73,17 @@
                     @endif
 
                     <div>
-                        {{ $bookRequests->links() }}
+                        {{ $userBookRequests->links() }}
                     </div>
                 </div>
 
-                <div class="text-center">
-                    <p class="my-3 mx-auto">
-                        <x-button href="/dashboard">Home</x-button>
+                <div class="flex justify-between">
+                    <p class="mt-6">
+                        <x-button href="{{ url()->previous() }}">Back</x-button>
+                    </p>
+
+                    <p class="mt-6">
+                        <x-button href="{{ route('dashboard') }}">Home</x-button>
                     </p>
                 </div>
             </div>

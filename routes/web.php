@@ -1,6 +1,7 @@
 <?php
 
 use App\Exports\AuthorsExport;
+use App\Exports\BookRequestsExport;
 use App\Exports\BooksExport;
 use App\Exports\PublishersExport;
 use App\Http\Controllers\BookRequestController;
@@ -44,7 +45,10 @@ Route::middleware([
     // Admin Routes
     Route::middleware('role:admin')->group(function () {
 
+        Route::get('/admin-panel', [HomeController::class, 'admin_panel'])->name('admin_panel');
+
         Route::get('/book-requests-admin', [BookRequestController::class, 'indexAdmin'])->name('book_requests.index_admin');
+        Route::get('/book-requests-admin/{user}', [BookRequestController::class, 'userBookRequestsForAdmin'])->name('book_requests.userBookRequestsForAdmin');
 
         // Export books to Excel
         Route::get('/books/export', function () {
@@ -60,6 +64,11 @@ Route::middleware([
         Route::get('/publishers/export', function () {
             return Excel::download(new PublishersExport, 'publishers.xlsx');
         })->name('publishers.export');
+
+        // Export book requests to Excel
+        Route::get('/book-requests/export', function () {
+            return Excel::download(new BookRequestsExport, 'book_requests.xlsx');
+        })->name('book_requests.export');
 
         // Resource routes for books (create, store, edit, update, destroy)
         Route::resource('books', BookController::class)->except(['index', 'show','export']);

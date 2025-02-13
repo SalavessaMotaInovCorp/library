@@ -31,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -64,11 +65,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => 'encrypted',
         ];
     }
 
     public function bookRequests()
     {
         return $this->hasMany(BookRequest::class);
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->roles->first()->name ?? 'No Role';
     }
 }

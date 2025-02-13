@@ -40,6 +40,9 @@
                             <x-nav-link href="{{ route('book_requests.index_admin') }}" :active="request()->routeIs('book_requests.index_admin')">
                                 {{ __('Book Requests') }}
                             </x-nav-link>
+                            <x-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
+                                {{ __('Admin Panel') }}
+                            </x-nav-link>
                         @else
                             <x-nav-link href="{{ route('book_requests.index') }}" :active="request()->routeIs('book_requests.index')">
                                 {{ __('Book Requests') }}
@@ -90,13 +93,6 @@
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     {{ __('Manage Account') }}
                                 </div>
-
-
-                                @if(Auth::user()->hasRole('admin'))
-                                    <x-dropdown-link href="{{ route('create_admin') }}" :active="request()->routeIs('publishers.index')">
-                                        {{ __('Register New Admin') }}
-                                    </x-dropdown-link>
-                                @endif
 
                                 <x-dropdown-link href="{{ route('profile.show') }}">
                                     {{ __('Profile') }}
@@ -155,6 +151,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('book_requests.index') }}" :active="request()->routeIs('book_requests.index')">
                 {{ __('Book Requests') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
+                {{ __('ADMIN PANEL') }}
             </x-responsive-nav-link>
         </div>
 

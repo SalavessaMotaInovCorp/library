@@ -16,16 +16,45 @@ class BookRequestController extends Controller
 {
     public function index()
     {
-        $bookRequests = BookRequest::with('book.authors', 'book.publisher')->where('user_id', Auth::id())->paginate(20);
+        $userId = Auth::id();
 
-        return view('book_requests.index', compact('bookRequests'));
+        $activeRequests = BookRequest::where('user_id', $userId)
+            ->where('is_returned', false)
+            ->count();
+
+        $last30DaysRequests = BookRequest::where('user_id', $userId)
+            ->where('created_at', '>=', now()->subDays(30))
+            ->count();
+
+        $returnedToday = BookRequest::where('user_id', $userId)
+            ->whereDate('return_date', now()->toDateString())
+            ->count();
+
+        $bookRequests = BookRequest::with('book.authors', 'book.publisher')
+            ->where('user_id', $userId)
+            ->paginate(20);
+
+        return view('book_requests.index', compact('bookRequests', 'activeRequests', 'last30DaysRequests', 'returnedToday'));
     }
 
     public function indexAdmin()
     {
+        $activeRequests = BookRequest::where('is_returned', false)->count();
+
+        $last30DaysRequests = BookRequest::where('created_at', '>=', now()->subDays(30))->count();
+
+        $returnedToday = BookRequest::where('return_date', now()->toDateString())->count();
+
         $bookRequests = BookRequest::with('user','book.authors', 'book.publisher')->paginate(20);
 
-        return view('book_requests.index_admin', compact('bookRequests'));
+        return view('book_requests.index_admin', compact('bookRequests', 'activeRequests', 'last30DaysRequests', 'returnedToday'));
+    }
+
+    public function userBookRequestsForAdmin(User $user)
+    {
+        $userBookRequests = User::find($user->id)->bookRequests()->paginate(20);
+
+        return view('book_requests.user-book-requests-for-admin', compact('userBookRequests', 'user'));
     }
 
     public function bookRequestsHistory(Book $book)
@@ -74,14 +103,14 @@ class BookRequestController extends Controller
             'status'       => 'active',
         ]);
 
-        SendBookRequestEmail::dispatch($bookRequest, $user, true);
-
-        $admins = User::whereHas('roles', function ($query) {
-            $query->where('name', 'admin');
-        })->get();
-        foreach ($admins as $admin) {
-            SendBookRequestEmail::dispatch($bookRequest, $admin, false);
-        }
+//        SendBookRequestEmail::dispatch($bookRequest, $user, true);
+//
+//        $admins = User::whereHas('roles', function ($query) {
+//            $query->where('name', 'admin');
+//        })->get();
+//        foreach ($admins as $admin) {
+//            SendBookRequestEmail::dispatch($bookRequest, $admin, false);
+//        }
 
         return redirect()->route('book_requests.available')->with('success', 'Request has been sent.');
     }
