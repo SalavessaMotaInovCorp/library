@@ -27,20 +27,33 @@
                         </div>
                     </div>
 
+                    <form method="GET" action="{{ route('book_requests.index') }}" class="mb-6 flex items-center justify-start gap-4">
+                        <label for="status" class="font-bold text-gray-700">Filter by Status:</label>
+                        <select name="status" id="status" class="border border-gray-300 rounded-lg pr-8">
+                            <option value="">All Requests</option>
+                            <option value="returned" {{ request('status') == 'returned' ? 'selected' : '' }}> Return Confirmed</option>
+                            <option value="pending_return_confirm" {{ request('status') == 'pending_return_confirm' ? 'selected' : '' }}>Pending Confirm</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                        </select>
+                        <x-button type="submit">Apply Filter</x-button>
+                    </form>
+
                     @if ($bookRequests->isEmpty())
                         <p class="text-gray-600">There are no book requests yet.</p>
                     @else
                         <div class="overflow-x-auto p-6">
-                            <table class="table w-full border-collapse border border-gray-300">
+                            <table class="table w-full border-collapse border border-gray-300 text-center">
                                 <thead>
                                 <tr class="bg-gray-200 text-black">
                                     <th class="border border-gray-300 p-2">ISBN</th>
                                     <th class="border border-gray-300 p-2">Book Name</th>
                                     <th class="border border-gray-300 p-2">Authors</th>
-                                    <th class="border border-gray-300 p-2">Publisher</th>
-                                    <th class="border border-gray-300 p-2">Description</th>
-                                    <th class="border border-gray-300 p-2">Cover</th>
-                                    <th class="border border-gray-300 p-2">Price</th>
+                                    <th class="border border-gray-300 p-2">Request Date</th>
+                                    <th class="border border-gray-300 p-2">Due Date</th>
+                                    <th class="border border-gray-300 p-2">Returned</th>
+                                    <th class="border border-gray-300 p-2">Return Date</th>
+                                    <th class="border border-gray-300 p-2">Number of days</th>
+                                    <th class="border border-gray-300 p-2">Confirmed</th>
                                     <th class="border border-gray-300 p-2"></th>
                                 </tr>
                                 </thead>
@@ -51,25 +64,25 @@
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->book->name ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 p-2">
                                             @foreach($bookRequest->book->authors ?? [] as $author)
-                                                <a href="/authors/{{ $author->id }}" class="hover:underline">{{ $author->name }}</a><br/>
+                                                <a href="/authors/{{ $author->id }}" class="hover:underline">- {{ $author->name }}</a><br/>
                                             @endforeach
                                         </td>
+                                        <td class="border border-gray-300 p-2">{{ $bookRequest->request_date }}</td>
+                                        <td class="border border-gray-300 p-2">{{ $bookRequest->due_date }}</td>
                                         <td class="border border-gray-300 p-2">
-                                            <a href="/publishers/{{ $bookRequest->book->publisher->id ?? '#' }}" class="hover:underline">
-                                                {{ $bookRequest->book->publisher->name ?? 'N/A' }}
-                                            </a>
+                                            {{ $bookRequest->is_returned ? 'Yes' : 'No' }}
                                         </td>
-                                        <td class="border border-gray-300 p-2">{{ \Illuminate\Support\Str::limit($bookRequest->book->description ?? 'N/A', 50) }}</td>
+                                        <td class="border border-gray-300 p-2">{{ $bookRequest->return_date }}</td>
                                         <td class="border border-gray-300 p-2">
-                                            <div class="flex justify-center">
-                                                @if ($bookRequest->book && $bookRequest->book->cover_image)
-                                                    <img src="{{ $bookRequest->book->cover_image }}" alt="{{ $bookRequest->book->name }} cover" class="h-12 w-auto p-2">
-                                                @else
-                                                    <span class="text-gray-400 p-2">No Image</span>
-                                                @endif
-                                            </div>
+                                            @if ($bookRequest->is_confirmed)
+                                                {{ $bookRequest->total_request_days }}
+                                            @else
+                                                {{ ceil(\Carbon\Carbon::parse($bookRequest->request_date)->diffInDays(now(), false)) }}
+                                            @endif
                                         </td>
-                                        <td class="border border-gray-300 p-2">{{ number_format($bookRequest->book->price ?? 0, 2) }} €</td>
+                                        <td class="border border-gray-300 p-2">
+                                            {{ $bookRequest->is_confirmed ? 'Yes' : 'No' }}
+                                        </td>
                                         <td class="border border-gray-300 p-2 text-center font-bold">
                                             @if(!$bookRequest->is_returned)
                                                 <form method="POST" action="{{ route('book_requests.returnBook', $bookRequest->id) }}">

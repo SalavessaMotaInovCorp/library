@@ -63,7 +63,7 @@
                                             <!-- Admin: Show Modal to Select User -->
                                             <label for="admin-request-{{ $book->id }}"
                                                    class="btn text-white px-4 py-2 rounded cursor-pointer ">
-                                                Request for a citizen
+                                                Choose a citizen
                                             </label>
                                             <input type="checkbox" id="admin-request-{{ $book->id }}"
                                                    class="modal-toggle"/>

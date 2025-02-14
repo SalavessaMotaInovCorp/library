@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Schedule;
 
 class BookRequestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $userId = Auth::id();
 
@@ -30,14 +30,24 @@ class BookRequestController extends Controller
             ->whereDate('return_date', now()->toDateString())
             ->count();
 
-        $bookRequests = BookRequest::with('book.authors', 'book.publisher')
-            ->where('user_id', $userId)
-            ->paginate(20);
+        $query = BookRequest::where('user_id', $userId);
+
+        if ($request->has('status')) {
+            if ($request->status == 'returned') {
+                $query->where('is_returned', true)->where('is_confirmed', true);
+            } elseif ($request->status == 'pending_return_confirm') {
+                $query->where('is_confirmed', false)->where('is_returned', true);
+            } elseif ($request->status == 'active') {
+                $query->where('is_returned', false);
+            }
+        }
+
+        $bookRequests = $query->with('book.authors')->paginate(10);
 
         return view('book_requests.index', compact('bookRequests', 'activeRequests', 'last30DaysRequests', 'returnedToday'));
     }
 
-    public function indexAdmin()
+    public function indexAdmin(Request $request)
     {
         $activeRequests = BookRequest::where('is_returned', false)->count();
 
@@ -45,9 +55,21 @@ class BookRequestController extends Controller
 
         $returnedToday = BookRequest::where('return_date', now()->toDateString())->count();
 
-        $bookRequests = BookRequest::with('user','book.authors', 'book.publisher')->paginate(20);
+        $query = BookRequest::query();
 
-        return view('book_requests.index_admin', compact('bookRequests', 'activeRequests', 'last30DaysRequests', 'returnedToday'));
+        if ($request->has('status')) {
+            if ($request->status == 'returned') {
+                $query->where('is_returned', true)->where('is_confirmed', true);
+            } elseif ($request->status == 'pending_return_confirm') {
+                $query->where('is_confirmed', false)->where('is_returned', true);
+            } elseif ($request->status == 'active') {
+                $query->where('is_returned', false);
+            }
+        }
+
+        $bookRequests = $query->with('book.authors')->paginate(10);
+
+        return view('book_requests.index_admin', compact('bookRequests', 'activeRequests', 'last30DaysRequests', 'returnedToday','bookRequests'));
     }
 
     public function userBookRequestsForAdmin(User $user)
@@ -103,14 +125,14 @@ class BookRequestController extends Controller
             'status'       => 'active',
         ]);
 
-//        SendBookRequestEmail::dispatch($bookRequest, $user, true);
-//
-//        $admins = User::whereHas('roles', function ($query) {
-//            $query->where('name', 'admin');
-//        })->get();
-//        foreach ($admins as $admin) {
-//            SendBookRequestEmail::dispatch($bookRequest, $admin, false);
-//        }
+        SendBookRequestEmail::dispatch($bookRequest, $user, true);
+
+        $admins = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->get();
+        foreach ($admins as $admin) {
+            SendBookRequestEmail::dispatch($bookRequest, $admin, false);
+        }
 
         return redirect()->route('book_requests.available')->with('success', 'Request has been sent.');
     }

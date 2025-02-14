@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\BookRequest;
 use App\Models\Publisher;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -20,23 +21,51 @@ class HomeController extends Controller
             'books_count' => Book::count(),
             'authors_count' => Author::count(),
             'publishers_count' => Publisher::count(),
-            'recent_books' => Book::latest()->take(12)->get(),
+            'recent_books' => Book::latest()->take(4)->get(),
         ]);
     }
 
     public function dashboard()
     {
+        $readerOfTheMonth = User::withCount(['bookRequests' => function ($query) {
+            $query->whereMonth('created_at', Carbon::now()->month);
+        }])
+            ->orderByDesc('book_requests_count')
+            ->first();
+
         return view('dashboard', [
             'books_count' => Book::count(),
             'authors_count' => Author::count(),
             'publishers_count' => Publisher::count(),
-            'recent_books' => Book::latest()->take(8)->get(),
+            'recent_books' => Book::latest()->take(4)->get(),
+            'readerOfTheMonth' => $readerOfTheMonth,
         ]);
     }
 
     public function admin_panel()
     {
-        return view('admin_panel');
+        $totalUsers = User::count();
+        $totalBooks = Book::count();
+        $totalAuthors = Author::count();
+        $totalPublishers = Publisher::count();
+
+        $totalBookRequests = BookRequest::count();
+        $totalReturnedRequests = BookRequest::where('status', 'returned')->count();
+        $totalPendingReturnRequests = BookRequest::where('status', 'pending_return_confirm')->count();
+        $totalActiveRequests = BookRequest::where('status', 'active')->count();
+        $totalPastDueRequests = BookRequest::where('due_date', '<', date('Y-m-d'))->count();
+
+        return view('admin_panel', compact(
+            'totalUsers',
+            'totalBooks',
+            'totalAuthors',
+            'totalPublishers',
+            'totalBookRequests',
+            'totalReturnedRequests',
+            'totalPendingReturnRequests',
+            'totalActiveRequests',
+            'totalPastDueRequests',
+        ));
     }
 
     public function create_admin()
@@ -56,10 +85,11 @@ class HomeController extends Controller
             'name' => request('name'),
             'email' => request('email'),
             'password' => Hash::make(request('password')),
+            'role' => 'admin',
+            'email_verified_at' => now(),
         ]);
 
         $new_admin->assignRole('admin');
-        $new_admin->sendEmailVerificationNotification();
 
         return redirect('/dashboard')->with('success', 'Admin has been created.');
     }

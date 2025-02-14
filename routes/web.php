@@ -4,6 +4,7 @@ use App\Exports\AuthorsExport;
 use App\Exports\BookRequestsExport;
 use App\Exports\BooksExport;
 use App\Exports\PublishersExport;
+use App\Exports\UsersExport;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthorController;
@@ -31,9 +32,8 @@ Route::middleware([
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
 
-    Route::get('/book-requests/available', [BookRequestController::class, 'available'])->name('book_requests.available');
-
     Route::get('/book-requests', [BookRequestController::class, 'index'])->name('book_requests.index');
+    Route::get('/book-requests/available', [BookRequestController::class, 'available'])->name('book_requests.available');
     Route::get('/book-requests/{book}/history', [BookRequestController::class, 'bookRequestsHistory'])->name('book_requests.history');
     Route::post('/book-requests/{book}/request', [BookRequestController::class, 'requestBook'])
         ->name('book_requests.request');
@@ -45,7 +45,13 @@ Route::middleware([
     // Admin Routes
     Route::middleware('role:admin')->group(function () {
 
+        // Administration Panel
         Route::get('/admin-panel', [HomeController::class, 'admin_panel'])->name('admin_panel');
+
+        // Export users to Excel
+        Route::get('/admin-panel/export', function () {
+            return Excel::download(new UsersExport, 'users.xlsx');
+        })->name('admin-panel.export');
 
         Route::get('/book-requests-admin', [BookRequestController::class, 'indexAdmin'])->name('book_requests.index_admin');
         Route::get('/book-requests-admin/{user}', [BookRequestController::class, 'userBookRequestsForAdmin'])->name('book_requests.userBookRequestsForAdmin');

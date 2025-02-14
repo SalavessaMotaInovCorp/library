@@ -27,6 +27,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->withSchedule(function (Schedule $schedule) {
-        $schedule->job(new SendDueDateReminder)->everyMinute();
+        $schedule->job(new SendDueDateReminder)->dailyAt('08:00');
     })
     ->create();

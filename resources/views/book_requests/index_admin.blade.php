@@ -32,12 +32,22 @@
                         </div>
                     </div>
 
+                    <form method="GET" action="{{ route('book_requests.index_admin') }}" class="mb-6 flex items-center justify-start gap-4">
+                        <label for="status" class="font-bold text-gray-700">Filter by Status:</label>
+                        <select name="status" id="status" class="border border-gray-300 rounded-lg pr-8">
+                            <option value="">All Requests</option>
+                            <option value="returned" {{ request('status') == 'returned' ? 'selected' : '' }}> Return Confirmed</option>
+                            <option value="pending_return_confirm" {{ request('status') == 'pending_return_confirm' ? 'selected' : '' }}>Pending Confirm</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                        </select>
+                        <x-button type="submit">Apply Filter</x-button>
+                    </form>
 
                     @if ($bookRequests->isEmpty())
                         <p class="text-gray-600">There are no book requests yet.</p>
                     @else
                         <div class="overflow-x-auto p-6">
-                            <table class="table w-full border-collapse border border-gray-300">
+                            <table class="table w-full border-collapse border border-gray-300 text-center">
                                 <thead>
                                 <tr class="bg-gray-200 text-black">
                                     <th class="border border-gray-300 p-2">User Name</th>
@@ -46,6 +56,7 @@
                                     <th class="border border-gray-300 p-2">Request Date</th>
                                     <th class="border border-gray-300 p-2">Due Date</th>
                                     <th class="border border-gray-300 p-2">Returned</th>
+                                    <th class="border border-gray-300 p-2">Return Date</th>
                                     <th class="border border-gray-300 p-2">Number of days</th>
                                     <th class="border border-gray-300 p-2">Confirmed</th>
                                     <th class="border border-gray-300 p-2"></th>
@@ -62,6 +73,7 @@
                                         <td class="border border-gray-300 p-2">
                                             {{ $bookRequest->is_returned ? 'Yes' : 'No' }}
                                         </td>
+                                        <td class="border border-gray-300 p-2">{{ $bookRequest->return_date }}</td>
                                         <td class="border border-gray-300 p-2">
                                             @if ($bookRequest->is_confirmed)
                                                 {{ $bookRequest->total_request_days }}

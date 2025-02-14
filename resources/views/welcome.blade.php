@@ -31,7 +31,7 @@
             Your browser does not support the video tag.
         </video>
 
-        <div class="relative min-h-screen flex flex-col items-center justify-center ">
+        <div class="relative min-h-screen flex flex-col items-center justify-center mt-3">
 
             <div class="relative w-full max-w-7xl p-6 bg-gray-100 rounded-2xl">
 
@@ -65,21 +65,42 @@
                 </div>
 
                 <h2 class="text-2xl font-bold text-gray-800 mb-3 mt-12">Discover New Books</h2>
-                <div class="grid gap-10 md:grid-cols-3 text-center mt-6">
+                <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 mb-6 mt-6">
                     @foreach($recent_books as $book)
-                        <div class="card bg-white shadow-xl">
+                        <div class="card bg-white shadow-xl flex flex-col h-full"> <!-- Flex container -->
                             <figure>
                                 <img src="{{ $book->cover_image }}" alt="Book Cover" class="h-48 w-full object-cover">
                             </figure>
-                            <div class="p-4">
+                            <div class="p-4 flex flex-col flex-grow"> <!-- Flex-grow para expandir -->
                                 <h3 class="text-lg font-bold">{{ $book->name }}</h3>
-                                <p class="text-sm text-gray-600">{{ Str::limit($book->description, 50) }}</p>
-                                <x-button href="/books/{{ $book->id }}" class="btn btn-primary btn-sm mt-4">View Details
-                                </x-button>
+                                <p class="text-sm text-gray-600 flex-grow">{{ Str::limit($book->description, 50) }}</p> <!-- Ocupar espaço extra -->
+                                <x-button href="/books/{{ $book->id }}" class="btn btn-primary btn-sm mt-4 self-start">View Details</x-button>
                             </div>
                         </div>
                     @endforeach
                 </div>
+
+
+                <section class="bg-gray-200 py-12 px-6 rounded-lg shadow-md">
+                    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 text-center md:text-left mb-6 md:mb-0">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">About Inovcorp Library</h2>
+                            <p class="text-lg text-gray-700 leading-relaxed">
+                                Inovcorp Library is a digital space dedicated to book lovers.
+                                Here, you can explore a vast collection of books, discover new authors,
+                                and easily request book loans.
+                            </p>
+                            <p class="mt-4 text-lg text-gray-700">
+                                Our mission is to promote reading and make literature more accessible to everyone.
+                                Join us and experience the joy of reading!
+                            </p>
+                        </div>
+                        <div class="md:w-1/2 flex justify-center mt-2">
+                            <img src="https://aircinelmvc.blob.core.windows.net/resources/librarySample2.jpg"
+                                 alt="Library Image" class="w-full max-w-md rounded-lg shadow-lg">
+                        </div>
+                    </div>
+                </section>
 
             </div>
         </div>

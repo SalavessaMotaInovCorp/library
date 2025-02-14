@@ -19,9 +19,9 @@
     </x-slot>
 
     <div class="py-3">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10 py-6">
 
-            <h2 class="text-2xl font-bold text-gray-800 mb-3 mt-12">Explore</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">Explore</h2>
             <div class="grid gap-10 md:grid-cols-3 text-center">
                 <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                     <h3 class="text-4xl font-bold">{{ $books_count }}</h3>
@@ -68,6 +68,45 @@
                     </div>
                 @endforeach
             </div>
+
+            @if($readerOfTheMonth)
+                <section class="py-6 px-6 rounded-lg shadow-md text-center bg-cover bg-center flex justify-center items-center"
+                         style="background-image: url('https://aircinelmvc.blob.core.windows.net/resources/librarySample3.jpg'); min-height: 300px;">
+
+                    <div class="bg-gray-50 bg-opacity-50 backdrop-blur-md p-6 rounded-lg shadow-lg max-w-md w-full">
+                        <h2 class="text-2xl font-bold text-gray-800">Reader of the Month</h2>
+                        <img src="{{ $readerOfTheMonth->profile_photo_path ?? '/default-avatar.jpg' }}"
+                             alt="Reader of the Month" class="w-32 h-42 mx-auto rounded-xl mt-4 shadow-lg border border-black">
+                        <h3 class="text-xl font-bold mt-2">{{ $readerOfTheMonth->name }}</h3>
+                        <p class="text-gray-900">Read {{ $readerOfTheMonth->book_requests_count }} books this month!</p>
+                    </div>
+
+                </section>
+            @endif
+
+
+            <section class="bg-gray-100 py-12 px-6 rounded-lg shadow-md">
+                <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 text-center md:text-left mb-6 md:mb-0">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">About Inovcorp Library</h2>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Inovcorp Library is a digital space dedicated to book lovers.
+                            Here, you can explore a vast collection of books, discover new authors,
+                            and easily request book loans.
+                        </p>
+                        <p class="mt-4 text-lg text-gray-700">
+                            Our mission is to promote reading and make literature more accessible to everyone.
+                            Join us and experience the joy of reading!
+                        </p>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center mt-2">
+                        <img src="https://aircinelmvc.blob.core.windows.net/resources/librarySample2.jpg"
+                             alt="Library Image" class="w-full max-w-md rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </section>
+
+
 
         </div>
     </div>

@@ -36,20 +36,40 @@
                     <x-nav-link href="{{ route('publishers.index') }}" :active="request()->routeIs('publishers.index')">
                         {{ __('Publishers') }}
                     </x-nav-link>
-                        @auth
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <x-nav-link href="#"  class="h-full flex items-center">
+                                {{ __('Book Requests') }}
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </x-nav-link>
+                        </x-slot>
+
+                        <x-slot name="content">
                             @if(Auth::user()->hasRole('admin'))
-                                <x-nav-link href="{{ route('book_requests.index_admin') }}" :active="request()->routeIs('book_requests.index_admin')">
+                                <x-dropdown-link href="{{ route('book_requests.index_admin') }}">
                                     {{ __('Book Requests') }}
-                                </x-nav-link>
-                                <x-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
-                                    {{ __('Admin Panel') }}
-                                </x-nav-link>
+                                </x-dropdown-link>
                             @else
-                                <x-nav-link href="{{ route('book_requests.index') }}" :active="request()->routeIs('book_requests.index')">
-                                    {{ __('Book Requests') }}
-                                </x-nav-link>
+                                <x-dropdown-link href="{{ route('book_requests.index') }}">
+                                    {{ __('Your Book Requests') }}
+                                </x-dropdown-link>
                             @endif
-                        @endauth
+
+                            <x-dropdown-link href="{{ route('book_requests.available') }}">
+                                {{ __('Make a Request') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                        @if(Auth::user()->hasRole('admin'))
+                            <x-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
+                                {{ __('Admin Panel') }}
+                            </x-nav-link>
+                        @endif
+
+
+
                 </div>
             </div>
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -61,8 +81,7 @@
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                    <button
-                                        class="flex items-center space-x-2 text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                    <button class="flex items-center space-x-2 text-sm border-2 border-transparent focus:outline-none focus:border-gray-300 transition">
                                         <div class="text-center self-center">
                                             {{ Auth::user()->name }}
                                             <br/>
@@ -153,12 +172,21 @@
             <x-responsive-nav-link href="{{ route('publishers.index') }}" :active="request()->routeIs('publishers.index')">
                 {{ __('Publishers') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('book_requests.index') }}" :active="request()->routeIs('book_requests.index')">
-                {{ __('Book Requests') }}
+            <x-responsive-nav-link href="{{ route('book_requests.available') }}" :active="request()->routeIs('book_requests.available')">
+                {{ __('Make a Book Request') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
-                {{ __('ADMIN PANEL') }}
-            </x-responsive-nav-link>
+            @if(Auth::user()->hasRole('admin'))
+                <x-responsive-nav-link href="{{ route('book_requests.index_admin') }}" :active="request()->routeIs('book_requests.index_admin')">
+                    {{ __('Book Requests') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin_panel') }}" :active="request()->routeIs('admin_panel')">
+                    {{ __('ADMIN PANEL') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link href="{{ route('book_requests.index') }}" :active="request()->routeIs('book_requests.index')">
+                    {{ __('Your Book Requests') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
