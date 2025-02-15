@@ -40,8 +40,8 @@ class BookRequestsExport implements FromCollection, withHeadings, ShouldAutoSize
             $bookRequest->book->name,
             $bookRequest->request_date,
             $bookRequest->due_date,
-            $bookRequest->book->is_returned ? "Yes" : "No",
-            $bookRequest->isConfirmed ? "Yes" : "No",
+            $bookRequest->is_returned ? "Yes" : "No",
+            $bookRequest->is_confirmed ? "Yes" : "No",
             $bookRequest->status,
         ];
     }
