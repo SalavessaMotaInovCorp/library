@@ -24,7 +24,7 @@ class BookFactory extends Factory
             'name' => $this->faker->words(3, true), // Generate a random book title
             'publisher_id' => Publisher::factory(), // Create a related publisher
             'description' => $this->faker->paragraph(), // Generate a random description
-            'cover_image' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 200) . '/200/300', // Random cover image URL
+            'cover_image' => 'covers/default_cover.jpg',
             'price' => $this->faker->numberBetween(5, 500), // Random price between 5 and 500
         ];
     }

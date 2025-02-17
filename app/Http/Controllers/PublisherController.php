@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publisher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PublisherController extends Controller
 {
@@ -28,16 +29,22 @@ class PublisherController extends Controller
     }
 
     // Store a new publisher in the database
-    public function store()
+    public function store(Request $request)
     {
         request()->validate([
             'name' => 'required',
-            'logo' => ['required', 'min:5']
+            'logo' => 'required|image|mimes:jpg,png,jpeg,gif,webp|max:2048'
         ]);
+
+        if ($request->hasFile('logo')) {
+            $imagePath = $request->file('logo')->store('publishers', 'public');
+        } else {
+            $imagePath = 'publishers/default_publisher_logo.png';
+        }
 
         Publisher::create([
             'name' => request('name'),
-            'logo' => request('logo')
+            'logo' => $imagePath
         ]);
 
         return redirect('/publishers');
@@ -50,17 +57,23 @@ class PublisherController extends Controller
     }
 
     // Update publisher information
-    public function update(Publisher $publisher)
+    public function update(Request $request, Publisher $publisher)
     {
-        request()->validate([
+        $validated = $request->validate([
             'name' => 'required',
-            'logo' => ['required', 'min:5']
+            'logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:12288']
         ]);
 
-        $publisher->update([
-            'name' => request('name'),
-            'logo' => request('logo')
-        ]);
+        if ($request->hasFile('logo')) {
+            if ($publisher->logo) {
+                Storage::delete('public/authors/' . $publisher->logo);
+            }
+
+            $imagePath = $request->file('logo')->store('publishers', 'public');
+            $validated['logo'] = $imagePath;
+        }
+
+        $publisher->update($validated);
 
         return redirect('/publishers');
     }

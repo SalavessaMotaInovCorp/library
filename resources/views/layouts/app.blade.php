@@ -37,7 +37,7 @@
 
     <div class="text-black min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-6">
-            <div class="bg-white overflow-hidden shadow-xl rounded-lg my-3">
+            <div class="bg-white overflow-hidden shadow-xl rounded-lg m-3">
                 <!-- Page Content -->
                 <main class="flex-grow w-full h-full">
                     {{ $slot }}

@@ -45,6 +45,8 @@ class HomeController extends Controller
     public function admin_panel()
     {
         $totalUsers = User::count();
+        $totalAdmins = User::role('admin')->count();
+        $totalCitizens = User::role('citizen')->count();
         $totalBooks = Book::count();
         $totalAuthors = Author::count();
         $totalPublishers = Publisher::count();
@@ -57,6 +59,8 @@ class HomeController extends Controller
 
         return view('admin_panel', compact(
             'totalUsers',
+            'totalAdmins',
+            'totalCitizens',
             'totalBooks',
             'totalAuthors',
             'totalPublishers',

@@ -20,7 +20,7 @@ class PublisherFactory extends Factory
     {
         return [
             'name' => $this->faker->company(), // Generate a random company name
-            'logo' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 150) . '/200/300', // Generate a random logo URL
+            'logo' => 'storage/publishers/default_publisher_logo.jpg'
         ];
     }
 }

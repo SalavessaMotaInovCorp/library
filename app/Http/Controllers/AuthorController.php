@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AuthorController extends Controller
 {
@@ -28,16 +29,22 @@ class AuthorController extends Controller
     }
 
     // Store a new author in the database
-    public function store()
+    public function store(Request $request)
     {
         request()->validate([
             'name' => 'required',
-            'photo' => ['required', 'min:5']
+            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,webp|max:2048'
         ]);
 
+        if ($request->hasFile('photo')) {
+            $imagePath = $request->file('photo')->store('authors', 'public');
+        } else {
+            $imagePath = 'authors/default_author_photo.png';
+        }
+
         Author::create([
-            'name' => request('name'),
-            'photo' => request('photo')
+            'name' => $request->name,
+            'photo' => $imagePath
         ]);
 
         return redirect('/authors');
@@ -50,17 +57,23 @@ class AuthorController extends Controller
     }
 
     // Update author information
-    public function update(Author $author)
+    public function update(Request $request, Author $author)
     {
-        request()->validate([
+        $validated = $request->validate([
             'name' => 'required',
-            'photo' => ['required', 'min:5']
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:12288']
         ]);
 
-        $author->update([
-            'name' => request('name'),
-            'photo' => request('photo')
-        ]);
+        if ($request->hasFile('photo')) {
+            if ($author->photo) {
+                Storage::delete('public/authors/' . $author->photo);
+            }
+
+            $imagePath = $request->file('photo')->store('authors', 'public');
+            $validated['photo'] = $imagePath;
+        }
+
+        $author->update($validated);
 
         return redirect('/authors');
     }

@@ -31,7 +31,7 @@
             Your browser does not support the video tag.
         </video>
 
-        <div class="relative min-h-screen flex flex-col items-center justify-center mt-3">
+        <div class="relative min-h-screen flex flex-col items-center justify-center m-3">
 
             <div class="relative w-full max-w-7xl p-6 bg-gray-100 rounded-2xl">
 

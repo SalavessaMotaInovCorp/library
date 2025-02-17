@@ -20,7 +20,7 @@ class AuthorFactory extends Factory
     {
         return [
             'name' => $this->faker->name(), // Generate a random author name
-            'photo' => 'https://picsum.photos/id/' . $this->faker->numberBetween(100, 200) . '/200/300', // Generate a random photo URL
+            'photo' => 'storage/authors/default_author_photo.jpg'
         ];
     }
 }

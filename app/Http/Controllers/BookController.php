@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -57,32 +58,37 @@ class BookController extends Controller
     }
 
     // Store a new book in the database
-    public function store()
+    public function store(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'isbn' => 'required|string|unique:books,isbn',
             'name' => 'required|string',
             'description' => 'required|string',
-            'cover_image' => 'required|string',
+            'cover_image' => 'required|image|mimes:jpg,png,jpeg,gif,webp|max:2048',
             'price' => 'required|numeric',
             'publisher_id' => 'required|exists:publishers,id',
             'authors' => 'required|array',
             'authors.*' => 'exists:authors,id',
         ]);
 
+        if ($request->hasFile('cover_image')) {
+            $imagePath = $request->file('cover_image')->store('covers', 'public');
+        } else {
+            $imagePath = 'covers/default_cover.jpg';
+        }
+
         $book = Book::create([
-            'isbn' => request('isbn'),
-            'name' => request('name'),
-            'publisher_id' => request('publisher_id'),
-            'description' => request('description'),
-            'cover_image' => request('cover_image'),
-            'price' => request('price'),
+            'isbn' => $request->isbn,
+            'name' => $request->name,
+            'publisher_id' => $request->publisher_id,
+            'description' => $request->description,
+            'cover_image' => $imagePath,
+            'price' => $request->price,
         ]);
 
-        // Attach authors to the book
-        $book->authors()->attach(request()->authors);
+        $book->authors()->attach($request->authors);
 
-        return redirect('/books');
+        return redirect('/books')->with('success', 'Book added successfully!');
     }
 
     // Show the form to edit an existing book
@@ -96,31 +102,31 @@ class BookController extends Controller
     }
 
     // Update book details
-    public function update(Book $book)
+    public function update(Request $request, Book $book)
     {
-        request()->validate([
-            // ISBN must be exactly 10 or 13 digits
+        $validated = $request->validate([
             'isbn' => ['required', 'regex:/^(?:\d{10}|\d{13})$/'],
             'name' => ['required', 'min:3'],
             'publisher_id' => 'required|exists:publishers,id',
             'description' => ['required', 'min:3'],
-            'cover_image' => ['required', 'min:5'],
+            'cover_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:12288'],
             'price' => ['required', 'numeric'],
         ]);
 
-        $book->update([
-            'isbn' => request('isbn'),
-            'name' => request('name'),
-            'publisher_id' => request('publisher_id'),
-            'description' => request('description'),
-            'cover_image' => request('cover_image'),
-            'price' => request('price')
-        ]);
+        if ($request->hasFile('cover_image')) {
+            if ($book->cover_image) {
+                Storage::delete('public/covers/' . $book->cover_image);
+            }
 
-        // Sync authors with the book
-        $book->authors()->sync(request()->authors);
+            $imagePath = $request->file('cover_image')->store('covers', 'public');
+            $validated['cover_image'] = $imagePath;
+        }
 
-        return redirect('/books/' . $book->id);
+        $book->update($validated);
+
+        $book->authors()->sync($request->authors);
+
+        return redirect()->route('books.show', $book->id)->with('success', 'Book updated successfully!');
     }
 
     // Delete a book from the database

@@ -13,9 +13,12 @@
                     <p class="text-gray-500">{{ $author->name }}</p>
                 </div>
 
-                <figure class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <strong class="text-bold text-gray-900 mr-1">Photo:</strong>
-                    <img src="{{ $author->photo }}" alt="Author Photo" class="rounded-lg shadow-md mx-auto">
+                <figure class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 flex justify-center">
+                    <div class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+                        <strong class="text-bold text-gray-900 mr-1 block text-center">Photo:</strong>
+                        <img src="{{ asset('' . $author->photo) }}" alt="Author Photo"
+                             class="rounded-lg shadow-md mx-auto w-full h-auto object-contain">
+                    </div>
                 </figure>
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">

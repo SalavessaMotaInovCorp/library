@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="card bg-gray-300 shadow-xl space-y-6 p-6">
 
-                <form method="POST" action="/publishers/{{ $publisher->id }}" class="space-y-6">
+                <form method="POST" action="/publishers/{{ $publisher->id }}" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     @method('PATCH')
 
@@ -21,11 +21,24 @@
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                        <label for="logo" class="block text-sm font-medium text-gray-900">Publisher logo URL</label>
-                        <input type="text" name="logo" id="logo" class="rounded-lg w-full mt-2"
-                               placeholder="Enter Cover Image URL" value="{{ $publisher->logo }}" required>
-                        @error('logo') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
+                        <label for="logo" class="block text-sm font-medium text-gray-900">Upload New Publisher Logo (max 12MB)</label>
+                        <input type="file" name="logo" id="logo" class="rounded-lg w-full mt-2" accept="image/png, image/jpeg" onchange="validateFileSize(this)">
+
+                        <script>
+                            function validateFileSize(input) {
+                                const file = input.files[0];
+                                if (file && file.size > 12 * 1024 * 1024) { // 12MB
+                                    alert("File is too large! Maximum allowed size is 12MB.");
+                                    input.value = "";
+                                }
+                            }
+                        </script>
+
+                        @error('cover_image')
+                        <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
+
 
                     <div class="flex flex-col sm:flex-row gap-4 mb-6 text-center justify-between">
                         <x-button href="/publishers/{{ $publisher->id }}" class="btn btn-outline btn-sm">Back</x-button>

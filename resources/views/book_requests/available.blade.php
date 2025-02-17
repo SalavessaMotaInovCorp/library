@@ -46,7 +46,7 @@
                                             @if($book->cover_image)
 
                                                 <label for="modal-cover">
-                                                    <img src="{{ $book->cover_image }}" alt="Cover image" style="height:60px; cursor:pointer;" class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
+                                                    <img src="{{ asset('' . $book->cover_image) }}" alt="Cover image" style="height:60px; cursor:pointer;" class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
                                                 </label>
 
                                                 <input type="checkbox" id="modal-cover" class="modal-toggle" />
@@ -57,7 +57,7 @@
                                                             <h3 class="text-lg font-bold mb-4 mx-auto">{{ $book->name }}</h3>
                                                         </div>
 
-                                                        <img src="{{ $book->cover_image }}" alt="Cover image" class="rounded-lg shadow-2xl mx-auto w-full border-black">
+                                                        <img src="{{ asset('' . $book->cover_image) }}" alt="Cover image" class="rounded-lg shadow-2xl mx-auto w-full border-black">
 
                                                         <label for="modal-cover" class="btn btn-sm mt-2">Close</label>
                                                     </div>

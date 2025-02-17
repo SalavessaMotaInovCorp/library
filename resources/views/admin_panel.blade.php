@@ -1,10 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between">
-            <h2 class="text-black text-3xl font-bold">
-                ADMIN PANEL
-            </h2>
-        </div>
+        <h2 class="text-black text-3xl font-bold text-center">
+            ADMIN PANEL
+        </h2>
     </x-slot>
 
     <div class="py-12 text-black bg-gray-100">
@@ -18,9 +16,20 @@
                     </div>
 
                     <div class="text-center">
-                        <div class="p-6 rounded-lg shadow bg-gray-50 my-6">
+                        <div class="p-6 rounded-lg shadow bg-gray-50 mt-6">
                             <h3 class="text-xl font-bold ">{{ $totalUsers }}</h3>
                             <p class="text-gray-600">Registered Users</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                        <div class="p-6 rounded-lg shadow bg-gray-50">
+                            <h3 class="text-xl font-bold ">{{ $totalAdmins }}</h3>
+                            <p class="text-gray-600">Administrators</p>
+                        </div>
+                        <div class="p-6 rounded-lg shadow bg-gray-50">
+                            <h3 class="text-xl font-bold ">{{ $totalCitizens }}</h3>
+                            <p class="text-gray-600">Citizens</p>
                         </div>
                     </div>
 
@@ -40,7 +49,7 @@
                     </div>
 
 
-                    <div class="text-center">
+                    <div class="text-center my-6">
                         <div class="p-6 rounded-lg shadow bg-gray-50">
                             <h3 class="text-xl font-bold ">{{ $totalBookRequests }}</h3>
                             <p class="text-gray-600">Book Requests</p>
