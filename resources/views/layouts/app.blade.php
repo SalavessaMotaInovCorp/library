@@ -19,7 +19,7 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased bg-cover bg-center bg-no-repeat"
+    <body class="font-serif antialiased bg-cover bg-center bg-no-repeat"
           style="background-image: url('https://aircinelmvc.blob.core.windows.net/resources/libraryBackground2blurred.jpg');">
 
     @livewire('navigation-menu')
@@ -36,15 +36,12 @@
     @endif
 
     <div class="text-black min-h-screen">
-
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg my-3">
-                <div>
-                    <!-- Page Content -->
-                    <main class="flex-grow w-full h-full">
-                        {{ $slot }}
-                    </main>
-                </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-6">
+            <div class="bg-white overflow-hidden shadow-xl rounded-lg my-3">
+                <!-- Page Content -->
+                <main class="flex-grow w-full h-full">
+                    {{ $slot }}
+                </main>
             </div>
         </div>
 

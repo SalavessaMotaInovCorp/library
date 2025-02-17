@@ -49,13 +49,13 @@ class BooksTable extends DataTableComponent
             Column::make("Id", "id")
                 ->hideIf(true), // Hide the ID column
 
-            Column::make("Isbn", "isbn")
-                ->sortable() // Enable sorting
-                ->searchable(), // Enable searching
-
             Column::make("Name", "name")
                 ->sortable()
                 ->searchable(),
+
+            Column::make("Isbn", "isbn")
+                ->sortable() // Enable sorting
+                ->searchable(), // Enable searching
 
             Column::make("Authors")
                 ->label(function ($row) {
@@ -73,11 +73,9 @@ class BooksTable extends DataTableComponent
                         ? '<a href="/publishers/' . $value . '" class="hover:underline">' . $publisher_name . '</a>'
                         : 'No Publisher'; // Display publisher link or fallback
                 })
-                ->html()
-                ->sortable(),
+                ->html(),
 
             Column::make("Description", "description")
-                ->sortable()
                 ->format(function ($value) {
                     return Str::limit($value, 25); // Limit description length
                 }),
@@ -106,7 +104,6 @@ class BooksTable extends DataTableComponent
                 ->html(),
 
             Column::make("Price", "price")
-                ->sortable()
                 ->format(function ($value) {
                     return number_format($value, 2, ',', '.') . ' €'; // Format price
                 }),

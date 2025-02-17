@@ -96,8 +96,8 @@
 
                 <div clasS="border shadow-xl p-6 space-y-3 bg-gray-300 rounded-xl">
                     <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                        <div class="text-center">
-                            <x-button href="{{ route('admin-panel.export') }}">Export CSV/Excel</x-button>
+                        <div class="text-center my-1">
+                            <x-button href="{{ route('admin-panel.export') }}" class="inline-flex mb-1">Export CSV/Excel</x-button>
                         </div>
                         @livewire('users-table')
                     </div>

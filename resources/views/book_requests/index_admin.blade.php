@@ -17,7 +17,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 bg-white border border-gray-200">
 
-                    <div class="flex gap-4 mb-6 text-center justify-between">
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6 text-center justify-between px-2">
                         <div class="bg-gray-200 p-4 rounded-lg shadow">
                             <p class="text-lg font-bold">{{ $activeRequests }}</p>
                             <p class="text-sm">Active Requests</p>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <form method="GET" action="{{ route('book_requests.index_admin') }}" class="mb-6 flex items-center justify-start gap-4">
+                    <form method="GET" action="{{ route('book_requests.index_admin') }}" class="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                         <label for="status" class="font-bold text-gray-700">Filter by Status:</label>
                         <select name="status" id="status" class="border border-gray-300 rounded-lg pr-8">
                             <option value="">All Requests</option>

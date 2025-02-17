@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between">
-            <h1 class="text-black text-3xl font-bold">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+            <h1 class="text-black text-3xl font-bold mr-1">
                 Authors
             </h1>
             @can('create')
@@ -13,7 +13,7 @@
         </div>
     </x-slot>
 
-    <div class="py-12 text-black">
+    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="bg-white shadow-sm sm:rounded-lg p-6">

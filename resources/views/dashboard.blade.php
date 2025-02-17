@@ -12,13 +12,13 @@
 
     <x-slot name="header">
         <div class="bg-cover bg-center">
-            <div class="inset-0 flex items-center justify-center">
+            <div class="inset-0 flex items-center justify-center text-center">
                 <h1 class="text-black text-5xl font-bold">Inovcorp Library</h1>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-3">
+    <div class="py-3 mx-3">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10 py-6">
 
             <h2 class="text-2xl font-bold text-gray-800 mb-3">Explore</h2>

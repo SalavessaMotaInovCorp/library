@@ -5,16 +5,16 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 px-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="card bg-gray-300 shadow-xl space-y-6 p-6">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <strong class="text-bold text-gray-900">Title:</strong>
+                    <strong class="text-bold text-gray-900">Name:</strong>
                     <p class="text-gray-500">{{ $author->name }}</p>
                 </div>
 
                 <figure class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <strong class="text-bold text-gray-900">Cover:</strong>
+                    <strong class="text-bold text-gray-900 mr-1">Photo:</strong>
                     <img src="{{ $author->photo }}" alt="Author Photo" class="rounded-lg shadow-md mx-auto">
                 </figure>
 
@@ -37,7 +37,7 @@
                     @endif
                 </div>
 
-                <div class="flex justify-between">
+                <div class="flex flex-col sm:flex-row gap-4 mb-6 text-center justify-between">
                     <p class="mt-6">
                         <x-button href="/authors">Authors List</x-button>
                     </p>

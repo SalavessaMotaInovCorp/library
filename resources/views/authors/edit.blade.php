@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 px-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="card bg-gray-300 shadow-xl space-y-6 p-6">
 
@@ -27,18 +27,16 @@
                         @error('photo') <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p> @enderror
                     </div>
 
-                    <div class="flex justify-between items-center mt-6">
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6 text-center justify-between">
                         <x-button href="/authors/{{ $author->id }}" class="btn btn-outline btn-sm">Back</x-button>
-                        <div class="flex gap-4">
-                            <x-button type="submit" class="btn btn-primary">Save Changes</x-button>
+                        <x-button type="submit">Save Changes</x-button>
 
-                            @can('delete')
-                                <label for="delete-modal" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest
-                    hover:bg-red-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer
+                        @can('delete')
+                            <label for="delete-modal" class="items-center px-4 py-2 mx-1 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest
+                    hover:bg-red-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer
                     disabled:opacity-50 transition ease-in-out duration-150
                     transform hover:-translate-y-1 hover:shadow-lg active:scale-95">Delete</label>
-                            @endcan
-                        </div>
+                        @endcan
                     </div>
                 </form>
 
@@ -51,7 +49,7 @@
                 <div class="modal">
                     <div class="modal-box">
                         <h3 class="font-bold text-lg text-red-600">Confirm Delete</h3>
-                        <p class="py-4">Are you sure you want to delete the author <strong>{{ $author->name }}</strong>?</p>
+                        <p class="py-4 text-white">Are you sure you want to delete the author <strong>{{ $author->name }}</strong>?</p>
                         <div class="modal-action">
                             <label for="delete-modal" class="btn">Cancel</label>
                             <x-button onclick="document.getElementById('delete-form').submit();" class="btn btn-error bg-red-600">Yes, Delete</x-button>

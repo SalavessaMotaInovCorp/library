@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-black text-3xl font-bold">
+        <h2 class="text-black text-3xl font-bold text-center">
             Register a new publisher
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 px-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="card bg-gray-300 shadow-xl space-y-6 p-6">
 
@@ -35,10 +35,10 @@
                     </div>
 
                     <div class="flex justify-between items-center mt-6">
-                        <x-button href="/publishers" class="btn btn-outline btn-sm">Back</x-button>
+                        <x-button href="/publishers">Back</x-button>
 
                         <div class="flex gap-4">
-                            <x-button type="submit" class="btn btn-primary">Save</x-button>
+                            <x-button type="submit">Save</x-button>
                         </div>
                     </div>
                 </form>

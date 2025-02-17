@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 px-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="card bg-gray-300 shadow-xl space-y-6 p-6">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
@@ -14,7 +14,7 @@
                 </div>
 
                 <figure class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <strong class="text-bold text-gray-900">Cover:</strong>
+                    <strong class="text-bold text-gray-900 mr-1">Cover:</strong>
                     <img src="{{ $book->cover_image }}" alt="Book Cover" class="rounded-lg shadow-md mx-auto">
                 </figure>
 
@@ -97,7 +97,7 @@
                     @endif
                 @endauth
 
-                <div class="flex justify-between mt-6">
+                <div class="flex flex-col sm:flex-row gap-4 mb-6 text-center justify-between">
                     <x-button href="/books">Books List</x-button>
 
                     @auth

@@ -11,12 +11,12 @@
                 @if ($books->isEmpty())
                     <p class="text-gray-600">No books available at the moment.</p>
                 @else
-                    <div class="overflow-x-auto p-6">
+                    <div class="overflow-x-auto p-6 mb-1">
                         <table class="table w-full text-black">
                             <thead>
                             <tr class="bg-gray-200 text-black">
-                                <th class="border border-gray-300 p-2">ISBN</th>
                                 <th class="border border-gray-300 p-2">Name</th>
+                                <th class="border border-gray-300 p-2">ISBN</th>
                                 <th class="border border-gray-300 p-2">Authors</th>
                                 <th class="border border-gray-300 p-2">Publisher</th>
                                 <th class="border border-gray-300 p-2">Description</th>
@@ -28,8 +28,8 @@
                             <tbody>
                             @foreach ($books as $book)
                                 <tr class="hover:bg-gray-100">
-                                    <td class="border border-gray-300 p-2">{{ $book->isbn }}</td>
                                     <td class="border border-gray-300 p-2">{{ $book->name }}</td>
+                                    <td class="border border-gray-300 p-2">{{ $book->isbn }}</td>
                                     <td class="border border-gray-300 p-2">
                                         @foreach($book->authors as $author)
                                             <a href="/authors/{{ $author->id }}"
@@ -44,9 +44,25 @@
                                     <td class="border border-gray-300 p-2">
                                         <div class="flex justify-center">
                                             @if($book->cover_image)
-                                                <img src="{{ $book->cover_image }}" alt="Cover image"
-                                                     style="height:60px; cursor:pointer;"
-                                                     class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
+
+                                                <label for="modal-cover">
+                                                    <img src="{{ $book->cover_image }}" alt="Cover image" style="height:60px; cursor:pointer;" class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
+                                                </label>
+
+                                                <input type="checkbox" id="modal-cover" class="modal-toggle" />
+                                                <div class="modal space-y-1" id="modal-cover">
+                                                    <div class="modal-box bg-white">
+                                                        <div>
+                                                            <h3>Cover image for:</h3>
+                                                            <h3 class="text-lg font-bold mb-4 mx-auto">{{ $book->name }}</h3>
+                                                        </div>
+
+                                                        <img src="{{ $book->cover_image }}" alt="Cover image" class="rounded-lg shadow-2xl mx-auto w-full border-black">
+
+                                                        <label for="modal-cover" class="btn btn-sm mt-2">Close</label>
+                                                    </div>
+                                                </div>
+
                                             @else
                                                 <span class="text-gray-400 p-2">No Image</span>
                                             @endif
@@ -62,7 +78,7 @@
                                         @if(Auth::user()->hasRole('admin'))
                                             <!-- Admin: Show Modal to Select User -->
                                             <label for="admin-request-{{ $book->id }}"
-                                                   class="btn text-white px-4 py-2 rounded cursor-pointer ">
+                                                   class="btn text-white rounded cursor-pointer ">
                                                 Choose a citizen
                                             </label>
                                             <input type="checkbox" id="admin-request-{{ $book->id }}"
