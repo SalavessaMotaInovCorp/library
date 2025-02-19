@@ -4,15 +4,15 @@ This project is a **Library Management System** built with **Laravel Jetstream**
 
 ---
 
-## ** Features**  
+## **Features**  
 
-### **📖 Book Management**  
+### **Book Management**  
 - Add, edit, delete, and view books with details like ISBN, description, cover image, and price.  
 - **Google Books API Integration** – **Only admins** can search books in the external API and import them into the local database.  
 - **Book Preview** – Logged-in users can preview books directly from Google Books (if available).  
 - **3D Book Carousel** – Displays the latest additions dynamically with clickable covers to view book details.  
 
-### ** Book Request System**  
+### **Book Request System**  
 - Users can **request books** from the library.  
 - The system tracks **request dates, due dates, and return status**.  
 - Requests must be **confirmed** by admins before they are completed.  
@@ -21,24 +21,24 @@ This project is a **Library Management System** built with **Laravel Jetstream**
 - Automatic emails when a book request is made, both for the user and also to all admins.
 - Automatic email alert to remind the user that a book request due date is aproxing.  
 
-### ** Search System**  
+### **Search System**  
 - **Citizens (Regular Users)** – Can **search for books only in the local database**.  
 - **Admins** – Can **search for books both locally and in the Google Books API**. If a book is not available locally, admins can import it into the system.  
 - **Optimized Performance** – The system follows a **"request on demand"** model to avoid unnecessary API calls and improve efficiency.  
 
-### ** Authors & Publishers Management**  
+### **Authors & Publishers Management**  
 - Manage authors, including their names and photos.  
 - Add and edit publishers with logo support.  
 - Many-to-Many Relationship – Books can have multiple authors.  
 
-### ** Data Export & Authentication**  
+### **Data Export & Authentication**  
 - Export books, authors, and publishers data to Excel format.  
 - Secure login, registration, and session management using **Laravel Jetstream**.  
 - **Fully Responsive UI** – Designed with **DaisyUI & TailwindCSS** for a seamless experience on all devices.  
 
 ---
 
-## ** Technologies Used**  
+## **Technologies Used**  
 - **Laravel Jetstream** (Livewire for interactivity)  
 - **DaisyUI** (Tailwind CSS Components)  
 - **MySQL** (or any supported database)  
@@ -48,7 +48,7 @@ This project is a **Library Management System** built with **Laravel Jetstream**
 
 ---
 
-## ** Database Structure**  
+## **Database Structure**  
 
 ### **Books, Authors & Publishers**  
 - **Authors:** `id`, `name`, `photo`  
@@ -70,7 +70,7 @@ This project is a **Library Management System** built with **Laravel Jetstream**
 
 ---
 
-## ** Data Export**  
+## **Data Export**  
 Export data as Excel files:  
 - `/books/export`  
 - `/authors/export`  
@@ -78,7 +78,7 @@ Export data as Excel files:
 
 ---
 
-## ** How It Works**  
+## **How It Works**  
 
 1️⃣ **Users search for books**  
    - **Regular users** can only search in the **local database**.  
@@ -101,7 +101,7 @@ Export data as Excel files:
 
 ---
 
-## ** Summary of Recent Updates**  
+## **Summary of Recent Updates**  
 
 **Google Books API Integration (Admins Only)** – Admins can now search, preview, and import books dynamically.  
 **3D Carousel** – Displays the latest books in an interactive rotating display.  
