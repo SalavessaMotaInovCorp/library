@@ -6,14 +6,65 @@
     </x-slot>
 
     <div class="py-12 text-black bg-gray-100">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
+            <div class="border border-gray-300 bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
+                <div class="text-center my-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Books</h2>
+                </div>
+
+                <div clasS="border shadow-xl p-6 space-y-3 bg-gray-300 rounded-xl font-bold">
+                    <div class="text-center my-6 px-2">
+                        <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                            <h1 class="mb-4">Request Books From The Main Warehouse:</h1>
+
+                            <form method="GET" action="{{ route('googlebooks.search') }}" class="relative flex items-center justify-center mb-6">
+                                <div class="flex flex-col justify-center items-center w-full max-w-lg gap-2">
+                                    <input type="text" name="query" placeholder="Search book name..."
+                                           class="input input-bordered rounded-md w-full sm:w-auto px-4 py-2 text-white">
+                                    <x-button type="submit" class="w-full sm:w-auto">🔍 Search</x-button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border border-gray-300 bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
+                <div class="text-center my-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Users</h2>
+                </div>
+
+                <div clasS="border shadow-xl p-1 space-y-3 bg-gray-300 rounded-xl font-bold">
+                    <div class="text-center">
+                        <x-button href="/create-admin"
+                                  class="p-12 flex flex-col items-center justify-center rounded-lg shadow-xl my-5">
+                            <h3 class="text-2xl font-bold">Register a New Admin</h3>
+                        </x-button>
+                    </div>
+
+                    <div clasS="border shadow-xl p-6 space-y-3 bg-white rounded-xl">
+                        <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                            <div class="text-center my-1">
+                                <x-button href="{{ route('admin-panel.export') }}" class="inline-flex mb-1">Export
+                                    Excel
+                                </x-button>
+                            </div>
+                            @livewire('users-table')
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border border-gray-300 bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
+
+                <div class="text-center my-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Statistics</h2>
+                </div>
+
 
                 <div clasS="border shadow-xl p-6 space-y-3 bg-gray-300 rounded-xl font-bold">
 
-                    <div class="flex justify-center w-full">
-                        <h1 class="px-4 py-2 rounded-lg text-2xl font-bold">Statistics</h1>
-                    </div>
 
                     <div class="text-center">
                         <div class="p-6 rounded-lg shadow bg-gray-50 mt-6">
@@ -84,8 +135,8 @@
                     <div class="text-center">
                         @if($totalPastDueRequests > 0)
                             <div class="p-6 rounded-lg shadow bg-red-200">
-                                    <h3 class="text-xl font-bold text-black">{{ $totalPastDueRequests }}</h3>
-                                    <p class="text-black">Past Due Date Requests</p>
+                                <h3 class="text-xl font-bold text-black">{{ $totalPastDueRequests }}</h3>
+                                <p class="text-black">Past Due Date Requests</p>
                             </div>
                         @else
                             <div class="p-6 rounded-lg shadow bg-green-200">
@@ -96,34 +147,20 @@
                     </div>
 
                 </div>
-
-                <div class="text-center">
-                    <x-button href="/create-admin" class="p-12 flex flex-col items-center justify-center rounded-lg shadow-xl my-5">
-                        <h3 class="text-2xl font-bold">Register a New Admin</h3>
-                    </x-button>
-                </div>
-
-                <div clasS="border shadow-xl p-6 space-y-3 bg-gray-300 rounded-xl">
-                    <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                        <div class="text-center my-1">
-                            <x-button href="{{ route('admin-panel.export') }}" class="inline-flex mb-1">Export CSV/Excel</x-button>
-                        </div>
-                        @livewire('users-table')
-                    </div>
-                </div>
-
-                <div class="flex justify-between">
-                    <p class="mt-6">
-                        <x-button href="{{ url()->previous() }}">Back</x-button>
-                    </p>
-
-                    <p class="mt-6">
-                        <x-button href="{{ route('dashboard') }}">Home</x-button>
-                    </p>
-                </div>
-
             </div>
+
+            <div class="flex justify-between">
+                <p class="mt-6">
+                    <x-button href="{{ url()->previous() }}">Back</x-button>
+                </p>
+
+                <p class="mt-6">
+                    <x-button href="{{ route('dashboard') }}">Home</x-button>
+                </p>
+            </div>
+
         </div>
+    </div>
     </div>
 
 </x-app-layout>

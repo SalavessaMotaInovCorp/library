@@ -2,13 +2,13 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
             <h2 class="text-black text-3xl font-bold">
-                Books
+                Our available Books
             </h2>
             @can('create')
                 <x-button href="/books/create">Register book</x-button>
             @endcan
             @can('export')
-                <x-button href="{{ route('books.export') }}">Export CSV/Excel</x-button>
+                <x-button href="{{ route('books.export') }}">Export Excel</x-button>
             @endcan
         </div>
     </x-slot>
@@ -19,6 +19,7 @@
                 <div class="bg-white shadow-sm sm:rounded-lg p-6">
                     @livewire('books-table')
                 </div>
+
 
                 <div class="text-center">
                     <p class="my-3 mx-auto">

@@ -6,10 +6,20 @@
     </x-slot>
 
     <div class="py-12">
+
+        <div class="mb-4 flex justify-center">
+            <form method="GET" action="{{ route('book_requests.available') }}" class="flex">
+                <input type="text" name="query" placeholder="Search by book name..."
+                       class="input input-bordered w-full max-w-md text-white" value="{{ request('query') }}">
+                <x-button type="submit" class="btn btn-primary ml-2">🔍 Search</x-button>
+            </form>
+        </div>
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                 @if ($books->isEmpty())
-                    <p class="text-gray-600">No books available at the moment.</p>
+                    <p class="text-gray-600">No books found for "{{ request('query') }}".</p>
+
                 @else
                     <div class="overflow-x-auto p-6 mb-1">
                         <table class="table w-full text-black">
@@ -45,12 +55,12 @@
                                         <div class="flex justify-center">
                                             @if($book->cover_image)
 
-                                                <label for="modal-cover">
+                                                <label for="modal-cover-{{ $book->isbn }}">
                                                     <img src="{{ asset('' . $book->cover_image) }}" alt="Cover image" style="height:60px; cursor:pointer;" class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
                                                 </label>
 
-                                                <input type="checkbox" id="modal-cover" class="modal-toggle" />
-                                                <div class="modal space-y-1" id="modal-cover">
+                                                <input type="checkbox" id="modal-cover-{{ $book->isbn }}" class="modal-toggle" />
+                                                <div class="modal space-y-1" id="modal-cover-{{ $book->isbn }}">
                                                     <div class="modal-box bg-white">
                                                         <div>
                                                             <h3>Cover image for:</h3>
@@ -59,7 +69,7 @@
 
                                                         <img src="{{ asset('' . $book->cover_image) }}" alt="Cover image" class="rounded-lg shadow-2xl mx-auto w-full border-black">
 
-                                                        <label for="modal-cover" class="btn btn-sm mt-2">Close</label>
+                                                        <label for="modal-cover-{{ $book->isbn }}" class="btn btn-sm mt-2">Close</label>
                                                     </div>
                                                 </div>
 
@@ -164,6 +174,8 @@
 
                 @endif
             </div>
+
+
         </div>
     </div>
 </x-app-layout>

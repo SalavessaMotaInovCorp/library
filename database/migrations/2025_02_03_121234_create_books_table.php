@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id(); // Primary key
             $table->string('isbn')->unique(); // Unique ISBN for the book
-            $table->string('name'); // Book name
+            $table->text('name'); // Book name
             $table->foreignId('publisher_id')->constrained()->onDelete('cascade'); // Foreign key to publishers table
             $table->text('description')->nullable(); // Book description (optional)
             $table->text('cover_image')->nullable(); // Cover image URL (optional)

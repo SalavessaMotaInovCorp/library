@@ -15,9 +15,7 @@ class Book extends Model
     // Cast specific attributes to be encrypted
     protected function casts(): array {
         return [
-            'isbn' => 'encrypted',
             'description' => 'encrypted',
-            'cover_image' => 'encrypted',
             'price' => 'encrypted',
         ];
     }

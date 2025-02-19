@@ -24,7 +24,6 @@ class BookController extends Controller
         $authors = $book->authors;
         $book_requests = $book->bookRequests();
 
-        // Definir valores padrão para evitar erro caso o utilizador não esteja autenticado
         $hasActiveRequest = false;
         $isBookRequestedByOthers = false;
 

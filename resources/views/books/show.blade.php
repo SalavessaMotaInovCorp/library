@@ -13,13 +13,16 @@
                     <p class="text-gray-500">{{ $book->name }}</p>
                 </div>
 
-                <figure class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 flex justify-center">
-                    <div class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
-                        <strong class="text-bold text-gray-900 mr-1 block text-center">Cover:</strong>
-                        <img src="{{ asset($book->cover_image) }}" alt="Book Cover"
-                             class="rounded-lg shadow-md mx-auto w-full h-auto object-contain">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                    <div class="w-full">
+                        <strong class="text-bold text-gray-900 mr-1 block">Cover:</strong>
+                        <div class="text-center">
+                            <img src="{{ asset($book->cover_image) }}" alt="Book Cover"
+                                 class="rounded-lg shadow-md mx-auto w-1/2 object-contain">
+                        </div>
+
                     </div>
-                </figure>
+                </div>
 
 
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
@@ -54,6 +57,31 @@
                 </div>
 
                 @auth
+
+                    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+                    <script type="text/javascript">
+                        google.books.load();
+
+                        function initialize() {
+                            var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+                            viewer.load('{{ $book->isbn }}', function(success) {
+                                if (!success) {
+                                    document.getElementById('previewContainer').style.display = 'none';
+                                }
+                            });
+                        }
+                        google.books.setOnLoadCallback(initialize);
+                    </script>
+                    <div id="previewContainer">
+                        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                            <strong class="text-bold text-gray-900">Preview:</strong>
+                            <div id="viewerCanvas"
+                                 class="w-full max-w-[800px] aspect-[1/1.3] mx-auto shadow-lg rounded-lg bg-white overflow-auto">
+                            </div>
+
+                        </div>
+                    </div>
+
                     @if(Auth::user()->hasRole('admin'))
                         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 text-center cursor-pointer">
                             <a href="/book-requests/{{ $book->id }}/history" class="hover:underline">

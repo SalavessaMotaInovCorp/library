@@ -42,7 +42,7 @@ class BookRequestController extends Controller
             }
         }
 
-        $bookRequests = $query->with('book.authors')->paginate(10);
+        $bookRequests = $query->with('book.authors')->latest()->paginate(10);
 
         return view('book_requests.index', compact('bookRequests', 'activeRequests', 'last30DaysRequests', 'returnedToday'));
     }
@@ -85,11 +85,19 @@ class BookRequestController extends Controller
         return view('book_requests.book_requests_history', compact('book', 'bookRequests'));
     }
 
-    public function available()
+    public function available(Request $request)
     {
+        $query = $request->input('query');
+
         $books = Book::whereDoesntHave('bookRequests', function ($query) {
             $query->whereIn('status', ['active', 'pending_return_confirm']);
-        })->with('authors', 'publisher')->paginate(10);
+        })
+            ->when($query, function ($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%');
+            })
+            ->with('authors', 'publisher')
+            ->latest()
+            ->paginate(10);
 
         $citizens = User::role('citizen')
             ->withCount(['bookRequests' => function ($query) {
@@ -98,8 +106,9 @@ class BookRequestController extends Controller
             ->having('book_requests_count', '<', 3)
             ->get();
 
-        return view('book_requests.available', compact('books', 'citizens'));
+        return view('book_requests.available', compact('books', 'citizens', 'query'));
     }
+
 
     public function requestBook(Request $request, Book $book)
     {

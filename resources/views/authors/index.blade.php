@@ -8,7 +8,7 @@
                 <x-button href="/authors/create">Register author</x-button>
             @endcan
             @can('export')
-                <x-button href="{{ route('authors.export') }}">Export CSV/Excel</x-button>
+                <x-button href="{{ route('authors.export') }}">Export Excel</x-button>
             @endcan
         </div>
     </x-slot>

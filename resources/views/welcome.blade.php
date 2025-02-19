@@ -9,6 +9,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
+        <link rel="icon" type="image/png" href="https://aircinelmvc.blob.core.windows.net/resources/inovcorp_logo_book_bg_removed.png.png">
 
         <!-- Styles / Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -64,7 +65,10 @@
                     </x-button>
                 </div>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-3 mt-12">Discover New Books</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-3 mt-12">Latest Additions</h2>
+
+                <x-recent-books-carousel :recentBooks="$recent_books" />
+
                 <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 mb-6 mt-6">
                     @foreach($recent_books as $book)
                         <div class="card bg-white shadow-xl flex flex-col h-full"> <!-- Flex container -->

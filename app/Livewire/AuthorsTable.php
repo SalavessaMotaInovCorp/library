@@ -2,14 +2,17 @@
 
 namespace App\Livewire;
 
+use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Author;
 
 class AuthorsTable extends DataTableComponent
 {
-    // Define the model for the table
-    protected $model = Author::class;
+    public function builder(): Builder
+    {
+        return Author::query()->orderBy('id', 'desc');
+    }
 
     // Configure table settings
     public function configure(): void

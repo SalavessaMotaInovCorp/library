@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Publisher;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -10,8 +12,10 @@ use App\Models\Book;
 
 class BooksTable extends DataTableComponent
 {
-    // Define the model for the table
-    protected $model = Book::class;
+    public function builder(): Builder
+    {
+        return Book::query()->with(['authors', 'publisher'])->orderBy('id', 'desc');
+    }
 
     // Configure table settings
     public function configure(): void
@@ -49,13 +53,12 @@ class BooksTable extends DataTableComponent
             Column::make("Id", "id")
                 ->hideIf(true), // Hide the ID column
 
+            Column::make("Isbn", "isbn")
+                ->searchable(), // Enable searching
+
             Column::make("Name", "name")
                 ->sortable()
                 ->searchable(),
-
-            Column::make("Isbn", "isbn")
-                ->sortable() // Enable sorting
-                ->searchable(), // Enable searching
 
             Column::make("Authors")
                 ->label(function ($row) {
@@ -76,9 +79,27 @@ class BooksTable extends DataTableComponent
                 ->html(),
 
             Column::make("Description", "description")
-                ->format(function ($value) {
-                    return Str::limit($value, 25); // Limit description length
-                }),
+                ->format(function ($value, $row) {
+                    return '<label for="modal-description-' . $row->id . '" class="hover:cursor-pointer">
+                    <p>' . Str::limit($value, 50) . '</p>
+                </label>
+
+                <input type="checkbox" id="modal-description-' . $row->id . '" class="modal-toggle" />
+
+                <div class="modal space-y-1" id="modal-description-' . $row->id . '">
+                    <div class="modal-box bg-white">
+                        <div>
+                            <h3>Description for:</h3>
+                            <h3 class="text-lg font-bold mb-4 mx-auto">' . $row->name . '</h3>
+                        </div>
+
+                        <p class="rounded-lg shadow-2xl mx-auto w-full border-black p-2">' . $value . '</p>
+
+                        <label for="modal-description-' . $row->id . '" class="btn btn-sm mt-2">Close</label>
+                    </div>
+                </div>';
+                })
+                ->html(),
 
             Column::make("Cover image", "cover_image")
                 ->format(function ($value, $row) {
@@ -86,7 +107,9 @@ class BooksTable extends DataTableComponent
                         ? '<label for="modal-' . $row->id . '">
                    <img src="' . $value . '" alt="Cover image" style="height:60px; cursor:pointer;" class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
                </label>
+
                <input type="checkbox" id="modal-' . $row->id . '" class="modal-toggle" />
+
                <div class="modal space-y-1" id="modal-' . $row->id . '">
                    <div class="modal-box bg-white">
                         <div>
@@ -104,9 +127,9 @@ class BooksTable extends DataTableComponent
                 ->html(),
 
             Column::make("Price", "price")
-                ->format(function ($value) {
-                    return number_format($value, 2, ',', '.') . ' €'; // Format price
-                }),
+            ->format(function ($value) {
+                return number_format($value, 2) . ' €';
+            }),
 
             Column::make("Actions")
                 ->label(function ($row) {

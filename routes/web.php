@@ -6,6 +6,7 @@ use App\Exports\BooksExport;
 use App\Exports\PublishersExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\BookRequestController;
+use App\Http\Controllers\GoogleBooksController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
@@ -31,7 +32,6 @@ Route::middleware([
     // Dashboard route
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
-
     Route::get('/book-requests', [BookRequestController::class, 'index'])->name('book_requests.index');
     Route::get('/book-requests/available', [BookRequestController::class, 'available'])->name('book_requests.available');
     Route::get('/book-requests/{book}/history', [BookRequestController::class, 'bookRequestsHistory'])->name('book_requests.history');
@@ -47,6 +47,10 @@ Route::middleware([
 
         // Administration Panel
         Route::get('/admin-panel', [HomeController::class, 'admin_panel'])->name('admin_panel');
+
+        // Google / Main Warehouse Book Search and Order
+        Route::get('/google-books/search', [GoogleBooksController::class, 'search'])->name('googlebooks.search');
+        Route::post('/google-books/order', [GoogleBooksController::class, 'orderBook'])->name('google_books.order');
 
         // Export users to Excel
         Route::get('/admin-panel/export', function () {

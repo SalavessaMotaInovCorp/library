@@ -25,7 +25,7 @@
             <div class="grid gap-10 md:grid-cols-3 text-center">
                 <x-button href="/books" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                     <h3 class="text-4xl font-bold">{{ $books_count }}</h3>
-                    <p class="text-lg">Books Available</p>
+                    <p class="text-lg">Books</p>
                 </x-button>
 
                 <x-button href="/authors" class="p-6 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
@@ -39,22 +39,18 @@
                 </x-button>
             </div>
 
-
-
-            <form action="/search" class="relative flex items-center justify-center mb-6">
-                @csrf
-                <input type="text" class="input input-bordered w-full max-w-md text-white" name="query" placeholder="Search book name...">
-                 <x-button class="btn btn-primary ml-2">🔍 Search</x-button>
-            </form>
-
             <div class="text-center">
                 <x-button href="/book-requests/available" class="p-12 min-h-32 flex flex-col items-center justify-center rounded-lg shadow-lg">
                     <h3 class="text-2xl font-bold">Request a Book</h3>
                 </x-button>
             </div>
 
-            <h2 class="text-2xl font-bold text-gray-800 mb-3">Recent Books</h2>
-            <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 mb-6">
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">Latest Additions</h2>
+
+            <x-recent-books-carousel :recentBooks="$recent_books" />
+
+            <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 my-14">
                 @foreach($recent_books as $book)
                     <div class="card bg-white shadow-xl flex flex-col h-full"> <!-- Flex container -->
                         <figure>
@@ -69,13 +65,14 @@
                 @endforeach
             </div>
 
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">Reader of the Month</h2>
             @if($readerOfTheMonth)
                 <section class="py-6 px-6 rounded-lg shadow-md text-center bg-cover bg-center flex justify-center items-center"
                          style="background-image: url('https://aircinelmvc.blob.core.windows.net/resources/librarySample3.jpg'); min-height: 300px;">
 
                     <div class="bg-gray-50 bg-opacity-50 backdrop-blur-md p-6 rounded-lg shadow-lg max-w-md w-full">
                         <h2 class="text-2xl font-bold text-gray-800">Reader of the Month</h2>
-                        <img src="{{ $readerOfTheMonth->profile_photo_path ?? '/default-avatar.jpg' }}"
+                        <img src="{{ $readerOfTheMonth->profile_photo_path ?? '/profile-photos/default-avatar.jpg' }}"
                              alt="Reader of the Month" class="w-32 h-42 mx-auto rounded-xl mt-4 shadow-lg border border-black">
                         <h3 class="text-xl font-bold mt-2">{{ $readerOfTheMonth->name }}</h3>
                         <p class="text-gray-900">Read {{ $readerOfTheMonth->book_requests_count }} books this month!</p>

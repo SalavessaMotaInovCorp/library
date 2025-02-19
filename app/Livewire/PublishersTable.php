@@ -2,14 +2,17 @@
 
 namespace App\Livewire;
 
+use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Publisher;
 
 class PublishersTable extends DataTableComponent
 {
-    // Define the model for the table
-    protected $model = Publisher::class;
+    public function builder(): Builder
+    {
+        return Publisher::query()->orderBy('id', 'desc');
+    }
 
     // Configure table settings
     public function configure(): void

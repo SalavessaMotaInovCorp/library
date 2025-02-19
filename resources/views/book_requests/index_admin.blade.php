@@ -7,7 +7,7 @@
                 @endif
             </h2>
             @can('export')
-                <x-button href="{{ route('book_requests.export') }}">Export CSV/Excel</x-button>
+                <x-button href="{{ route('book_requests.export') }}">Export Excel</x-button>
             @endcan
         </div>
     </x-slot>
