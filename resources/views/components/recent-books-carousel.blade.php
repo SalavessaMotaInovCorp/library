@@ -1,5 +1,5 @@
 <div class="relative w-full min-h-[500px] flex items-center justify-center bg-gray-100 rounded-xl shadow-xl">
-<div id="drag-container">
+    <div id="drag-container">
         <div id="spin-container">
             @foreach($recentBooks as $book)
                 <a target="_blank" href="/books/{{ $book->id }}">
@@ -46,7 +46,7 @@
             position: absolute;
             top: 100%;
             left: 50%;
-            transform: translate(-50%,-50%) rotateX(90deg);
+            transform: translate(-50%, -50%) rotateX(90deg);
         }
 
         #drag-container a {
@@ -59,17 +59,25 @@
             position: absolute;
             top: 100%;
             left: 50%;
-            transform: translate(-50%,-50%) rotateX(90deg);
+            transform: translate(-50%, -50%) rotateX(90deg);
         }
 
         @keyframes spin {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
         }
 
         @keyframes spinRevert {
-            from { transform: rotateY(360deg); }
-            to { transform: rotateY(0deg); }
+            from {
+                transform: rotateY(360deg);
+            }
+            to {
+                transform: rotateY(0deg);
+            }
         }
     </style>
 
@@ -104,8 +112,8 @@
         }
 
         function applyTranform(obj) {
-            if(tY > 180) tY = 180;
-            if(tY < 0) tY = 0;
+            if (tY > 180) tY = 180;
+            if (tY < 0) tY = 0;
             obj.style.transform = "rotateX(" + (-tY) + "deg) rotateY(" + (tX) + "deg)";
         }
 

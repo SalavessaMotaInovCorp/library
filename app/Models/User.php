@@ -79,4 +79,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->roles->first()->name ?? 'No Role';
     }
+
+    public function bookReviews()
+    {
+        return $this->hasMany(BookReview::class);
+    }
+
+    public function interestedBooks()
+    {
+        return $this->belongsToMany(Book::class, 'book_user_interests');
+    }
+
 }

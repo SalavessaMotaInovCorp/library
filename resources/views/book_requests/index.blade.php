@@ -27,15 +27,26 @@
                         </div>
                     </div>
 
-                    <form method="GET" action="{{ route('book_requests.index') }}" class="mb-6 flex flex-col sm:flex-row items-center justify-start gap-4">
+                    <form method="GET" action="{{ route('book_requests.index') }}"
+                          class="mb-6 flex flex-col sm:flex-row items-center justify-start gap-4">
                         <label for="status" class="font-bold text-gray-700">Filter by Status:</label>
                         <select name="status" id="status" class="border border-gray-300 rounded-lg pr-8">
                             <option value="">All Requests</option>
-                            <option value="returned" {{ request('status') == 'returned' ? 'selected' : '' }}> Return Confirmed</option>
-                            <option value="pending_return_confirm" {{ request('status') == 'pending_return_confirm' ? 'selected' : '' }}>Pending Confirm</option>
+                            <option value="returned" {{ request('status') == 'returned' ? 'selected' : '' }}> Return
+                                Confirmed
+                            </option>
+                            <option
+                                value="pending_return_confirm" {{ request('status') == 'pending_return_confirm' ? 'selected' : '' }}>
+                                Pending Confirm
+                            </option>
                             <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
                         </select>
-                        <x-button type="submit" class="mr-1">Apply Filter</x-button>
+                        <div class="flex flex-col sm:flex-row justify-between w-full">
+                            <x-button type="submit" class="mt-1">Apply Filter</x-button>
+                            <x-button href="{{ route('book_requests.available') }}" class="mt-1">Make a new Request
+                            </x-button>
+                        </div>
+
                     </form>
 
                     @if ($bookRequests->isEmpty())
@@ -64,7 +75,8 @@
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->book->isbn ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 p-2">
                                             @foreach($bookRequest->book->authors ?? [] as $author)
-                                                <a href="/authors/{{ $author->id }}" class="hover:underline">- {{ $author->name }}</a><br/>
+                                                <a href="/authors/{{ $author->id }}"
+                                                   class="hover:underline">- {{ $author->name }}</a><br/>
                                             @endforeach
                                         </td>
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->request_date }}</td>
@@ -85,12 +97,42 @@
                                         </td>
                                         <td class="border border-gray-300 p-2 text-center font-bold">
                                             @if(!$bookRequest->is_returned)
-                                                <form method="POST" action="{{ route('book_requests.returnBook', $bookRequest->id) }}">
-                                                    @csrf
-                                                    <x-button type="submit">Return Book</x-button>
-                                                </form>
+                                                <label for="return-{{ $bookRequest->book_id }}"
+                                                       class="btn text-white px-4 py-2 rounded cursor-pointer">
+                                                    Return
+                                                </label>
+                                                <input type="checkbox" id="return-{{ $bookRequest->book_id }}"
+                                                       class="modal-toggle"/>
+
+                                                <div class="modal">
+                                                    <div class="modal-box text-white">
+                                                        <div class="text-center m-3">
+                                                            <h3 class="font-bold text-lg mt-3">Thank you for choosing
+                                                                our library! :)</h3>
+                                                        </div>
+                                                        <form method="POST"
+                                                              action="{{ route('book_requests.returnBook', $bookRequest->id) }}">
+                                                            @csrf
+                                                            <x-button type="submit">Close</x-button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
                                             @else
                                                 <p class="text-green-500">Returned</p>
+                                                @php
+                                                    $existingReview = Auth::user()->bookReviews()->where('book_id', $bookRequest->book_id)->first();
+                                                @endphp
+                                                @if($existingReview)
+                                                    <a href="/book-reviews/{{ $existingReview->id }}/edit"
+                                                       class="text-xs">
+                                                        (Edit Review)
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('book_reviews.create', ['book' => $bookRequest->book_id]) }}">
+                                                        (Review)
+                                                    </a>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>
@@ -99,12 +141,10 @@
                             </table>
                         </div>
                     @endif
-
                     <div>
                         {{ $bookRequests->links() }}
                     </div>
                 </div>
-
                 <div class="text-center">
                     <p class="my-3 mx-auto">
                         <x-button href="/dashboard">Home</x-button>

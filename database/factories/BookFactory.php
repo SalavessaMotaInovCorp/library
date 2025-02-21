@@ -25,7 +25,7 @@ class BookFactory extends Factory
             'publisher_id' => Publisher::factory(), // Create a related publisher
             'description' => $this->faker->paragraph(), // Generate a random description
             'cover_image' => 'covers/default_cover.jpg',
-            'price' => $this->faker->numberBetween(5, 500), // Random price between 5 and 500
+            'price' => $this->faker->numberBetween(1, 100), // Random price between 5 and 500
         ];
     }
 }

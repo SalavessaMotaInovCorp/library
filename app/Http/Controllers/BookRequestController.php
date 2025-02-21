@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendBookAvailableEmail;
 use App\Jobs\SendBookRequestEmail;
-use App\Jobs\SendDueDateReminder;
 use App\Models\Book;
 use App\Models\BookRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schedule;
 
 class BookRequestController extends Controller
 {
@@ -139,6 +138,7 @@ class BookRequestController extends Controller
         $admins = User::whereHas('roles', function ($query) {
             $query->where('name', 'admin');
         })->get();
+
         foreach ($admins as $admin) {
             SendBookRequestEmail::dispatch($bookRequest, $admin, false);
         }
@@ -168,6 +168,8 @@ class BookRequestController extends Controller
             'status' => 'returned',
             'total_request_days' => $totalDays,
         ]);
+
+        SendBookAvailableEmail::dispatch($bookRequest->book);
 
         return back()->with('success', 'Book has been returned.');
     }

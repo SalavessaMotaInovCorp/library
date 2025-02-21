@@ -9,30 +9,36 @@
             background-color: #f4f4f4;
             padding: 20px;
         }
+
         .container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             max-width: 600px;
             margin: auto;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
+
         .table th, .table td {
             border: 1px solid #e5e7eb;
             padding: 12px;
             text-align: left;
         }
+
         .table th {
             background-color: #e5e7eb;
             color: #111827;
         }
+
         .table tr:nth-child(even) {
             background-color: #f9fafb;
         }
+
         .header {
             background-color: #374151;
             color: white;
@@ -40,12 +46,13 @@
             border-radius: 8px 8px 0 0;
             text-align: center;
         }
+
         .cover-image {
             max-width: 150px;
             margin: 10px auto;
             display: block;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>

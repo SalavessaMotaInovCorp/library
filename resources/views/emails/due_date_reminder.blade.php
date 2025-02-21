@@ -9,14 +9,16 @@
             background-color: #f4f4f4;
             padding: 20px;
         }
+
         .container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             max-width: 600px;
             margin: auto;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .header {
             background-color: #374151;
             color: white;
@@ -24,30 +26,36 @@
             border-radius: 8px 8px 0 0;
             text-align: center;
         }
+
         .table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
+
         .table th, .table td {
             border: 1px solid #e5e7eb;
             padding: 12px;
             text-align: left;
         }
+
         .table th {
             background-color: #e5e7eb;
             color: #111827;
         }
+
         .table tr:nth-child(even) {
             background-color: #f9fafb;
         }
+
         .cover-image {
             max-width: 150px;
             margin: 10px auto;
             display: block;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         .footer {
             text-align: center;
             color: #6b7280;
@@ -64,7 +72,8 @@
     </div>
 
     <p>Hello {{ $userName }},</p>
-    <p>This is a friendly reminder that the following book is due for return tomorrow. Please ensure it is returned on time to avoid any penalties.</p>
+    <p>This is a friendly reminder that the following book is due for return tomorrow. Please ensure it is returned on
+        time to avoid any penalties.</p>
 
     <table class="table">
         <tr>

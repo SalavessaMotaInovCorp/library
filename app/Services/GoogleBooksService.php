@@ -45,7 +45,7 @@ class GoogleBooksService
             $book = new Book();
             $book->isbn = $isbn;
             $book->name = $volumeInfo['title'] ?? 'Unknown Title';
-            $book->description = $volumeInfo['description'] ?? 'No description available.';
+            $book->description = $volumeInfo['description'] ?? '';
             $book->cover_image = isset($volumeInfo['imageLinks']['thumbnail'])
                 ? str_replace('&zoom=1', '&zoom=10', $volumeInfo['imageLinks']['thumbnail'])
                 : null;

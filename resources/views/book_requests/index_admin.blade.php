@@ -32,15 +32,26 @@
                         </div>
                     </div>
 
-                    <form method="GET" action="{{ route('book_requests.index_admin') }}" class="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <form method="GET" action="{{ route('book_requests.index_admin') }}"
+                          class="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                         <label for="status" class="font-bold text-gray-700">Filter by Status:</label>
                         <select name="status" id="status" class="border border-gray-300 rounded-lg pr-8">
                             <option value="">All Requests</option>
-                            <option value="returned" {{ request('status') == 'returned' ? 'selected' : '' }}> Return Confirmed</option>
-                            <option value="pending_return_confirm" {{ request('status') == 'pending_return_confirm' ? 'selected' : '' }}>Pending Confirm</option>
+                            <option value="returned" {{ request('status') == 'returned' ? 'selected' : '' }}> Return
+                                Confirmed
+                            </option>
+                            <option
+                                value="pending_return_confirm" {{ request('status') == 'pending_return_confirm' ? 'selected' : '' }}>
+                                Pending Confirm
+                            </option>
                             <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
                         </select>
-                        <x-button type="submit">Apply Filter</x-button>
+                        <div class="flex flex-col sm:flex-row justify-between w-full">
+                            <x-button type="submit" class="mt-1">Apply Filter</x-button>
+                            <x-button href="{{ route('book_requests.available') }}" class="mt-1">Make a new Request
+                            </x-button>
+                        </div>
+
                     </form>
 
                     @if ($bookRequests->isEmpty())
@@ -93,7 +104,8 @@
                                                 @if(!$bookRequest->is_returned)
                                                     <p class="text-yellow-500">Active</p>
                                                 @else
-                                                    <form method="POST" action="{{ route('book_requests.confirmReturn', $bookRequest->id) }}">
+                                                    <form method="POST"
+                                                          action="{{ route('book_requests.confirmReturn', $bookRequest->id) }}">
                                                         @csrf
                                                         <x-button type="submit">Confirm Return</x-button>
                                                     </form>

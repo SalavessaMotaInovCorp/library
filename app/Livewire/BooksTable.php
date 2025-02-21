@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Publisher;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;

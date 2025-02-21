@@ -22,10 +22,13 @@
 
 
                 <div class="text-center my-6">
-                    <h6 class="mb-1">If you want a book and you can't find it in our database, search here so we can check our warehouses:</h6>
+                    <h6 class="mb-1">If you want a book and you can't find it in our database, search here so we can
+                        check our warehouses:</h6>
 
-                    <form method="GET" action="{{ route('googlebooks.search') }}" class="relative flex items-center justify-center mb-6">
-                        <input type="text" name="query" placeholder="Search books..." class="input input-bordered w-full max-w-md text-white">
+                    <form method="GET" action="{{ route('googlebooks.search') }}"
+                          class="relative flex items-center justify-center mb-6">
+                        <input type="text" name="query" placeholder="Search books..."
+                               class="input input-bordered w-full max-w-md text-white">
                         <x-button type="submit" class="btn btn-primary ml-2">🔍 Search</x-button>
                     </form>
 

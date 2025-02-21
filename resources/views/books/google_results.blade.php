@@ -38,11 +38,13 @@
                                     <td class="border border-gray-300 p-2">{{ $book->publisher->name }}</td>
 
                                     <td class="border border-gray-300 p-2">
-                                        <label for="modal-description-{{ $book->isbn }}" class="mx-auto hover:cursor-pointer">
+                                        <label for="modal-description-{{ $book->isbn }}"
+                                               class="mx-auto hover:cursor-pointer">
                                             <p>{{ \Illuminate\Support\Str::limit($book->description, 50) }}</p>
                                         </label>
 
-                                        <input type="checkbox" id="modal-description-{{ $book->isbn }}" class="modal-toggle" />
+                                        <input type="checkbox" id="modal-description-{{ $book->isbn }}"
+                                               class="modal-toggle"/>
 
                                         <div class="modal space-y-1" id="modal-description-{{ $book->isbn }}">
                                             <div class="modal-box bg-white">
@@ -53,7 +55,8 @@
 
                                                 <p class="rounded-lg shadow-2xl mx-auto w-full border-black p-2">{{ $book->description }}</p>
 
-                                                <label for="modal-description-{{ $book->isbn }}" class="btn btn-sm mt-2">Close</label>
+                                                <label for="modal-description-{{ $book->isbn }}"
+                                                       class="btn btn-sm mt-2">Close</label>
                                             </div>
                                         </div>
                                     </td>
@@ -63,10 +66,12 @@
                                             @if($book->cover_image)
 
                                                 <label for="modal-cover-{{ $book->isbn }}">
-                                                    <img src="{{ $book->cover_image }}" alt="Cover image" style="height:60px; cursor:pointer;"
+                                                    <img src="{{ $book->cover_image }}" alt="Cover image"
+                                                         style="height:60px; cursor:pointer;"
                                                          class="rounded mx-auto hover:shadow-lg transition-transform hover:scale-105">
                                                 </label>
-                                                <input type="checkbox" id="modal-cover-{{ $book->isbn }}" class="modal-toggle" />
+                                                <input type="checkbox" id="modal-cover-{{ $book->isbn }}"
+                                                       class="modal-toggle"/>
 
                                                 <div class="modal space-y-1" id="modal-cover-{{ $book->isbn }}">
                                                     <div class="modal-box bg-white">
@@ -75,9 +80,11 @@
                                                             <h3 class="text-lg font-bold mb-4 mx-auto">{{ $book->name }}</h3>
                                                         </div>
 
-                                                        <img src="{{ $book->cover_image }}" alt="Cover image" class="rounded-lg shadow-2xl mx-auto w-full border-black">
+                                                        <img src="{{ $book->cover_image }}" alt="Cover image"
+                                                             class="rounded-lg shadow-2xl mx-auto w-full border-black">
 
-                                                        <label for="modal-cover-{{ $book->isbn }}" class="btn btn-sm mt-2">Close</label>
+                                                        <label for="modal-cover-{{ $book->isbn }}"
+                                                               class="btn btn-sm mt-2">Close</label>
                                                     </div>
                                                 </div>
 
@@ -94,23 +101,31 @@
                                                 @csrf
                                                 <input type="hidden" name="isbn" value="{{ $book->isbn }}">
                                                 <input type="hidden" name="title" value="{{ $book->name }}">
-                                                <input type="hidden" name="publisher" value="{{ $book->publisher->name ?? 'Unknown Publisher' }}">
-                                                <input type="hidden" name="description" value="{{ $book->description }}">
-                                                <input type="hidden" name="cover_image" value="{{ $book->cover_image }}">
-                                                <input type="hidden" name="authors" value="{{ json_encode($book->authors->pluck('name')) }}">
+                                                <input type="hidden" name="publisher"
+                                                       value="{{ $book->publisher->name ?? 'Unknown Publisher' }}">
+                                                <input type="hidden" name="description"
+                                                       value="{{ $book->description }}">
+                                                <input type="hidden" name="cover_image"
+                                                       value="{{ $book->cover_image }}">
+                                                <input type="hidden" name="authors"
+                                                       value="{{ json_encode($book->authors->pluck('name')) }}">
 
-                                                <label for="confirm-request-delivery-{{ $book->isbn }}" class="btn text-white px-4 py-2 rounded cursor-pointer">
+                                                <label for="confirm-request-delivery-{{ $book->isbn }}"
+                                                       class="btn text-white px-4 py-2 rounded cursor-pointer">
                                                     Import
                                                 </label>
-                                                <input type="checkbox" id="confirm-request-delivery-{{ $book->isbn }}" class="modal-toggle"/>
+                                                <input type="checkbox" id="confirm-request-delivery-{{ $book->isbn }}"
+                                                       class="modal-toggle"/>
 
                                                 <div class="modal">
                                                     <div class="modal-box text-white text-center">
                                                         <h3 class="font-bold text-lg">Confirm Book Import Request</h3>
                                                         <p class="py-4">Are you sure you want to import the book:
-                                                            <strong>{{ $book->name }}</strong> to our library database?</p>
+                                                            <strong>{{ $book->name }}</strong> to our library database?
+                                                        </p>
                                                         <div class="modal-action flex justify-between">
-                                                            <label for="confirm-request-delivery-{{ $book->isbn }}" class="btn bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</label>
+                                                            <label for="confirm-request-delivery-{{ $book->isbn }}"
+                                                                   class="btn bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</label>
                                                             <x-button type="submit">Confirm</x-button>
                                                         </div>
                                                         <p class="py-4">The importation is immediate!</p>

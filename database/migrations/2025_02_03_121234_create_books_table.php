@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('cover_image')->nullable(); // Cover image URL (optional)
             $table->string('price'); // Book price
             $table->timestamps(); // Created_at and updated_at timestamps
+
+            $table->fullText('name');
         });
     }
 

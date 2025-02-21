@@ -15,7 +15,6 @@ class Book extends Model
     // Cast specific attributes to be encrypted
     protected function casts(): array {
         return [
-            'description' => 'encrypted',
             'price' => 'encrypted',
         ];
     }
@@ -35,5 +34,22 @@ class Book extends Model
     public function bookRequests()
     {
         return $this->hasMany(BookRequest::class);
+    }
+
+    public function bookReviews()
+    {
+        return $this->hasMany(BookReview::class);
+    }
+
+    public function interestedUsers()
+    {
+        return $this->belongsToMany(User::class, 'book_user_interests');
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        return $this->bookReviews()
+            ->where('status', 'approved')
+            ->avg('rating') ?? 0;
     }
 }

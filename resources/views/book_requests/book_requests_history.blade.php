@@ -17,17 +17,17 @@
                         <div class="overflow-x-auto p-6">
                             <table class="table w-full border-collapse border border-gray-300">
                                 <thead>
-                                <tr class="bg-gray-200 text-black">
-                                    <th class="border border-gray-300 p-2">User Name</th>
-                                    <th class="border border-gray-300 p-2">ISBN</th>
-                                    <th class="border border-gray-300 p-2">Book Title</th>
-                                    <th class="border border-gray-300 p-2">Request Date</th>
-                                    <th class="border border-gray-300 p-2">Due Date</th>
-                                    <th class="border border-gray-300 p-2">Returned</th>
-                                    <th class="border border-gray-300 p-2">Number of days</th>
-                                    <th class="border border-gray-300 p-2">Confirmed</th>
-                                    <th class="border border-gray-300 p-2"></th>
-                                </tr>
+                                    <tr class="bg-gray-200 text-black">
+                                        <th class="border border-gray-300 p-2">User Name</th>
+                                        <th class="border border-gray-300 p-2">ISBN</th>
+                                        <th class="border border-gray-300 p-2">Book Title</th>
+                                        <th class="border border-gray-300 p-2">Request Date</th>
+                                        <th class="border border-gray-300 p-2">Due Date</th>
+                                        <th class="border border-gray-300 p-2">Returned</th>
+                                        <th class="border border-gray-300 p-2">Number of days</th>
+                                        <th class="border border-gray-300 p-2">Confirmed</th>
+                                        <th class="border border-gray-300 p-2"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($bookRequests as $bookRequest)
@@ -59,7 +59,8 @@
                                                 @if(!$bookRequest->is_returned)
                                                     <p class="text-yellow-500 font-bold">Active</p>
                                                 @else
-                                                    <form method="POST" action="{{ route('book_requests.confirmReturn', $bookRequest->id) }}">
+                                                    <form method="POST"
+                                                          action="{{ route('book_requests.confirmReturn', $bookRequest->id) }}">
                                                         @csrf
                                                         <x-button type="submit">Confirm Return</x-button>
                                                     </form>
@@ -69,7 +70,6 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
-
                             </table>
                         </div>
                     @else
@@ -80,19 +80,16 @@
                         {{ $bookRequests->links() }}
                     </div>
 
-                        <div class="flex justify-between">
-                            <p class="mt-6">
-                                <x-button href="{{ url()->previous() }}">Back</x-button>
-                            </p>
+                    <div class="flex justify-between">
+                        <p class="mt-6">
+                            <x-button href="{{ url()->previous() }}">Back</x-button>
+                        </p>
 
-                            <p class="mt-6">
-                                <x-button href="{{ route('dashboard') }}">Home</x-button>
-                            </p>
-                        </div>
-
+                        <p class="mt-6">
+                            <x-button href="{{ route('dashboard') }}">Home</x-button>
+                        </p>
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </div>

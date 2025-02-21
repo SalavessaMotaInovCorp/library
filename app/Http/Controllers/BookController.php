@@ -18,11 +18,32 @@ class BookController extends Controller
         return view('books.index', compact('books'));
     }
 
+
+    public function getRelatedBooksFullText(Book $book)
+    {
+        $query = $book->name;
+
+        if (empty($query)) {
+            return collect([]);
+        }
+
+        $relatedBooks = Book::selectRaw("*, MATCH(name) AGAINST(? IN NATURAL LANGUAGE MODE) as relevance", [$query])
+            ->where('id', '!=', $book->id)
+            ->whereNotNull('name')
+            ->having('relevance', '>', 0)
+            ->orderByDesc('relevance')
+            ->limit(4)
+            ->get();
+
+        return $relatedBooks;
+    }
+
     // Show details of a specific book
     public function show(Book $book)
     {
         $authors = $book->authors;
         $book_requests = $book->bookRequests();
+        $book_reviews = $book->bookReviews()->where('status', 'approved')->paginate(5);
 
         $hasActiveRequest = false;
         $isBookRequestedByOthers = false;
@@ -41,10 +62,11 @@ class BookController extends Controller
                 ->exists();
         }
 
-        return view('books.show', compact('book', 'authors', 'book_requests', 'hasActiveRequest', 'isBookRequestedByOthers'));
+        $relatedBooks = $this->getRelatedBooksFullText($book);
+
+
+        return view('books.show', compact('book', 'authors', 'book_requests', 'book_reviews','hasActiveRequest', 'isBookRequestedByOthers', 'relatedBooks'));
     }
-
-
 
     // Show the form to create a new book
     public function create(Request $request)
@@ -134,6 +156,19 @@ class BookController extends Controller
         $book->delete();
         return redirect('/books');
     }
+
+    public function markInterest(Book $book)
+    {
+        $user = auth()->user();
+
+        if (!$book->interestedUsers()->where('user_id', $user->id)->exists()) {
+            $book->interestedUsers()->attach($user->id);
+            return back()->with('success', 'You will be notified when this book becomes available.');
+        }
+
+        return back()->with('warning', 'You are already registered to receive notifications for this book.');
+    }
+
 
 
 }

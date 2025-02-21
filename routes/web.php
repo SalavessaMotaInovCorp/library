@@ -6,6 +6,7 @@ use App\Exports\BooksExport;
 use App\Exports\PublishersExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\BookRequestController;
+use App\Http\Controllers\BookReviewController;
 use App\Http\Controllers\GoogleBooksController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthorController;
@@ -41,6 +42,13 @@ Route::middleware([
         ->name('book_requests.returnBook');
     Route::post('/book-requests/{bookRequest}/confirmReturn', [BookRequestController::class, 'confirmReturn'])
         ->name('book_requests.confirmReturn');
+
+    Route::post('/books/{book}/interest', [BookController::class, 'markInterest'])->name('books.markInterest');
+
+    Route::get('/book-reviews/{book}', [BookReviewController::class, 'create'])->name('book_reviews.create');
+    Route::post('/book-reviews/{book}', [BookReviewController::class, 'store'])->name('book_reviews.store');
+    Route::get('/book-reviews/{bookReview}/edit', [BookReviewController::class, 'edit'])->name('book_reviews.edit');
+    Route::patch('/book-reviews/{bookReview}', [BookReviewController::class, 'update'])->name('book_reviews.update');
 
     // Admin Routes
     Route::middleware('role:admin')->group(function () {
@@ -81,13 +89,13 @@ Route::middleware([
         })->name('book_requests.export');
 
         // Resource routes for books (create, store, edit, update, destroy)
-        Route::resource('books', BookController::class)->except(['index', 'show','export']);
+        Route::resource('books', BookController::class)->except(['index', 'show', 'export']);
 
         // Resource routes for authors (create, store, edit, update, destroy)
-        Route::resource('authors', AuthorController::class)->except(['index', 'show','export']);
+        Route::resource('authors', AuthorController::class)->except(['index', 'show', 'export']);
 
         // Resource routes for publishers (create, store, edit, update, destroy)
-        Route::resource('publishers', PublisherController::class)->except(['index', 'show','export']);
+        Route::resource('publishers', PublisherController::class)->except(['index', 'show', 'export']);
 
         // Register New Admin Route
         Route::get('/create-admin', [HomeController::class, 'create_admin'])->name('create_admin');

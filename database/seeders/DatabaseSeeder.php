@@ -38,10 +38,10 @@ class DatabaseSeeder extends Seeder
         $citizen->assignRole('citizen');
 
         // Create 50 books
-        $books = Book::factory(50)->create();
+        $books = Book::factory(20)->create();
 
         // Create 30 authors
-        $authors = Author::factory(30)->create();
+        $authors = Author::factory(20)->create();
 
         // Attach 1 to 3 random authors to each book
         $books->each(function ($book) use ($authors) {

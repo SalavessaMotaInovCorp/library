@@ -17,10 +17,11 @@
                         <div class="bg-white shadow-sm sm:rounded-lg p-6">
                             <h1 class="mb-4">Request Books From The Main Warehouse:</h1>
 
-                            <form method="GET" action="{{ route('googlebooks.search') }}" class="relative flex items-center justify-center mb-6">
+                            <form method="GET" action="{{ route('googlebooks.search') }}"
+                                  class="relative flex items-center justify-center mb-6">
                                 <div class="flex flex-col justify-center items-center w-full max-w-lg gap-2">
                                     <input type="text" name="query" placeholder="Search book name..."
-                                           class="input input-bordered rounded-md w-full sm:w-auto px-4 py-2 text-white">
+                                           class="input input-bordered rounded-md w-full px-4 py-2 text-white">
                                     <x-button type="submit" class="w-full sm:w-auto">🔍 Search</x-button>
                                 </div>
                             </form>
@@ -32,9 +33,23 @@
 
             <div class="border border-gray-300 bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
                 <div class="text-center my-4">
-                    <h2 class="text-2xl font-bold text-gray-800">Users</h2>
+                    <h2 class="text-2xl font-bold text-gray-800">Book Reviews</h2>
                 </div>
 
+                <div clasS="border shadow-xl p-1 space-y-3 bg-gray-300 rounded-xl font-bold">
+
+                    <div clasS="border shadow-xl p-6 space-y-3 bg-white rounded-xl">
+                        <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                            @livewire('book-reviews-table')
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border border-gray-300 bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
+                <div class="text-center my-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Users</h2>
+                </div>
                 <div clasS="border shadow-xl p-1 space-y-3 bg-gray-300 rounded-xl font-bold">
                     <div class="text-center">
                         <x-button href="/create-admin"
@@ -160,7 +175,6 @@
             </div>
 
         </div>
-    </div>
     </div>
 
 </x-app-layout>

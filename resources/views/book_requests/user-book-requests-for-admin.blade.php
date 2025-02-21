@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="text-black text-3xl font-bold">
-                Book Requests History of:    {{ $user->name }}
+                Book Requests History of: {{ $user->name }}
             </h2>
         </div>
     </x-slot>
@@ -35,11 +35,13 @@
                                         <td class="border border-gray-300 p-2">{{ $bookRequest->book->name ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 p-2">
                                             @foreach($bookRequest->book->authors ?? [] as $author)
-                                                <a href="/authors/{{ $author->id }}" class="hover:underline">{{ $author->name }}</a><br/>
+                                                <a href="/authors/{{ $author->id }}"
+                                                   class="hover:underline">{{ $author->name }}</a><br/>
                                             @endforeach
                                         </td>
                                         <td class="border border-gray-300 p-2">
-                                            <a href="/publishers/{{ $bookRequest->book->publisher->id ?? '#' }}" class="hover:underline">
+                                            <a href="/publishers/{{ $bookRequest->book->publisher->id ?? '#' }}"
+                                               class="hover:underline">
                                                 {{ $bookRequest->book->publisher->name ?? 'N/A' }}
                                             </a>
                                         </td>
