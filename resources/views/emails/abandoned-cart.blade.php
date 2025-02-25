@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your Book is Now Available</title>
+    <title>Need help with your books?</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,15 +54,22 @@
 
 <div class="container">
     <div class="header">
-        <h2>Your Book is Now Available!</h2>
+        <h2>Need help with your books?</h2>
     </div>
 
     <div class="content">
-        <p><strong>Book Title:</strong> {{ $bookTitle }}</p>
-        <p>Good news! The book you're interested in is now available at the library.</p>
-        <p>
-            <a href="{{ $bookLink }}" class="button">Go to book!</a>
-        </p>
+        <p>Hi {{ $user->name }},</p>
+        <p>We noticed that you added the following books to your cart but haven't completed your purchase yet.</p>
+
+        <ul style="text-align: left;">
+            @foreach($cartItems as $item)
+                <li><strong>{{ $item->book->name }}</strong></li>
+            @endforeach
+        </ul>
+
+        <p>Do you need any help? Click below to return to your cart and complete your order.</p>
+
+        <a href="{{ $cartUrl }}" class="button">Go to Cart</a>
     </div>
 
     <div class="footer">

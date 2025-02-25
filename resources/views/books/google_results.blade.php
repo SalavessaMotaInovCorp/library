@@ -94,7 +94,7 @@
                                         </div>
                                     </td>
                                     <td class="border border-gray-300 p-2 text-center">
-                                        @if(isset($book->exists_in_db) && $book->exists_in_db)
+                                        @if(isset($book->exists_in_db) && $book->exists_in_db && $book->in_stock)
                                             <div class="text-center font-bold">Already in our Library</div>
                                         @else
                                             <form action="{{ route('google_books.order') }}" method="POST">

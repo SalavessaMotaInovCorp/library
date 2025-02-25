@@ -8,22 +8,18 @@
     <div class="py-12 px-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="card bg-gray-300 shadow-xl space-y-6 p-6">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                    <strong class="text-bold text-gray-900">Name:</strong>
-                    <p class="text-gray-500">{{ $publisher->name }}</p>
-                </div>
 
-                <figure class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 flex justify-center">
-                    <div class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
-                        <strong class="text-bold text-gray-900 mr-1 block text-center">Logo:</strong>
-                        <img src="{{ asset('' . $publisher->logo) }}" alt="{{ $publisher->name }} logo"
-                             class="rounded-lg shadow-md mx-auto w-full h-auto object-contain">
+                <x-section title="Name">
+                    {{ $publisher->name }}
+                </x-section>
+
+                <x-section title="Logo">
+                    <div class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto">
+                        <img src="{{ asset('' . $publisher->logo) }}" alt="{{ $publisher->name }} logo" class="rounded-lg shadow-md mx-auto w-full h-auto object-contain">
                     </div>
-                </figure>
+                </x-section>
 
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-
-                    <strong class="text-bold text-gray-900">Books from this publisher:</strong>
+                <x-section title="Books from this publisher">
                     @if($books->isEmpty())
                         <p class="text-gray-500 mt-2">This publisher has no books yet.</p>
                     @else
@@ -38,7 +34,7 @@
                             @endforeach
                         </ul>
                     @endif
-                </div>
+                </x-section>
 
                 <div class="flex flex-col sm:flex-row gap-4 mb-6 text-center justify-between">
                     <x-button href="/publishers">Publishers List</x-button>

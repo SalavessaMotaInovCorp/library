@@ -3,14 +3,17 @@
 use App\Exports\AuthorsExport;
 use App\Exports\BookRequestsExport;
 use App\Exports\BooksExport;
+use App\Exports\OrdersExport;
 use App\Exports\PublishersExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\BookReviewController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\GoogleBooksController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +53,16 @@ Route::middleware([
     Route::get('/book-reviews/{bookReview}/edit', [BookReviewController::class, 'edit'])->name('book_reviews.edit');
     Route::patch('/book-reviews/{bookReview}', [BookReviewController::class, 'update'])->name('book_reviews.update');
 
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+    Route::post('/orders/{order}/proceed-to-payment', [OrderController::class, 'proceedToPayment'])->name('orders.proceedToPayment');
+    Route::get('/orders/payment-success/{order}', [OrderController::class, 'paymentSuccess'])->name('orders.paymentSuccess');
+
     // Admin Routes
     Route::middleware('role:admin')->group(function () {
 
@@ -87,6 +100,11 @@ Route::middleware([
         Route::get('/book-requests/export', function () {
             return Excel::download(new BookRequestsExport, 'book_requests.xlsx');
         })->name('book_requests.export');
+
+        // Export orders to Excel
+        Route::get('/orders/export', function () {
+            return Excel::download(new OrdersExport, 'orders.xlsx');
+        })->name('orders.export');
 
         // Resource routes for books (create, store, edit, update, destroy)
         Route::resource('books', BookController::class)->except(['index', 'show', 'export']);

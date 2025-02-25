@@ -13,7 +13,8 @@ class BooksTable extends DataTableComponent
 {
     public function builder(): Builder
     {
-        return Book::query()->with(['authors', 'publisher'])->orderBy('id', 'desc');
+        return Book::query()
+            ->with(['authors', 'publisher']);
     }
 
     // Configure table settings
@@ -22,6 +23,8 @@ class BooksTable extends DataTableComponent
         $this->setPrimaryKey('id'); // Set primary key
         $this->setSortingEnabled(); // Enable sorting
         $this->setSearchEnabled();  // Enable search
+
+        $this->setDefaultSort('id', 'desc');
 
         $this->setTBodyAttributes([
             'default' => false,
@@ -49,8 +52,8 @@ class BooksTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
-                ->hideIf(true), // Hide the ID column
+            Column::make("Book Id", "id")
+                ->sortable(), // Hide the ID column
 
             Column::make("Isbn", "isbn")
                 ->searchable(), // Enable searching

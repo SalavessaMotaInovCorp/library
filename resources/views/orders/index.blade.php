@@ -2,22 +2,19 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
             <h2 class="text-black text-3xl font-bold">
-                Our Books
+                Your orders
             </h2>
-            @can('create')
-                <x-button href="/books/create">Register book</x-button>
-            @endcan
-            @can('export')
-                <x-button href="{{ route('books.export') }}">Export Excel</x-button>
-            @endcan
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+
+                <x-flash-message type="success"/>
+
                 <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                    @livewire('books-table')
+                    @livewire('citizen-orders-table')
                 </div>
 
 

@@ -7,12 +7,13 @@
 
     <div class="py-12 text-black bg-gray-100">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
+
             <div class="border border-gray-300 bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
                 <div class="text-center my-4">
                     <h2 class="text-2xl font-bold text-gray-800">Books</h2>
                 </div>
 
-                <div clasS="border shadow-xl p-6 space-y-3 bg-gray-300 rounded-xl font-bold">
+                <div clasS="border shadow-xl p-6 space-y-3 bg-gray-300 rounded-xl">
                     <div class="text-center my-6 px-2">
                         <div class="bg-white shadow-sm sm:rounded-lg p-6">
                             <h1 class="mb-4">Request Books From The Main Warehouse:</h1>
@@ -33,10 +34,28 @@
 
             <div class="border border-gray-300 bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
                 <div class="text-center my-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Orders</h2>
+                </div>
+                <div clasS="border shadow-xl p-1 space-y-3 bg-gray-300 rounded-xl">
+                    <div clasS="border shadow-xl p-6 space-y-3 bg-white rounded-xl">
+                        <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                            <div class="text-center my-1">
+                                <x-button href="{{ route('orders.export') }}" class="inline-flex mb-1">Export
+                                    Excel
+                                </x-button>
+                            </div>
+                            @livewire('orders-table')
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border border-gray-300 bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 space-y-3">
+                <div class="text-center my-4">
                     <h2 class="text-2xl font-bold text-gray-800">Book Reviews</h2>
                 </div>
 
-                <div clasS="border shadow-xl p-1 space-y-3 bg-gray-300 rounded-xl font-bold">
+                <div clasS="border shadow-xl p-1 space-y-3 bg-gray-300 rounded-xl">
 
                     <div clasS="border shadow-xl p-6 space-y-3 bg-white rounded-xl">
                         <div class="bg-white shadow-sm sm:rounded-lg p-6">
@@ -50,7 +69,7 @@
                 <div class="text-center my-4">
                     <h2 class="text-2xl font-bold text-gray-800">Users</h2>
                 </div>
-                <div clasS="border shadow-xl p-1 space-y-3 bg-gray-300 rounded-xl font-bold">
+                <div clasS="border shadow-xl p-1 space-y-3 bg-gray-300 rounded-xl">
                     <div class="text-center">
                         <x-button href="/create-admin"
                                   class="p-12 flex flex-col items-center justify-center rounded-lg shadow-xl my-5">

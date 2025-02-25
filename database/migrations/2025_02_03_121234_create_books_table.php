@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable(); // Book description (optional)
             $table->text('cover_image')->nullable(); // Cover image URL (optional)
             $table->string('price'); // Book price
+            $table->boolean('in_stock')->default(true);
             $table->timestamps(); // Created_at and updated_at timestamps
 
             $table->fullText('name');

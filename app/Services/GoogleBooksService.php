@@ -37,8 +37,12 @@ class GoogleBooksService
 
             $existingBook = Book::where('isbn', $isbn)->first();
             if ($existingBook) {
-                $existingBook->exists_in_db = true;
-                return $existingBook;
+                if (!$existingBook->in_stock) {
+                    $existingBook->exists_in_db = false;
+                } else {
+                    $existingBook->exists_in_db = true;
+                    return $existingBook;
+                }
             }
 
 
@@ -51,6 +55,7 @@ class GoogleBooksService
                 : null;
 
             $book->price = 0;
+            $book->in_stock = true;
 
             $publisherName = $volumeInfo['publisher'] ?? 'Unknown Publisher';
             $publisher = Publisher::where('name', $publisherName)->first();

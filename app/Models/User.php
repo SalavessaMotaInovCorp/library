@@ -90,4 +90,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Book::class, 'book_user_interests');
     }
 
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
 }

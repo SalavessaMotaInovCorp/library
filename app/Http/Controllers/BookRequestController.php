@@ -6,6 +6,8 @@ use App\Jobs\SendBookAvailableEmail;
 use App\Jobs\SendBookRequestEmail;
 use App\Models\Book;
 use App\Models\BookRequest;
+use App\Models\CartItem;
+use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -88,9 +90,12 @@ class BookRequestController extends Controller
     {
         $query = $request->input('query');
 
-        $books = Book::whereDoesntHave('bookRequests', function ($query) {
-            $query->whereIn('status', ['active', 'pending_return_confirm']);
+        $books = Book::whereDoesntHave('bookRequests', function ($q) {
+            $q->whereIn('status', ['active', 'pending_return_confirm']);
         })
+            ->whereDoesntHave('orderItems.order', function ($q) {
+                $q->whereIn('status', ['pending', 'completed']);
+            })
             ->when($query, function ($q) use ($query) {
                 $q->where('name', 'like', '%' . $query . '%');
             })
@@ -142,6 +147,20 @@ class BookRequestController extends Controller
         foreach ($admins as $admin) {
             SendBookRequestEmail::dispatch($bookRequest, $admin, false);
         }
+
+        $affectedUsers = CartItem::where('book_id', $book->id)
+            ->where('user_id', '!=', Auth::id())
+            ->pluck('user_id')
+            ->unique();
+
+        foreach ($affectedUsers as $userId) {
+            Notification::create([
+                'user_id' => $userId,
+                'message' => 'Some books in your cart are no longer available and were removed. Sorry for the inconvenience.',
+            ]);
+        }
+
+        CartItem::where('book_id', $book->id)->delete();
 
         return redirect()->route('book_requests.available')->with('success', 'Request has been sent.');
     }

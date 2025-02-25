@@ -37,11 +37,27 @@ class DatabaseSeeder extends Seeder
         ]);
         $citizen->assignRole('citizen');
 
+        $teste1 = User::factory()->create([
+            'name' => 'Teste 1',
+            'email' => 'teste@teste.pt',
+            'password' => Hash::make('Library1!'),
+            'role' => 'citizen',
+        ]);
+        $teste1->assignRole('citizen');
+
+        $teste2 = User::factory()->create([
+            'name' => 'Teste 2',
+            'email' => 'teste2@teste.pt',
+            'password' => Hash::make('Library1!'),
+            'role' => 'citizen',
+        ]);
+        $teste2->assignRole('citizen');
+
         // Create 50 books
-        $books = Book::factory(20)->create();
+        $books = Book::factory(8)->create();
 
         // Create 30 authors
-        $authors = Author::factory(20)->create();
+        $authors = Author::factory(10)->create();
 
         // Attach 1 to 3 random authors to each book
         $books->each(function ($book) use ($authors) {

@@ -14,8 +14,7 @@ class BookController extends Controller
     // Display a paginated list of books
     public function index(Request $request)
     {
-        $books = Book::latest()->paginate(10);
-        return view('books.index', compact('books'));
+        return view('books.index');
     }
 
 
@@ -60,13 +59,23 @@ class BookController extends Controller
                 ->whereIn('status', ['active', 'pending_return_confirm'])
                 ->where('user_id', '!=', $user->id)
                 ->exists();
+
+            $alreadyInCart = $user->cartItems()->where('book_id', $book->id)->exists();
+        } else {
+            $alreadyInCart = false;
         }
 
         $relatedBooks = $this->getRelatedBooksFullText($book);
 
+        //$isSold = $book->orderItems()->exists();
 
-        return view('books.show', compact('book', 'authors', 'book_requests', 'book_reviews','hasActiveRequest', 'isBookRequestedByOthers', 'relatedBooks'));
+        return view('books.show', compact(
+            'book', 'authors', 'book_requests', 'book_reviews',
+            'hasActiveRequest', 'isBookRequestedByOthers',
+            'alreadyInCart', 'relatedBooks'
+        ));
     }
+
 
     // Show the form to create a new book
     public function create(Request $request)

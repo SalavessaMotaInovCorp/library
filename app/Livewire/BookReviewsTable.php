@@ -14,8 +14,30 @@ class BookReviewsTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
-        $this->setSearchStatus(false);
+        $this->setPrimaryKey('id'); // Set primary key
+        $this->setSortingEnabled(); // Enable sorting
+        $this->setSearchEnabled();  // Enable search
+
+        $this->setTBodyAttributes([
+            'default' => false,
+            'class' => 'bg-white divide-y divide-gray-200', // Styling for tbody
+        ]);
+
+        $this->setTrAttributes(function () {
+            return [
+                'default' => false,
+                'class' => 'hover:bg-gray-100', // Hover effect for rows
+            ];
+        });
+
+        $this->setTdAttributes(function () {
+            return [
+                'default' => false,
+                'class' => 'text-black p-1 text-center', // Cell styling
+            ];
+        });
+
+        $this->setSearchPlaceholder('Search user name...'); // Custom search placeholder
     }
 
     public function columns(): array

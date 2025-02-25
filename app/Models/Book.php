@@ -10,7 +10,7 @@ class Book extends Model
     use HasFactory;
 
     // Allow mass assignment for these fields
-    protected $fillable = ['isbn', 'name', 'publisher_id', 'description', 'cover_image', 'price'];
+    protected $fillable = ['isbn', 'name', 'publisher_id', 'description', 'cover_image', 'price', 'in_stock'];
 
     // Cast specific attributes to be encrypted
     protected function casts(): array {
@@ -44,6 +44,11 @@ class Book extends Model
     public function interestedUsers()
     {
         return $this->belongsToMany(User::class, 'book_user_interests');
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'book_id');
     }
 
     public function getAverageRatingAttribute()

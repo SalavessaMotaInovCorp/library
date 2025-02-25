@@ -28,5 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })->withSchedule(function (Schedule $schedule) {
         $schedule->job(new SendDueDateReminder)->dailyAt('08:00');
+        //$schedule->job(new \App\Jobs\SendAbandonedCartReminder())->hourly();
+        $schedule->job(new \App\Jobs\SendAbandonedCartReminder())->everyTenSeconds();
     })
     ->create();

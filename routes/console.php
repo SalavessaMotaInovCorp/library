@@ -9,7 +9,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-//Schedule::job(new SendDueDateReminder())->everyMinute();
+//Schedule::job(new SendDueDateReminder())->dailyAt('08:00');
 
 
 

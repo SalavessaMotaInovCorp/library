@@ -64,11 +64,8 @@
                             <x-button href="{{ route('book_requests.index') }}">Back</x-button>
                             <x-button type="submit">Save Changes</x-button>
                         </div>
-                        @if(session('success'))
-                            <div class="bg-green-500 text-white text-center p-3 rounded-lg mb-4">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+
+                        <x-flash-message type="success"/>
                     </form>
                 @else
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
@@ -158,13 +155,4 @@
             });
         });
     });
-
-    setTimeout(function () {
-        let flashMessage = document.querySelector('.bg-green-500');
-        if (flashMessage) {
-            flashMessage.style.transition = "opacity 0.5s";
-            flashMessage.style.opacity = "0";
-            setTimeout(() => flashMessage.remove(), 500);
-        }
-    }, 3000);
 </script>

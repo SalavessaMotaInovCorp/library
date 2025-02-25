@@ -40,14 +40,24 @@ class GoogleBooksController extends Controller
             ]);
         }
 
-        $book = Book::create([
-            'isbn' => $data['isbn'],
-            'name' => $data['title'],
-            'description' => $data['description'],
-            'cover_image' => $data['cover_image'],
-            'price' => rand(1,50),
-            'publisher_id' => $publisher->id,
-        ]);
+        $book = Book::where('isbn', $data['isbn'])->first();
+
+        if ($book) {
+            if (!$book->in_stock) {
+                $book->update(['in_stock' => true]);
+            }
+        } else {
+            $book = Book::create([
+                'isbn' => $data['isbn'],
+                'name' => $data['title'],
+                'description' => $data['description'],
+                'cover_image' => $data['cover_image'],
+                'price' => rand(1,50),
+                'publisher_id' => $publisher->id,
+                'in_stock' => true,
+            ]);
+        }
+
 
         $authorsArray = is_array($data['authors']) ? $data['authors'] : json_decode($data['authors'], true) ?? [];
 
